@@ -1,20 +1,25 @@
-﻿namespace FastFood.Models
+﻿namespace FastFood.Models;
+
+using FastFood.Common.EntityConfig;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+public class OrderItem
 {
-    using System.ComponentModel.DataAnnotations;
+    [ForeignKey(nameof(Order))]
+    [MaxLength(ValidationConstants.GuidMaxLength)]
+    public string OrderId { get; set; } = null!;
 
-    public class OrderItem
-    {
-        public int OrderId { get; set; }
+    [Required]
+    public virtual Order Order { get; set; } = null!;
 
-        [Required]
-        public Order Order { get; set; } = null!;
+    [ForeignKey(nameof(Item))]
+    [MaxLength(ValidationConstants.GuidMaxLength)]
+    public string ItemId { get; set; } = null!;
 
-        public int ItemId { get; set; }
+    [Required]
+    public virtual Item Item { get; set; } = null!;
 
-        [Required]
-        public Item Item { get; set; } = null!;
-
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
-    }
+    [Range(1, int.MaxValue)]
+    public int Quantity { get; set; }
 }
