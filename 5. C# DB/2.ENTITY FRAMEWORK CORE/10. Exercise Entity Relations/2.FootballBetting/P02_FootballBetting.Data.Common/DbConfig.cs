@@ -2,5 +2,5 @@
 
 public static class DbConfig
 {
-    public const string ConnectionString = @"Server=MYRO-LAPTOP-HP\SQLEXPRESS;Database=FootballBookmakerSystem;Integrated Security=True;";
+    public const string ConnectionString = @"Server=.\SQLEXPRESS;Database=FootballBookmakerSystem;Integrated Security=True;";
 }

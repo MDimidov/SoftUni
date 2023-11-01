@@ -2,6 +2,6 @@
 {
     public static class DbConfig
     {
-        public const string ConnectionString = @"Server=MYRO-LAPTOP-HP\SQLEXPRESS;Database=Hospital;Integrated Security=True";
+        public const string ConnectionString = @"Server=.\SQLEXPRESS;Database=Hospital;Integrated Security=True";
     }
 }

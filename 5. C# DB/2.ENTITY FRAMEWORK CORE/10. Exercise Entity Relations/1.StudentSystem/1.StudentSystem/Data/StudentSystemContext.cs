@@ -29,7 +29,7 @@ public class StudentSystemContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=MYRO-LAPTOP-HP\\SQLEXPRESS;Database=StudentSystem;Integrated Security=True;");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=StudentSystem;Integrated Security=True;");
         }
     }
 
