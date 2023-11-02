@@ -3,34 +3,44 @@
     using System;
     using AutoMapper;
     using Data;
+    using FastFood.Services.Data.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using ViewModels.Categories;
 
     public class CategoriesController : Controller
     {
-        private readonly FastFoodContext _context;
-        private readonly IMapper _mapper;
+        private readonly ICategoryService categoryService;
 
-        public CategoriesController(FastFoodContext context, IMapper mapper)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _context = context;
-            _mapper = mapper;
+            this.categoryService = categoryService;
         }
 
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCategoryInputModel model)
+        public async Task<IActionResult> Create(CreateCategoryInputModel model)
         {
-            throw new NotImplementedException();
+            if (!this.ModelState.IsValid)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            await this.categoryService.CreateAsync(model);
+
+            return this.RedirectToAction("All");
         }
 
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            throw new NotImplementedException();
+            IEnumerable<CategoryAllViewModel> categories = 
+                await this.categoryService.GetAllAsync();
+
+            return View(categories.ToList());
         }
     }
 }

@@ -3,6 +3,7 @@ using FastFood.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using FastFood.Services.Data;
+using FastFood.Services.Data.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddAutoMapper(cfg =>
 
 // Register Services
 builder.Services.AddTransient<IPositionsService, PositionsService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

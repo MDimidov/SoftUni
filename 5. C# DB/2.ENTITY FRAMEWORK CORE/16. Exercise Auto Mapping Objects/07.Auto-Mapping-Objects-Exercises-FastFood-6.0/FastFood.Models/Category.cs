@@ -14,7 +14,7 @@ public class Category
     public int Id { get; set; }
 
     [Required]
-    [StringLength(ValidationConstants.CategoryNameMaxLength, MinimumLength = 3)]
+    [MaxLength(ValidationConstants.CategoryNameMaxLength)]
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Item> Items { get; set; }
