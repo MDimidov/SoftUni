@@ -15,7 +15,7 @@ public class Position
     public int Id { get; set; }
 
     [Required]
-    [StringLength(ValidationConstants.PositionNameMaxLength, MinimumLength = 3)]
+    [MaxLength(ValidationConstants.PositionNameMaxLength)]
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Employee> Employees { get; set; }

@@ -1,53 +1,44 @@
-﻿namespace FastFood.Web.Controllers
+﻿namespace FastFood.Web.Controllers;
+
+using System.Linq;
+using AutoMapper.QueryableExtensions;
+using FastFood.Services.Data;
+using Microsoft.AspNetCore.Mvc;
+using ViewModels.Positions;
+
+public class PositionsController : Controller
 {
-    using System.Linq;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
-    using Data;
-    using FastFood.Models;
-    using Microsoft.AspNetCore.Mvc;
-    using ViewModels.Positions;
+    private readonly IPositionsService positionsService;
 
-    public class PositionsController : Controller
+    public PositionsController(IPositionsService positionsService)
     {
-        private readonly FastFoodContext _context;
-        private readonly IMapper _mapper;
+        this.positionsService = positionsService;
+    }
 
-        public PositionsController(FastFoodContext context, IMapper mapper)
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreatePositionInputModel model)
+    {
+        if (!ModelState.IsValid)
         {
-            _context = context;
-            _mapper = mapper;
+            return RedirectToAction("Error", "Home");
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        await this.positionsService.CreateAsync(model);
 
-        [HttpPost]
-        public IActionResult Create(CreatePositionInputModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Error", "Home");
-            }
+        return RedirectToAction("All", "Positions");
+    }
 
-            var position = _mapper.Map<Position>(model);
+    public async Task<IActionResult> All()
+    {
+        IEnumerable <PositionsAllViewModel> positions = 
+            await this.positionsService.GetAllAsync();
 
-            _context.Positions.Add(position);
-
-            _context.SaveChanges();
-
-            return RedirectToAction("All", "Positions");
-        }
-
-        public IActionResult All()
-        {
-            var positions = _context.Positions
-                .ProjectTo<PositionsAllViewModel>(_mapper.ConfigurationProvider)
-                .ToList();
-
-            return View(positions);
-        }
+        return View(positions.ToList());
     }
 }
