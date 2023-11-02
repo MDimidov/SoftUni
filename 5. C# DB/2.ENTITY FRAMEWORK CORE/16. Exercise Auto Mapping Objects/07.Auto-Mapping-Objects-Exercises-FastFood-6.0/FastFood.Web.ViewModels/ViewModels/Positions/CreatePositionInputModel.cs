@@ -1,4 +1,4 @@
-﻿namespace FastFood.Core.ViewModels.Positions
+﻿namespace FastFood.Web.ViewModels.Positions
 {
     public class CreatePositionInputModel
     {

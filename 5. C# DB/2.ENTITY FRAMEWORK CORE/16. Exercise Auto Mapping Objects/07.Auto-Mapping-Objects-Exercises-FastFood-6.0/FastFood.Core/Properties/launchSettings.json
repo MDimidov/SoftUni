@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "FastFood.Core": {
+    "FastFood.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

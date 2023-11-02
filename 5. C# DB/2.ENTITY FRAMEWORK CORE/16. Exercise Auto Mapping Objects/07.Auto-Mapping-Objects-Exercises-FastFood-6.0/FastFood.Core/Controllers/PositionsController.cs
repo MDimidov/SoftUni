@@ -1,4 +1,4 @@
-﻿namespace FastFood.Core.Controllers
+﻿namespace FastFood.Web.Controllers
 {
     using System.Linq;
     using AutoMapper;

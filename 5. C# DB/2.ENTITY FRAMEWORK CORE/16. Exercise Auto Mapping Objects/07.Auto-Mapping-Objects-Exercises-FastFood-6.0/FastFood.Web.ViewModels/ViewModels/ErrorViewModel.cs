@@ -1,4 +1,4 @@
-﻿namespace FastFood.Core.ViewModels
+﻿namespace FastFood.Web.ViewModels
 {
     public class ErrorViewModel
     {

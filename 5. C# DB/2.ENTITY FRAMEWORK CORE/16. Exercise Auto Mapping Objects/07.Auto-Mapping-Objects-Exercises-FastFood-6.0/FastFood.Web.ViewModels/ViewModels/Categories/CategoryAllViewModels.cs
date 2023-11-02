@@ -1,4 +1,4 @@
-﻿namespace FastFood.Core.ViewModels.Categories
+﻿namespace FastFood.Web.ViewModels.Categories
 {
     public class CategoryAllViewModel
     {
