@@ -34,10 +34,12 @@ public class StartUp
         //Console.WriteLine(ImportProducts(context, inputJson));
 
         //Query 3. Import Categories
-        string inputJson = File.ReadAllText(@"../../../Datasets/categories.json");
-        Console.WriteLine(ImportCategories(context, inputJson));
+        //string inputJson = File.ReadAllText(@"../../../Datasets/categories.json");
+        //Console.WriteLine(ImportCategories(context, inputJson));
 
-
+        //Query 4. Import Categories and Products
+        string inputJson = File.ReadAllText(@"../../../Datasets/categories-products.json");
+        Console.WriteLine(ImportCategoryProducts(context, inputJson));
     }
 
     //1.	Import Data
@@ -96,5 +98,18 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {categories.Count}";
+    }
+
+    //Query 4. Import Categories and Products
+    public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+    {
+        ImportCategoryProductDto[] categoryProductDtos = JsonConvert.DeserializeObject<ImportCategoryProductDto[]>(inputJson)!;
+
+        CategoryProduct[] categoryProducts = mapper.Map<CategoryProduct[]>(categoryProductDtos);
+
+        context.AddRange(categoryProducts);
+        context.SaveChanges();
+
+        return $"Successfully imported {categoryProducts.Length}";
     }
 }
