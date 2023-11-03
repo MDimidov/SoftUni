@@ -23,12 +23,19 @@ public class StartUp
         //context.Database.EnsureCreated();
 
 
+        //1.	Import Data
+        //Query 1.Import Users
+        //string inputJson = File.ReadAllText(@"../../../Datasets/users.json");
+        //Console.WriteLine(ImportUsers(context, inputJson));
 
-        string inputJson = File.ReadAllText(@"../../../Datasets/users.json");
-        Console.WriteLine(ImportUsers(context, inputJson));
+        //Query 2. Import Products
+        string inputJson = File.ReadAllText(@"../../../Datasets/products.json");
+        Console.WriteLine(ImportProducts(context, inputJson));
 
     }
 
+    //1.	Import Data
+    //Query 1. Import Users
     public static string ImportUsers(ProductShopContext context, string inputJson)
     {
         ImportUserDto[] userDtos = JsonConvert.DeserializeObject<ImportUserDto[]>(inputJson)!;
@@ -47,5 +54,18 @@ public class StartUp
 
         return $"Successfully imported {validUsers.Count}";
 
+    }
+
+    //Query 2. Import Products
+    public static string ImportProducts(ProductShopContext context, string inputJson)
+    {
+        ImportProductDto[] productDtos = JsonConvert.DeserializeObject<ImportProductDto[]>(inputJson)!;
+
+        Product[] products = mapper.Map<Product[]>(productDtos);
+
+        context.Products.AddRange(products);
+        context.SaveChanges();
+
+        return $"Successfully imported {products.Length}";
     }
 }
