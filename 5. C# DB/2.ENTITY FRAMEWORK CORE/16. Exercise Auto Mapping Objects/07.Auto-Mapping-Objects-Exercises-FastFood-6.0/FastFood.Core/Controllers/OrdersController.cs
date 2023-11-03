@@ -18,6 +18,7 @@
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             //var viewOrder = new CreateOrderViewModel

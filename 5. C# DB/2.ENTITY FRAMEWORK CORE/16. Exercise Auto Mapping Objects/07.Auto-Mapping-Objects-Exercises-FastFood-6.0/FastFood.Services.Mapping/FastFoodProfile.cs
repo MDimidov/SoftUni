@@ -5,6 +5,7 @@ using FastFood.Models;
 using FastFood.Web.ViewModels.Categories;
 using FastFood.Web.ViewModels.Employees;
 using FastFood.Web.ViewModels.Items;
+using FastFood.Web.ViewModels.Orders;
 using FastFood.Web.ViewModels.Positions;
 
 public class FastFoodProfile : Profile
@@ -43,7 +44,8 @@ public class FastFoodProfile : Profile
             .ForMember(d => d.Position, opt => opt.MapFrom(s => s.Position.Name));
 
         CreateMap<RegisterEmployeeInputModel, Employee>();
-            //.ForMember(d => d.Position.Name, opt => opt.MapFrom(s => s.PositionName));
 
+        //Orders
+        CreateMap<CreateOrderInputModel, Order>();
     }
 }
