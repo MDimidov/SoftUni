@@ -1,4 +1,5 @@
 ﻿using ProductShop.Data;
+using ProductShop.Models;
 
 namespace ProductShop;
 
@@ -10,5 +11,10 @@ public class StartUp
 
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
+
+    }
+    public static string ImportUsers(ProductShopContext context, string inputJson)
+    {
+        User user = new User();
     }
 }
