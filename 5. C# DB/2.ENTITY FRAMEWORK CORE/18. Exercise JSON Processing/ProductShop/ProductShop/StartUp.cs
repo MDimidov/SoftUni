@@ -13,8 +13,8 @@ public class StartUp
         context.Database.EnsureCreated();
 
     }
-    public static string ImportUsers(ProductShopContext context, string inputJson)
-    {
-        User user = new User();
-    }
+    //public static string ImportUsers(ProductShopContext context, string inputJson)
+    //{
+        
+    //}
 }
