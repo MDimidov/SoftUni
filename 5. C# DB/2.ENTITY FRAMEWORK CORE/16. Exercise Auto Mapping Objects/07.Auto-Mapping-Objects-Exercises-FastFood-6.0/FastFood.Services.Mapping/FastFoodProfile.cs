@@ -3,6 +3,7 @@
 using AutoMapper;
 using FastFood.Models;
 using FastFood.Web.ViewModels.Categories;
+using FastFood.Web.ViewModels.Employees;
 using FastFood.Web.ViewModels.Items;
 using FastFood.Web.ViewModels.Positions;
 
@@ -32,6 +33,17 @@ public class FastFoodProfile : Profile
 
         CreateMap<Item, ItemsAllViewModel>()
             .ForMember(d => d.Category, opt => opt.MapFrom(s => s.Category.Name));
+
+        //Employees
+        CreateMap<Position, RegisterEmployeeViewModel>()
+            .ForMember(d => d.PositionId, opt => opt.MapFrom(s => s.Id))
+            .ForMember(d => d.PositionName, opt => opt.MapFrom(s => s.Name));
+
+        CreateMap<Employee, EmployeesAllViewModel>()
+            .ForMember(d => d.Position, opt => opt.MapFrom(s => s.Position.Name));
+
+        CreateMap<RegisterEmployeeInputModel, Employee>();
+            //.ForMember(d => d.Position.Name, opt => opt.MapFrom(s => s.PositionName));
 
     }
 }

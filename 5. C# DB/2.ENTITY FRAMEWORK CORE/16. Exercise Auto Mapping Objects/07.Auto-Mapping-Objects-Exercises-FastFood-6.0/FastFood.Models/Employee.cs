@@ -18,7 +18,7 @@ public class Employee
     public string Id { get; set; } = null!;
 
     [Required]
-    [StringLength(ValidationConstants.EmployeeNameMaxLength, MinimumLength = ValidationConstants.EmployeeNameMinLength)]
+    [MaxLength(ValidationConstants.EmployeeNameMaxLength)]
     public string Name { get; set; } = null!;
 
     [Required]
@@ -26,7 +26,7 @@ public class Employee
     public int Age { get; set; }
 
     [Required]
-    [StringLength(ValidationConstants.EmployeeAddressMaxLength, MinimumLength = 3)]
+    [MaxLength(ValidationConstants.EmployeeAddressMaxLength)]
     public string Address { get; set; } = null!;
 
     [ForeignKey(nameof(Position))]
