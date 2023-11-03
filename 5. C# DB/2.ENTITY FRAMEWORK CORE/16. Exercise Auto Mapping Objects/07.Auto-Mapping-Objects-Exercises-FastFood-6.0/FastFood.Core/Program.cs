@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(cfg =>
 // Register Services
 builder.Services.AddTransient<IPositionsService, PositionsService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IItemsService, ItemsService>();
 
 var app = builder.Build();
 
