@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Castle.Core.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using ProductShop.Data;
@@ -29,8 +30,13 @@ public class StartUp
         //Console.WriteLine(ImportUsers(context, inputJson));
 
         //Query 2. Import Products
-        string inputJson = File.ReadAllText(@"../../../Datasets/products.json");
-        Console.WriteLine(ImportProducts(context, inputJson));
+        //string inputJson = File.ReadAllText(@"../../../Datasets/products.json");
+        //Console.WriteLine(ImportProducts(context, inputJson));
+
+        //Query 3. Import Categories
+        string inputJson = File.ReadAllText(@"../../../Datasets/categories.json");
+        Console.WriteLine(ImportCategories(context, inputJson));
+
 
     }
 
@@ -67,5 +73,28 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {products.Length}";
+    }
+
+    //Query 3. Import Categories
+    public static string ImportCategories(ProductShopContext context, string inputJson)
+    {
+        ImportCategoryDto[] categoryDtos = JsonConvert.DeserializeObject<ImportCategoryDto[]>(inputJson)!;
+
+        ICollection<Category> categories = new HashSet<Category>();
+
+        foreach (var categoryDto in categoryDtos)
+        {
+            if (String.IsNullOrEmpty(categoryDto.Name))
+            {
+                continue;
+            }
+
+            categories.Add(mapper.Map<Category>(categoryDto));
+        }
+
+        context.Categories.AddRange(categories);
+        context.SaveChanges();
+
+        return $"Successfully imported {categories.Count}";
     }
 }
