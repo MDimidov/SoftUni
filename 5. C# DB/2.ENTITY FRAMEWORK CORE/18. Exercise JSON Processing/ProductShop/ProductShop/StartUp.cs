@@ -31,11 +31,6 @@ public class StartUp
 
     public static string ImportUsers(ProductShopContext context, string inputJson)
     {
-        //IMapper mapper = new Mapper(new MapperConfiguration(cfg =>
-        //{
-        //    cfg.AddProfile<ProductShopProfile>();
-        //}));
-
         ImportUserDto[] userDtos = JsonConvert.DeserializeObject<ImportUserDto[]>(inputJson)!;
 
         ICollection<User> validUsers = new HashSet<User>();
