@@ -45,7 +45,11 @@ public class StartUp
 
         //2.	Export Data
         //Query 5. Export Products in Range
-        Console.WriteLine(GetProductsInRange(context));
+        //Console.WriteLine(GetProductsInRange(context));
+
+        //Query 6. Export Sold Products
+        Console.WriteLine(GetSoldProducts(context));
+
     }
 
     //1.	Import Data
@@ -139,6 +143,41 @@ public class StartUp
         return JsonConvert.SerializeObject(products,
             Formatting.Indented,
             new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver
+            });
+    }
+
+    //Query 6. Export Sold Products
+    public static string GetSoldProducts(ProductShopContext context)
+    {
+        IContractResolver contractResolver = ConfigureCamelCasing();
+
+        var products = context.Users
+            .AsNoTracking()
+            .Where(u => u.SoldProducts.Any(p => p.Buyer != null))
+            .OrderBy(u => u.LastName)
+            .ThenBy(u => u.FirstName)
+            .Select(u => new
+            {
+                u.FirstName,
+                u.LastName,
+                SoldProducts = u.SoldProducts
+                    .Where(sp => sp.Buyer != null)
+                    .Select(sp => new
+                    {
+                        sp.Name,
+                        sp.Price,
+                        BuyerFirstName = sp.Buyer!.FirstName,
+                        BuyerLastName = sp.Buyer!.LastName
+                    })
+                    .ToArray()
+            })
+            .ToArray();
+
+            return JsonConvert.SerializeObject(products, 
+                Formatting.Indented, 
+                new JsonSerializerSettings()
             {
                 ContractResolver = contractResolver
             });
