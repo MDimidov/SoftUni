@@ -48,7 +48,11 @@ public class StartUp
         //Console.WriteLine(GetProductsInRange(context));
 
         //Query 6. Export Sold Products
-        Console.WriteLine(GetSoldProducts(context));
+        //Console.WriteLine(GetSoldProducts(context));
+
+        //Query 7. Export Categories by Products Count
+        Console.WriteLine(GetCategoriesByProductsCount(context));
+
 
     }
 
@@ -181,6 +185,29 @@ public class StartUp
             {
                 ContractResolver = contractResolver
             });
+    }
+
+    //Query 7. Export Categories by Products Count
+    public static string GetCategoriesByProductsCount(ProductShopContext context)
+    {
+        IContractResolver contractResolver = ConfigureCamelCasing();
+
+        var categories = context.Categories
+            .AsNoTracking()
+            .OrderByDescending(c => c.CategoriesProducts.Count())
+            .Select(c => new
+            {
+                Category = c.Name,
+                ProductsCount = c.CategoriesProducts.Count(),
+                AveragePrice = c.CategoriesProducts.Average(cp => cp.Product.Price).ToString("f2"),
+                TotalRevenue = c.CategoriesProducts.Sum(cp => cp.Product.Price).ToString("f2")
+            })
+            .ToArray();
+
+        return JsonConvert.SerializeObject(categories, Formatting.Indented, new JsonSerializerSettings
+        {
+            ContractResolver = contractResolver
+        });
     }
 
     public static IContractResolver ConfigureCamelCasing()
