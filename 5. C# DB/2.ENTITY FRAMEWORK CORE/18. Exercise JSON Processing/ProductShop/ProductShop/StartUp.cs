@@ -51,8 +51,10 @@ public class StartUp
         //Console.WriteLine(GetSoldProducts(context));
 
         //Query 7. Export Categories by Products Count
-        Console.WriteLine(GetCategoriesByProductsCount(context));
+        //Console.WriteLine(GetCategoriesByProductsCount(context));
 
+        //Query 8. Export Users and Products
+        Console.WriteLine(GetUsersWithProducts(context));
 
     }
 
@@ -179,9 +181,9 @@ public class StartUp
             })
             .ToArray();
 
-            return JsonConvert.SerializeObject(products, 
-                Formatting.Indented, 
-                new JsonSerializerSettings()
+        return JsonConvert.SerializeObject(products,
+            Formatting.Indented,
+            new JsonSerializerSettings()
             {
                 ContractResolver = contractResolver
             });
@@ -208,6 +210,50 @@ public class StartUp
         {
             ContractResolver = contractResolver
         });
+    }
+
+    //Query 8. Export Users and Products
+    public static string GetUsersWithProducts(ProductShopContext context)
+    {
+        IContractResolver contractResolver = ConfigureCamelCasing();
+
+        var users = context.Users
+            .AsNoTracking()
+            .Where(u => u.SoldProducts.Any(sp => sp.Buyer != null))
+            .OrderByDescending(u => u.SoldProducts.Count)
+            .Select(u => new
+            {
+                u.FirstName,
+                u.LastName,
+                u.Age,
+                SoldProducts = new
+                {
+                    Count = u.SoldProducts.Count(p => p.Buyer != null),
+                    Products = u.SoldProducts
+                            .Where(p => p.Buyer != null)
+                            .Select(sp => new
+                            {
+                                sp.Name,
+                                sp.Price
+                            })
+                            .ToArray()
+                }
+            })
+            .ToArray();
+
+        var result = new
+        {
+            UsersCount = users.Length,
+            Users = users
+        };
+
+        return JsonConvert.SerializeObject(result,
+            Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver,
+                NullValueHandling = NullValueHandling.Ignore
+            });
     }
 
     public static IContractResolver ConfigureCamelCasing()
