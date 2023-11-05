@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ProductShop.Data;
 using ProductShop.DTOs.Import;
 using ProductShop.Models;
@@ -17,7 +19,7 @@ public class StartUp
 
     public static void Main(string[] args)
     {
-        
+
 
         ProductShopContext context = new ProductShopContext();
         //context.Database.EnsureDeleted();
@@ -38,8 +40,12 @@ public class StartUp
         //Console.WriteLine(ImportCategories(context, inputJson));
 
         //Query 4. Import Categories and Products
-        string inputJson = File.ReadAllText(@"../../../Datasets/categories-products.json");
-        Console.WriteLine(ImportCategoryProducts(context, inputJson));
+        //string inputJson = File.ReadAllText(@"../../../Datasets/categories-products.json");
+        //Console.WriteLine(ImportCategoryProducts(context, inputJson));
+
+        //2.	Export Data
+        //Query 5. Export Products in Range
+        Console.WriteLine(GetProductsInRange(context));
     }
 
     //1.	Import Data
@@ -112,4 +118,35 @@ public class StartUp
 
         return $"Successfully imported {categoryProducts.Length}";
     }
+
+    //2.	Export Data
+    //Query 5. Export Products in Range
+    public static string GetProductsInRange(ProductShopContext context)
+    {
+        IContractResolver contractResolver = ConfigureCamelCasing();
+        var products = context.Products
+            .AsNoTracking()
+            .Where(p => p.Price >= 500 && p.Price <= 1000)
+            .OrderBy(p => p.Price)
+            .Select(p => new
+            {
+                Name = p.Name,
+                Price = p.Price,
+                Seller = $"{p.Seller.FirstName} {p.Seller.LastName}"
+            })
+            .ToArray();
+
+        return JsonConvert.SerializeObject(products,
+            Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ContractResolver = contractResolver
+            });
+    }
+
+    public static IContractResolver ConfigureCamelCasing()
+        => new DefaultContractResolver()
+        {
+            NamingStrategy = new CamelCaseNamingStrategy(false, true)
+        };
 }
