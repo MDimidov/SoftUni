@@ -8,6 +8,12 @@ public class CarDealerProfile : Profile
 {
     public CarDealerProfile()
     {
+        //Supplier
         CreateMap<ImportSupplierDto, Supplier>();
+
+        //Part
+        CreateMap<ImportPartDto, Part>();
+
+
     }
 }
