@@ -1,17 +1,24 @@
-﻿namespace CarDealer.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CarDealer.Models;
+
+public class Car
 {
-    public class Car
+    public Car()
     {
-        public int Id { get; set; }
-
-        public string Make { get; set; } = null!;
-
-        public string Model { get; set; } = null!;
-
-        public long TravelledDistance { get; set; }
-
-        public ICollection<Sale> Sales { get; set; } = new List<Sale>();    
-
-        public ICollection<PartCar> PartsCars { get; set; } = new List<PartCar>();
+        Sales = new HashSet<Sale>();
+        PartsCars = new HashSet<PartCar>();
     }
+    [Key]
+    public int Id { get; set; }
+
+    public string Make { get; set; } = null!;
+
+    public string Model { get; set; } = null!;
+
+    public long TravelledDistance { get; set; }
+
+    public virtual ICollection<Sale> Sales { get; set; }
+
+    public virtual ICollection<PartCar> PartsCars { get; set; }
 }
