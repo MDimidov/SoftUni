@@ -29,8 +29,12 @@ public class StartUp
         //Console.WriteLine(ImportParts(context, inputJson1));
 
         //Query 11. Import Cars
-        string inputJson = File.ReadAllText("../../../Datasets/cars.json");
-        Console.WriteLine(ImportCars(context, inputJson));
+        //string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+        //Console.WriteLine(ImportCars(context, inputJson));
+
+        //Query 12. Import Customers
+        string inputJson = File.ReadAllText("../../../Datasets/customers.json");
+        Console.WriteLine(ImportCustomers(context, inputJson));
 
     }
 
@@ -105,5 +109,18 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {carDtos.Length}.";
+    }
+
+    //Query 12. Import Customers
+    public static string ImportCustomers(CarDealerContext context, string inputJson)
+    {
+        ImportCustomerDto[] customerDtos = JsonConvert.DeserializeObject<ImportCustomerDto[]>(inputJson)!;
+
+        Customer[] customers = mapper.Map<Customer[]>(customerDtos);
+
+        context.Customers.AddRange(customers);
+        context.SaveChanges();
+
+        return $"Successfully imported {customers.Length}.";
     }
 }

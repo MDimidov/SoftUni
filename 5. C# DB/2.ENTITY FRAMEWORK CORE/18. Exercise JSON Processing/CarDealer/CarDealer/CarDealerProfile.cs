@@ -18,7 +18,7 @@ public class CarDealerProfile : Profile
         CreateMap<ImportCarDto, Car>()
             .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
-        //PartCar
-        CreateMap<ImportPartCarDto, PartCar>();
+        //Customer
+        CreateMap<ImportCustomerDto, Customer>();
     }
 }
