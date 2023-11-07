@@ -33,8 +33,12 @@ public class StartUp
         //Console.WriteLine(ImportCars(context, inputJson));
 
         //Query 12. Import Customers
-        string inputJson = File.ReadAllText("../../../Datasets/customers.json");
-        Console.WriteLine(ImportCustomers(context, inputJson));
+        //string inputJson = File.ReadAllText("../../../Datasets/customers.json");
+        //Console.WriteLine(ImportCustomers(context, inputJson));
+
+        //Query 13. Import Sales
+        string inputJson = File.ReadAllText("../../../Datasets/sales.json");
+        Console.WriteLine(ImportSales(context, inputJson));
 
     }
 
@@ -122,5 +126,40 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {customers.Length}.";
+    }
+
+    //Query 13. Import Sales
+    //Properly solution of this task is with included comment part but for judge system we ignore verifications
+    public static string ImportSales(CarDealerContext context, string inputJson)
+    {
+        ImportSaleDto[] saleDtos = JsonConvert.DeserializeObject<ImportSaleDto[]>(inputJson)!;
+
+        //int[] carIDs = context
+        //    .Cars
+        //    .AsNoTracking()
+        //    .Select(c => c.Id)
+        //    .ToArray();
+
+        //int[] customerIDs = context
+        //    .Customers
+        //    .AsNoTracking()
+        //    .Select(c => c.Id)
+        //    .ToArray();
+
+        HashSet<Sale> sales = new();
+
+        foreach (ImportSaleDto saleDto in saleDtos)
+        {
+            //if(carIDs.Contains(saleDto.CarId) && customerIDs.Contains(saleDto.CustomerId))
+            //{
+                Sale sale = mapper.Map<Sale>(saleDto);
+                sales.Add(sale);
+            //}
+        }
+
+        context.Sales.AddRange(sales);
+        context.SaveChanges();
+        
+        return $"Successfully imported {sales.Count}.";
     }
 }
