@@ -2,6 +2,7 @@
 using CarDealer.Data;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
 
@@ -23,9 +24,13 @@ public class StartUp
         //string inputJson = File.ReadAllText("../../../Datasets/suppliers.json");
         //Console.WriteLine(ImportSuppliers(context, inputJson));
 
-        //Query 10. Import Parts
-        string inputJson = File.ReadAllText("../../../Datasets/parts.json");
-        Console.WriteLine(ImportParts(context, inputJson));
+        ////Query 10.Import Parts
+        //string inputJson1 = File.ReadAllText("../../../Datasets/parts.json");
+        //Console.WriteLine(ImportParts(context, inputJson1));
+
+        //Query 11. Import Cars
+        string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+        Console.WriteLine(ImportCars(context, inputJson));
 
     }
 
@@ -67,5 +72,38 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {parts.Count}.";
+    }
+
+    //Query 11. Import Cars
+    public static string ImportCars(CarDealerContext context, string inputJson)
+    {
+        ImportCarDto[] carDtos = JsonConvert.DeserializeObject<ImportCarDto[]>(inputJson)!;
+
+        foreach (var carDto in carDtos)
+        {
+            Car car = mapper.Map<Car>(carDto);
+
+            context.Cars.Add(car);
+            context.SaveChanges();
+
+            foreach (int partId in carDto.PartsId)
+            {
+                int carId = context.Cars.AsNoTracking().OrderBy(c => c.Id).LastOrDefault()!.Id;
+                PartCar partCar = new()
+                {
+                    CarId = carId,
+                    PartId = partId
+                };
+
+                if (car.PartsCars.FirstOrDefault(pc => pc.PartId == partId) == null)
+                {
+                    context.PartsCars.Add(partCar);
+                }
+            }
+        }
+
+        context.SaveChanges();
+
+        return $"Successfully imported {carDtos.Length}.";
     }
 }

@@ -9,6 +9,7 @@ public class Car
         Sales = new HashSet<Sale>();
         PartsCars = new HashSet<PartCar>();
     }
+
     [Key]
     public int Id { get; set; }
 
