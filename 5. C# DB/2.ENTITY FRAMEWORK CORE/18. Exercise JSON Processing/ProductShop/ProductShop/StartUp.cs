@@ -220,7 +220,10 @@ public class StartUp
         var users = context.Users
             .AsNoTracking()
             .Where(u => u.SoldProducts.Any(sp => sp.Buyer != null))
-            .OrderByDescending(u => u.SoldProducts.Count)
+            .OrderByDescending(u => 
+                    u.SoldProducts
+                    .Where(p => p.Buyer != null)
+                    .Count())
             .Select(u => new
             {
                 u.FirstName,
