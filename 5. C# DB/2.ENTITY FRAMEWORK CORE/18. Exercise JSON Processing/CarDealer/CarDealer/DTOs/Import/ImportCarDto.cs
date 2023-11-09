@@ -17,7 +17,7 @@ public class ImportCarDto
     public string Model { get; set; } = null!;
 
     [JsonPropertyName("traveledDistance")]
-    public long TravelledDistance { get; set; }
+    public long TraveledDistance { get; set; }
 
     [JsonPropertyName("partsId")]
     public IEnumerable<int> PartsId { get; set; }

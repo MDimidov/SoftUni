@@ -49,7 +49,11 @@ public class StartUp
         //Console.WriteLine(GetCarsFromMakeToyota(context));
 
         //Query 16. Export Local Suppliers
-        Console.WriteLine(GetLocalSuppliers(context));
+        //Console.WriteLine(GetLocalSuppliers(context));
+
+        //Query 17. Export Cars with Their List of Parts
+        Console.WriteLine(GetCarsWithTheirListOfParts(context));
+
     }
 
     //2.	Import Data
@@ -105,7 +109,7 @@ public class StartUp
 
             foreach (int partId in carDto.PartsId.Distinct())
             {
-                car.PartsCars.Add( new PartCar()
+                car.PartsCars.Add(new PartCar()
                 {
                     PartId = partId
                 });
@@ -157,14 +161,14 @@ public class StartUp
         {
             //if(carIDs.Contains(saleDto.CarId) && customerIDs.Contains(saleDto.CustomerId))
             //{
-                Sale sale = mapper.Map<Sale>(saleDto);
-                sales.Add(sale);
+            Sale sale = mapper.Map<Sale>(saleDto);
+            sales.Add(sale);
             //}
         }
 
         context.Sales.AddRange(sales);
         context.SaveChanges();
-        
+
         return $"Successfully imported {sales.Count}.";
     }
 
@@ -194,13 +198,13 @@ public class StartUp
             .AsNoTracking()
             .Where(c => c.Make == "Toyota")
             .OrderBy(c => c.Model)
-            .ThenByDescending(c => c.TravelledDistance)
+            .ThenByDescending(c => c.TraveledDistance)
             .Select(c => new
             {
                 Id = c.Id,
                 c.Make,
                 c.Model,
-                c.TravelledDistance
+                c.TraveledDistance
             })
             .ToArray();
 
@@ -223,5 +227,32 @@ public class StartUp
             .ToArray();
 
         return JsonConvert.SerializeObject(suppliers, Formatting.Indented);
+    }
+
+    //Query 17. Export Cars with Their List of Parts
+    public static string GetCarsWithTheirListOfParts(CarDealerContext context)
+    {
+        var result = context
+            .Cars
+            .AsNoTracking()
+            .Select(c => new
+            {
+                car = new
+                    {
+                        c.Make,
+                        c.Model,
+                        c.TraveledDistance
+                    },
+
+                parts = c.PartsCars
+                    .Select(pc => new
+                    {
+                        Name = pc.Part.Name,
+                        Price = pc.Part.Price.ToString("f2")
+                    })
+            })
+            .ToArray();
+
+        return JsonConvert.SerializeObject (result, Formatting.Indented);
     }
 }

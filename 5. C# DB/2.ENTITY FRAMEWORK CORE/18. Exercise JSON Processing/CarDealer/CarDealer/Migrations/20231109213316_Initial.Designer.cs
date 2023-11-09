@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarDealer.Migrations
 {
     [DbContext(typeof(CarDealerContext))]
-    [Migration("20231107094501_Initial")]
+    [Migration("20231109213316_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace CarDealer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TravelledDistance")
+                    b.Property<long>("TraveledDistance")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
