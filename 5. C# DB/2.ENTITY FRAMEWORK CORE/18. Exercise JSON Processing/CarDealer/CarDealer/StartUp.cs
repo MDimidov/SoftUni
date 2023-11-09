@@ -5,6 +5,7 @@ using CarDealer.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
+using System.Globalization;
 
 namespace CarDealer;
 
@@ -29,8 +30,8 @@ public class StartUp
         //Console.WriteLine(ImportParts(context, inputJson1));
 
         //Query 11. Import Cars
-        string inputJson = File.ReadAllText("../../../Datasets/cars.json");
-        Console.WriteLine(ImportCars(context, inputJson));
+        //string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+        //Console.WriteLine(ImportCars(context, inputJson));
 
         //Query 12. Import Customers
         //string inputJson = File.ReadAllText("../../../Datasets/customers.json");
@@ -39,6 +40,10 @@ public class StartUp
         //Query 13. Import Sales
         //string inputJson = File.ReadAllText("../../../Datasets/sales.json");
         //Console.WriteLine(ImportSales(context, inputJson));
+
+        //3.	Export Data
+        //Query 14. Export Ordered Customers
+        Console.WriteLine(GetOrderedCustomers(context));
 
     }
 
@@ -156,5 +161,24 @@ public class StartUp
         context.SaveChanges();
         
         return $"Successfully imported {sales.Count}.";
+    }
+
+    //3.	Export Data
+    //Query 14. Export Ordered Customers
+    public static string GetOrderedCustomers(CarDealerContext context)
+    {
+        var customers = context.Customers
+            .OrderBy(c => c.BirthDate)
+            .ThenBy(c => c.IsYoungDriver.ToString())
+            .Select(c => new
+            {
+                c.Name,
+                BirthDate = c.BirthDate.ToString("dd/MM/yyyy", DateTimeFormatInfo.InvariantInfo),
+                c.IsYoungDriver
+            })
+            .ToArray();
+
+        return JsonConvert
+            .SerializeObject(customers, Formatting.Indented);
     }
 }
