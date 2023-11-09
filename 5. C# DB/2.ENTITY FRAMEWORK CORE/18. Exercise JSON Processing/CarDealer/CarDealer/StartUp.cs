@@ -43,7 +43,11 @@ public class StartUp
 
         //3.	Export Data
         //Query 14. Export Ordered Customers
-        Console.WriteLine(GetOrderedCustomers(context));
+        //Console.WriteLine(GetOrderedCustomers(context));
+
+        //Query 15. Export Cars from Make Toyota
+        Console.WriteLine(GetCarsFromMakeToyota(context));
+
 
     }
 
@@ -90,7 +94,7 @@ public class StartUp
     //Query 11. Import Cars
     public static string ImportCars(CarDealerContext context, string inputJson)
     {
-        ImportCarDto[] carDtos = JsonConvert.DeserializeObject<ImportCarDto[]>(inputJson)!;
+        ImportCarDto[] carDtos = Newtonsoft.Json.JsonConvert.DeserializeObject<ImportCarDto[]>(inputJson)!;
 
         List<Car> cars = new();
 
@@ -180,5 +184,26 @@ public class StartUp
 
         return JsonConvert
             .SerializeObject(customers, Formatting.Indented);
+    }
+
+    //Query 15. Export Cars from Make Toyota
+    public static string GetCarsFromMakeToyota(CarDealerContext context)
+    {
+        var cars = context.Cars
+            .AsNoTracking()
+            .Where(c => c.Make == "Toyota")
+            .OrderBy(c => c.Model)
+            .ThenByDescending(c => c.TravelledDistance)
+            .Select(c => new
+            {
+                Id = c.Id,
+                c.Make,
+                c.Model,
+                c.TravelledDistance
+            })
+            .ToArray();
+
+        return JsonConvert
+            .SerializeObject(cars, Formatting.Indented);
     }
 }
