@@ -29,16 +29,16 @@ public class StartUp
         //Console.WriteLine(ImportParts(context, inputJson1));
 
         //Query 11. Import Cars
-        //string inputJson = File.ReadAllText("../../../Datasets/cars.json");
-        //Console.WriteLine(ImportCars(context, inputJson));
+        string inputJson = File.ReadAllText("../../../Datasets/cars.json");
+        Console.WriteLine(ImportCars(context, inputJson));
 
         //Query 12. Import Customers
         //string inputJson = File.ReadAllText("../../../Datasets/customers.json");
         //Console.WriteLine(ImportCustomers(context, inputJson));
 
         //Query 13. Import Sales
-        string inputJson = File.ReadAllText("../../../Datasets/sales.json");
-        Console.WriteLine(ImportSales(context, inputJson));
+        //string inputJson = File.ReadAllText("../../../Datasets/sales.json");
+        //Console.WriteLine(ImportSales(context, inputJson));
 
     }
 
@@ -87,32 +87,27 @@ public class StartUp
     {
         ImportCarDto[] carDtos = JsonConvert.DeserializeObject<ImportCarDto[]>(inputJson)!;
 
+        List<Car> cars = new();
+
         foreach (var carDto in carDtos)
         {
             Car car = mapper.Map<Car>(carDto);
 
-            context.Cars.Add(car);
-            context.SaveChanges();
-
-            foreach (int partId in carDto.PartsId)
+            foreach (int partId in carDto.PartsId.Distinct())
             {
-                int carId = context.Cars.AsNoTracking().OrderBy(c => c.Id).LastOrDefault()!.Id;
-                PartCar partCar = new()
+                car.PartsCars.Add( new PartCar()
                 {
-                    CarId = carId,
                     PartId = partId
-                };
-
-                if (car.PartsCars.FirstOrDefault(pc => pc.PartId == partId) == null)
-                {
-                    context.PartsCars.Add(partCar);
-                }
+                });
             }
+
+            cars.Add(car);
         }
 
+        context.Cars.AddRange(cars);
         context.SaveChanges();
 
-        return $"Successfully imported {carDtos.Length}.";
+        return $"Successfully imported {cars.Count}.";
     }
 
     //Query 12. Import Customers
