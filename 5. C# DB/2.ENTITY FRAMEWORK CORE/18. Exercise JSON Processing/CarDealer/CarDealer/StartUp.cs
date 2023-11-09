@@ -46,9 +46,10 @@ public class StartUp
         //Console.WriteLine(GetOrderedCustomers(context));
 
         //Query 15. Export Cars from Make Toyota
-        Console.WriteLine(GetCarsFromMakeToyota(context));
+        //Console.WriteLine(GetCarsFromMakeToyota(context));
 
-
+        //Query 16. Export Local Suppliers
+        Console.WriteLine(GetLocalSuppliers(context));
     }
 
     //2.	Import Data
@@ -205,5 +206,22 @@ public class StartUp
 
         return JsonConvert
             .SerializeObject(cars, Formatting.Indented);
+    }
+
+    //Query 16. Export Local Suppliers
+    public static string GetLocalSuppliers(CarDealerContext context)
+    {
+        var suppliers = context.Suppliers
+            .AsNoTracking()
+            .Where(s => s.IsImporter == false)
+            .Select(s => new
+            {
+                s.Id,
+                s.Name,
+                PartsCount = s.Parts.Count
+            })
+            .ToArray();
+
+        return JsonConvert.SerializeObject(suppliers, Formatting.Indented);
     }
 }
