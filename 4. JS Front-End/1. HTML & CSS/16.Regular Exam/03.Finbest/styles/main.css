@@ -1,0 +1,281 @@
+
+
+:root{
+    --grey-line: #dbdbdb;
+    --lightgrey-line: #f6f6f6;
+    --grey-border:#98b8b6;
+}
+
+
+
+body{
+    font-family: "PT Sans", sans-serif;
+    font-size: 14px;
+}
+
+.blue{
+    background-color: #ade2df;
+}
+
+.black{
+    background-color: black;
+    color: white;
+}
+
+header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+}
+
+
+li{
+    display: inline-block;
+    margin-right: 2rem;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+button{
+    all: unset;
+}
+
+.btn{
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#hero, #last{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+#hero .title, #last .title{
+    font-size: 58px;
+    margin-bottom: 0;
+}
+
+#hero .text, #last .title{
+    margin: 2rem auto;
+    margin-top: 1rem;
+}
+
+#hero .buttons, #last .buttons{
+    display: flex;
+    gap: 12px;
+}
+
+.famous{
+    display: flex;
+    justify-content: center;
+    padding: 80px;
+}
+
+.famous .info {
+    width: 320px;
+    text-align: center;
+    height: 200px;
+    padding: 0 16px;
+}
+
+.famous .info:nth-child(1){
+    border-left: 2px solid var(--lightgrey-line);
+    border-right: 1px solid var(--grey-line);
+}
+
+.famous .info:nth-child(3){
+    border-left: 1px solid var(--grey-line);
+    border-right: 2px solid var(--lightgrey-line);
+}
+
+h2{
+    font-size: 36px;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
+.phone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.phone .img{
+    height: 480px;
+    border: 2px dashed var(--grey-border);
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.phone .info{
+    width: 500px;
+}
+
+.phone p{
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.phone .bottom{
+    margin-bottom: 24px;
+}
+
+.underlined{
+    display: inline-block;
+    border-bottom: 1px solid black;
+}
+
+
+.hidden-fees{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--lightgrey-line);
+}
+
+.hidden-fees > *{
+    display: flex;
+}
+
+.hidden-fees .middle div{
+    display: flex;
+}
+
+.hidden-fees .top{
+    margin: 3rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden-fees .top .btn{
+    padding: 6px 16px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.hidden-fees .card{
+    width: calc(100%/3);
+    padding: 0 2rem;
+   
+}
+
+.hidden-fees .card > div{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.card .up-part{
+    border-bottom: 1px solid var(--grey-line);
+}
+
+.card .up-part .subtitle{
+    text-align: center;
+}
+
+.card .up-part .title .small{
+    font-size: small;
+    font-weight: normal;
+}
+.card ul{
+    margin-bottom: 2rem;
+}
+.card ul li{
+    font-size: 12px;
+}
+
+.card .btn{
+    align-self: stretch;
+    text-align: center;
+    font-weight: bold;
+}
+
+.hidden-fees .card:nth-child(2){
+    border-left: 1px solid var(--grey-line);
+    border-right: 1px solid var(--grey-line);
+}
+
+
+.hidden-fees .large{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    
+}
+
+.hidden-fees .card:last-child .up-part{
+    border: none;
+}
+
+.card .center{
+    text-align: center;
+}
+
+.hidden-fees .large ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden-fees .middle{
+    overflow: hidden;
+    border: 1px solid var(--grey-line);
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+    background-color: white;
+}
+
+.hidden-fees .middle .left{
+    padding: 1rem 0;
+}
+
+.hidden-fees li{
+    margin-bottom: 8px;
+}
+
+.hidden-fees .large .title{
+    margin-bottom: 32px;
+}
+
+#last .title,
+#last p{
+    width: 500px;
+    text-align: center;
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
+#last p{
+    font-size: 16px;
+    margin-bottom: 3rem;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+}
+
+footer i{
+    margin-left: 8px;
+}
+
