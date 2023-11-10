@@ -1,0 +1,27 @@
+*{
+    box-sizing: border-box;   
+}
+body{
+    background-color: rgb(238, 238, 238);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card{
+    background-color: rgb(255, 255, 255);
+    flex-basis: 25%;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 0 gray;
+    padding: 12px;
+}
+
+.card h2{
+    margin: 0;
+}
+
+.card p{
+    line-height: 1.3;
+}

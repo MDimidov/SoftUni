@@ -1,0 +1,104 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(238, 238, 238);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 50px 250px;
+}
+
+h2{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 500;
+}
+
+.card{
+    width: min-content;
+    border: 2px solid lightgray;
+    border-radius: 8px;
+}
+
+.card section{
+    padding: 20px;
+    background-color: white;
+}
+.card h3{
+    padding: 0;
+    margin-bottom: 0;
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+.card p{
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+.card footer{
+    border-top: 2px solid lightgrey;
+    padding: 20px;
+    background-color: white;
+}
+
+.card img{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+}
+
+
+
+        /* MASONRY */
+
+.cards-layout.masonry{
+    /* background-color: red; */
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.cards-layout.masonry > section{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cards-layout.masonry .card{
+    width: 100%;
+}
+
+
+/* Flex Example */
+
+.cards-layout.flex{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cards-layout.flex .card{
+    flex-basis: calc((100% - 20px) / 3);
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    
+}
+
+.cards-layout.flex .card section{
+    flex-grow: 1;
+}
+
+.cards-layout.flex .card img,
+.cards-layout.flex .card footer
+{
+    flex-grow: 0;
+}
+
+.cards-layout.flex .card:nth-child(8){
+    justify-self:flex-start;
+}

@@ -1,0 +1,30 @@
+body{
+    background-color: whitesmoke;
+}
+
+section ul{
+    margin: 80px 50px;
+    display: flex;
+    justify-content: space-between;
+    /* align-content:space-between; */
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+section ul li{
+    list-style-type: none;
+    border: 8px solid black;
+    padding: auto 5px;
+    box-shadow: 0px 0px 15px grey;
+    
+    background-color: white;
+    width: 330px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section ul li img{
+    padding: 4px;
+}
