@@ -1,0 +1,18 @@
+@import url("");
+
+html{
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h2{
+    font-family: Great Vibes, cursive;
+    line-height: 1.2;
+    font-weight: bold;
+}
+
+ul{
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
