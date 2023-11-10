@@ -1,0 +1,34 @@
+body{
+    font-family: Helvetica, sans-serif;
+    background-color: rgb(238, 238, 238);
+    color: rgb(51, 51, 51);
+}
+
+article{
+    display: inline-block;
+    width: 800px;
+    padding: 30px;
+}
+
+article p{
+    line-height: 1.4rem;
+}
+
+aside{
+    display: inline-block;
+    width: 300px;
+    position: absolute;
+    padding-top: 30px;
+}
+
+ul{
+    list-style-type: square;
+}
+
+img{
+    width: 70%;
+}
+
+h1, h2{
+    font-family: 'Times New Roman', serif;
+}

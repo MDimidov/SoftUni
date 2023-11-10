@@ -1,0 +1,43 @@
+body{
+    font-family: Helvetica, sans-serif;
+}
+
+header{
+    margin: 50px;
+    display: block;
+    height: 100px;
+    border-bottom: 2px solid #000;
+}
+
+header nav{
+    display: inline-block;
+}
+
+header nav a{
+    font-size: 14px;
+    display: inline-block;
+    text-decoration: none;
+    color: green;
+    margin: 20px;
+}
+
+header h1{
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 45px;
+    margin-right: 50px;
+}
+
+main{
+    margin: 50px;
+}
+main h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: lighter;
+}
+
+main p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
