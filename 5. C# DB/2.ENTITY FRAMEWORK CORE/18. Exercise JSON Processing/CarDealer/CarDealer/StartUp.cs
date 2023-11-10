@@ -57,8 +57,10 @@ public class StartUp
         //Console.WriteLine(GetCarsWithTheirListOfParts(context));
 
         //Query 18. Export Total Sales by Customer
-        Console.WriteLine(GetTotalSalesByCustomer(context));
+        //Console.WriteLine(GetTotalSalesByCustomer(context));
 
+        //Query 19. Export Sales with Applied Discount
+        Console.WriteLine(GetSalesWithAppliedDiscount(context));
 
     }
 
@@ -207,7 +209,7 @@ public class StartUp
             .ThenByDescending(c => c.TraveledDistance)
             .Select(c => new
             {
-                Id = c.Id,
+                c.Id,
                 c.Make,
                 c.Model,
                 c.TraveledDistance
@@ -289,6 +291,33 @@ public class StartUp
             {
                 ContractResolver = ConfigureCamelCase()
             });
+    }
+
+    //Query 19. Export Sales with Applied Discount
+    public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+    {
+        var cars = context
+            .Sales
+            .AsNoTracking()
+            .Select(c => new
+            {
+                car = new
+                {
+                    c.Car.Make,
+                    c.Car.Model,
+                    c.Car.TraveledDistance
+                },
+
+                customerName = c.Customer.Name,
+                discount = c.Discount.ToString("f2"),
+                price = c.Car.PartsCars.Sum(pc => pc.Part.Price).ToString("f2"),
+                priceWithDiscount = (c.Car.PartsCars.Sum(pc => pc.Part.Price)
+                                    - ((c.Car.PartsCars.Sum(pc => pc.Part.Price) * c.Discount) / 100)).ToString("f2")
+            })
+            .Take(10)
+            .ToArray();
+
+        return JsonConvert.SerializeObject(cars, Formatting.Indented);
     }
 
     private static IContractResolver ConfigureCamelCase()
