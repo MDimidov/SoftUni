@@ -48,7 +48,7 @@ public class StartUp
         //Console.WriteLine(GetOrderedCustomers(context));
 
         //Query 15. Export Cars from Make Toyota
-        //Console.WriteLine(GetCarsFromMakeToyota(context));
+        Console.WriteLine(GetCarsFromMakeToyota(context));
 
         //Query 16. Export Local Suppliers
         //Console.WriteLine(GetLocalSuppliers(context));
@@ -60,7 +60,7 @@ public class StartUp
         //Console.WriteLine(GetTotalSalesByCustomer(context));
 
         //Query 19. Export Sales with Applied Discount
-        Console.WriteLine(GetSalesWithAppliedDiscount(context));
+        //Console.WriteLine(GetSalesWithAppliedDiscount(context));
 
     }
 
