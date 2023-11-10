@@ -1,0 +1,23 @@
+/* body{
+    margin: 0;
+} */
+main{
+    position: relative;
+    /* margin: 2vh 2vw;
+    width: 96vw;
+    height: 96vh; */
+}
+
+/* main img{
+    height: 100%;
+    width: 100%;
+} */
+
+main h1{
+    position: absolute;
+    color: antiquewhite;
+    top: 60px;
+    left: 180px;
+    text-shadow: 1px 1px 20px black;
+}
+

@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-size: 0px;
+}
+
+.blue{
+    background-color: lightblue;
+}
+
+.purple{
+    background-color: orange;
+}
+
+.viewport{
+    height: 50vh;
+    width: 100vw;
+    margin: 0px;
+    position: relative;
+}
+
+
+
+
+.card{
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -50%);
+}
+
+.card img{
+    width: 50%;
+    height: 90%;
+    object-fit: cover;
+}
