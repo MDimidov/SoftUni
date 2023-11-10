@@ -4,7 +4,9 @@ using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Data;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 
 namespace CarDealer;
@@ -52,7 +54,11 @@ public class StartUp
         //Console.WriteLine(GetLocalSuppliers(context));
 
         //Query 17. Export Cars with Their List of Parts
-        Console.WriteLine(GetCarsWithTheirListOfParts(context));
+        //Console.WriteLine(GetCarsWithTheirListOfParts(context));
+
+        //Query 18. Export Total Sales by Customer
+        Console.WriteLine(GetTotalSalesByCustomer(context));
+
 
     }
 
@@ -255,4 +261,39 @@ public class StartUp
 
         return JsonConvert.SerializeObject (result, Formatting.Indented);
     }
+
+    //Query 18. Export Total Sales by Customer
+    public static string GetTotalSalesByCustomer(CarDealerContext context)
+    {
+        var customers = context
+            .Customers
+            .AsNoTracking()
+            .Where(c => c.Sales.Any(s => s.Car != null))
+            .Select(c => new
+            {
+                FullName = c.Name,
+                BoughtCars = c.Sales.Count(s => s.Car != null),
+                SpentMoney = c.Sales
+                    .SelectMany(s => s.Car.PartsCars)
+                    .Sum(pc => pc.Part.Price)
+
+            })
+            .OrderByDescending(c => c.SpentMoney)
+            .ThenByDescending(c => c.BoughtCars)
+            .ToArray();
+
+        return JsonConvert
+            .SerializeObject(customers
+            , Formatting.Indented
+            , new JsonSerializerSettings()
+            {
+                ContractResolver = ConfigureCamelCase()
+            });
+    }
+
+    private static IContractResolver ConfigureCamelCase()
+        => new DefaultContractResolver()
+        {
+            NamingStrategy = new CamelCaseNamingStrategy(false, true)
+        };
 }
