@@ -10,5 +10,8 @@ public class ProductShopProfile : Profile
     {
         // User
         CreateMap<ImportUserDto, User>();
+
+        // Product
+        CreateMap<ImportProductDto, Product>();
     }
 }
