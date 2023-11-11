@@ -30,8 +30,12 @@ public class StartUp
         //Console.WriteLine(ImportProducts(context, inputXml));
 
         //Query 3. Import Categories
-        string inputXml = File.ReadAllText("../../../Datasets/categories.xml");
-        Console.WriteLine(ImportProducts(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/categories.xml");
+        //Console.WriteLine(ImportCategories(context, inputXml));
+
+        //Query 4. Import Categories and Products
+        string inputXml = File.ReadAllText("../../../Datasets/categories-products.xml");
+        Console.WriteLine(ImportCategoryProducts(context, inputXml));
     }
 
     // 2.Import Data
@@ -67,7 +71,7 @@ public class StartUp
     public static string ImportCategories(ProductShopContext context, string inputXml)
     {
         ImportCategoryDto[] categoryDtos = new XmlHelper()
-        .Deserialize<ImportCategoryDto[]>(inputXml, "Categories");
+            .Deserialize<ImportCategoryDto[]>(inputXml, "Categories");
 
         Category[] categories = mapper.Map<Category[]>(categoryDtos);
 
@@ -75,5 +79,20 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {categories.Length}";
+    }
+
+    //Query 4. Import Categories and Products
+    public static string ImportCategoryProducts(ProductShopContext context, string inputXml)
+    {
+        ImportCategoryProductDto[] categoryProductDtos = new XmlHelper()
+            .Deserialize<ImportCategoryProductDto[]>(inputXml, "CategoryProducts");
+
+        CategoryProduct[] categoryProducts = mapper
+            .Map<CategoryProduct[]>(categoryProductDtos);
+
+        context.CategoryProducts.AddRange(categoryProducts);
+        context.SaveChanges();
+
+        return $"Successfully imported {categoryProducts.Length}";
     }
 }

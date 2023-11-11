@@ -14,4 +14,14 @@ public class XmlHelper
 
         return (T)serializer.Deserialize(stringReader)!;
     }
+
+    public T Deserialize<T>(string inputXml)
+    {
+        XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+        using StringReader stringReader = new(inputXml);
+
+        return (T)serializer.Deserialize(stringReader)!;
+    }
+
 }
