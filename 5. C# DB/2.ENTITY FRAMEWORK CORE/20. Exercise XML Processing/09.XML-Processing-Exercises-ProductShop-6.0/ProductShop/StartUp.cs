@@ -26,9 +26,12 @@ public class StartUp
         //Console.WriteLine(ImportUsers(context, inputXml));
 
         //Query 2. Import Products
-        string inputXml = File.ReadAllText("../../../Datasets/products.xml");
-        Console.WriteLine(ImportProducts(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/products.xml");
+        //Console.WriteLine(ImportProducts(context, inputXml));
 
+        //Query 3. Import Categories
+        string inputXml = File.ReadAllText("../../../Datasets/categories.xml");
+        Console.WriteLine(ImportProducts(context, inputXml));
     }
 
     // 2.Import Data
@@ -58,5 +61,19 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {products.Length}";
+    }
+
+    //Query 3. Import Categories
+    public static string ImportCategories(ProductShopContext context, string inputXml)
+    {
+        ImportCategoryDto[] categoryDtos = new XmlHelper()
+        .Deserialize<ImportCategoryDto[]>(inputXml, "Categories");
+
+        Category[] categories = mapper.Map<Category[]>(categoryDtos);
+
+        context.Categories.AddRange(categories);
+        context.SaveChanges();
+
+        return $"Successfully imported {categories.Length}";
     }
 }
