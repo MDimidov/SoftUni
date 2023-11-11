@@ -1,18 +1,19 @@
-﻿namespace ProductShop.Models
+﻿namespace ProductShop.Models;
+
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+public class Category
 {
-    using System.Collections.Generic;
-
-    public class Category
+    public Category()
     {
-        public Category()
-        {
-            this.CategoryProducts = new List<CategoryProduct>();
-        }
-
-        public int Id { get; set; }
-
-        public string Name { get; set; } = null!;
-
-        public ICollection<CategoryProduct> CategoryProducts { get; set; }
+        this.CategoryProducts = new HashSet<CategoryProduct>();
     }
+
+    [Key]
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 }
