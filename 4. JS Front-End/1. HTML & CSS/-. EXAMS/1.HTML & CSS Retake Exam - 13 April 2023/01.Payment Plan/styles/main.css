@@ -1,0 +1,75 @@
+
+
+:root{
+    --p-color: #59595e;
+}
+
+
+
+body{
+    background-image: url(image/background.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main{
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 60px;
+}
+
+.card{
+    position: relative;
+    background-color: white;
+    padding: 20px 30px;
+    height: 500px;
+    max-width: 400px;
+}
+
+.title{
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.price{
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.sum{
+    font-size: 3.8rem;
+    font-weight: 700;
+}
+
+.annualy{
+    color: var(--p-color);
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.list li{
+    margin-bottom: 4px;
+}
+
+.btn{
+    padding: 10px 28px;
+    color: white;
+    background-color: black;
+    border: 0;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 1.5rem;
+}
+
+.big-card{
+    height: 540px;
+}

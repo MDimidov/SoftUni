@@ -1,0 +1,47 @@
+@media (max-width: 600px){
+    .navigation-nav, .home-text, .home-image-container{
+        display: none;
+    }
+
+    .home-text-container{
+        margin-top: 36px;
+    }
+
+    .button-secondary{
+        margin-bottom: 1rem;
+    }
+
+    .home-tab-selector-cards-container{
+        grid-template-columns: 1fr;
+    }
+
+    .home-about.section-container{
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+
+    .home-process.section-container{
+        padding-top: 36px;
+        padding-bottom: 36px;
+    }
+
+    .home-text10{
+        margin-right: 36px;
+    }
+
+    .home-top-part, .home-links-container{
+        flex-direction: column;
+        gap: 36px;
+    }
+
+    .section-container{
+        padding-top: 36px;
+        padding-bottom: 36px;
+    }
+
+    .button-primary{
+        padding: 18px 24px;
+    }
+
+    
+}
