@@ -1,0 +1,251 @@
+
+
+:root{
+    --color-text: #54546d;
+    --color-p: #65546f;
+    --color-btn: #9a5dc6;
+}
+
+
+
+body{
+    font-family: "Lato", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: "Montserrat", sans-serif;
+}
+
+header{
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    padding: 0 6rem;
+}
+
+header img{
+    height: 2.3rem;
+}
+
+header ul{
+    display: flex;
+    justify-content: space-between;
+    width: calc(max-content + 4rem);
+    gap: 8px;
+}
+
+header a{
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: small;
+    text-decoration: none;
+}
+
+main{
+    position: relative;
+}
+
+main #hero{
+    background-color: #54546d;
+    height: 300px;
+    text-align: center;
+}
+
+#hero img{
+    position: absolute;
+    transform: translate(-45%, 50px);
+}
+
+#hero .taxes{
+    color: white;
+    padding: 2rem;
+    font-weight: normal;
+    font-size: xx-large;
+}
+
+#hero .cards{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 0 3rem;
+}
+
+.cards .card{
+    border-radius: 0.5rem;
+    overflow: hidden;
+    height: 320px;
+    width: 400px;
+}
+
+.card .up-part{
+    background-color: white;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    /* padding-top: 1.5rem; */
+}
+
+.up-part *{
+    color: var(--color-text);
+}
+
+.up-part .subtitle{
+    font-weight: normal;
+}
+
+.up-part .btn{
+    padding: 12px 2rem;
+    margin: 3rem auto;
+    color: white;
+    background-color: var(--color-btn);
+    font-size: medium;
+    font-weight: bold;
+    border: none;
+    border-radius: 2rem;
+}
+
+.card .down-part{
+    height: 30%;
+    color: white;
+}
+
+
+
+.down-part *{
+    font-weight:normal;
+    margin: 4px;
+}
+
+.blue{
+    background: rgb(9,60,121);
+    background: linear-gradient(90deg, rgba(9,60,121,1) 0%, rgba(9,60,121,0.5550595238095238) 39%, rgba(9,60,121,0.13209033613445376) 100%);    
+}
+
+.purple{
+    background: rgb(92,9,121);
+    background: linear-gradient(90deg, rgba(92,9,121,1) 0%, rgba(92,9,121,0.5550595238095238) 39%, rgba(92,9,121,0.3841911764705882) 100%);
+}
+
+.down-part{
+    display: flex;
+    gap: 0px;
+    align-items: center;
+}
+
+.card .down-part.green{
+    background: rgb(9,121,14);
+    background: linear-gradient(90deg, rgba(9,121,14,1) 0%, rgba(9,121,14,0.835171568627451) 39%, rgba(9,121,14,0.3617822128851541) 100%);
+    padding-top: 1rem;
+    display: block;
+}
+
+.left-part{
+    flex-basis: 50%;
+    height: min-content;
+    border-right: 1px solid white;
+}
+
+.card .up-part .text{
+    font-size: 14px;
+    margin-bottom: 1rem;
+}
+
+.card .up-part:first-child .title{
+    margin-top: 2rem;
+}
+
+.content{
+    margin-top: 12rem;
+    padding: 1rem 10rem;
+}
+
+.content .title{
+    color: var(--color-p);
+    font-weight: normal;
+}
+
+.content .subtitle{
+    color: var(--color-p);
+}
+
+.table{
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.table .row{
+    padding-left: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    height: 3rem;
+    margin: 0;
+    background-color: lightgray;
+
+}
+
+.table .row .text{
+    color: var(--color-p);
+}
+
+.table .row i{
+    margin: 0px 3rem;
+}
+
+.fa-check{
+    color: green;
+    position: absolute;
+    right: 15rem;
+}
+
+.fa-check.left{
+    position: unset;
+}
+
+.fa-xmark{
+    color: red;
+}
+
+.table .row:nth-child(even){
+    background-color: rgb(235, 238, 241);
+}
+
+.last{
+    margin: 5rem auto;
+    padding: 0 4rem;
+}
+
+.last .title{
+    color: var(--color-p);
+    font-weight: normal;
+}
+
+.last .text{
+    margin: 1rem auto;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.last img{
+    float: right;
+    margin-left: 3rem;
+}
+
+footer{
+    background-color: #54546d;
+    padding: 26px 0;
+}
+
+footer p{
+    text-align: center;
+    margin: 0 auto;
+}

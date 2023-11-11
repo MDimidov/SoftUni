@@ -1,0 +1,139 @@
+@media (max-width: 600px){
+    
+    body{
+        max-width: 600px;
+    }
+
+    header{
+        background-size: cover;
+        max-width: 100vw;
+        
+    }
+
+    .div-logo, .div-header ul, 
+    .options article a,
+    .gallery article div,
+    .blog article img,
+    .blog .blog-title a,
+    .magazine .magazine-title a{
+        display: none;
+    }
+
+    h3{
+        font-size: 12px;
+    }
+
+    h1{
+        font-size: 24px;
+    }
+
+    .options{
+        flex-direction: column;
+        align-items: center;
+        padding-top: 0px;
+    }
+
+    header .options article{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .gallery{
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .gallery article{
+        width: 50vw;
+
+    }
+
+    main .gallery article p{
+        font-size: 14px;
+        padding-bottom: 0px;
+    }
+
+    main .gallery article img{
+        object-fit:contain;
+        width: 100%;
+        padding-bottom: 0px;
+    }
+
+    .blog{
+        width: 100vw;
+    }
+
+    .blog .blog-title{
+        padding-left: 10vw;   
+    }
+
+    .blog .blog-title h4{
+        font-size: 24px;
+    }
+
+    .blog #about-blog{
+        width: 90%;
+    }
+
+    .blog #about-blog p{
+        font-size: 12px;
+    }
+
+    .magazine .magazine-title{
+        padding-left: 20px ;
+    }
+
+    .magazine .magazine-title h4{
+        font-size: 24px;
+    }
+
+    .magazine article{
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+    }
+
+    img#magazine-img{
+        width: 70%;
+    }
+
+    main .magazine-info h2{
+        font-size: 18px;
+    }
+
+    main .magazine-info{
+        margin: 0;
+        text-align: center;
+    }
+
+    .magazine .magazine-info img{
+        width: 100%;
+        height: 179px;
+    }
+
+    .magazine .magazine-info h3{
+        font-size: large;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+
+    .magazine .magazine-info p{
+        font-size: small;
+    }
+
+    .magazine .magazine-info button{
+        font-size: 8px;
+    }
+
+    footer{
+        flex-direction: column;
+    }
+    
+    footer p{
+        font-size: 12px;
+        /* text-align: center; */
+    }
+
+}
