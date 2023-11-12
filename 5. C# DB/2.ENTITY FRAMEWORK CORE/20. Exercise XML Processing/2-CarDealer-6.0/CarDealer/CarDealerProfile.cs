@@ -10,5 +10,8 @@ public class CarDealerProfile : Profile
     {
         //Supplier
         CreateMap<ImportSupplierDto, Supplier>();
+
+        //Parts
+        CreateMap<ImportPartDto, Part>();
     }
 }

@@ -3,6 +3,7 @@ using CarDealer.Data;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using CarDealer.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System.Xml.Serialization;
 
 namespace CarDealer;
@@ -20,8 +21,12 @@ public class StartUp
 
         //2.	Import Data
         //Query 9. Import Suppliers
-        string inputXml = File.ReadAllText("../../../Datasets/suppliers.xml");
-        Console.WriteLine(ImportSuppliers(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/suppliers.xml");
+        //Console.WriteLine(ImportSuppliers(context, inputXml));
+
+        //Query 10. Import Parts
+        string inputXml = File.ReadAllText("../../../Datasets/parts.xml");
+        Console.WriteLine(ImportParts(context, inputXml));
     }
 
     //2.	Import Data
@@ -38,5 +43,33 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {suppliers.Length}";
+    }
+
+    //Query 10. Import Parts
+    public static string ImportParts(CarDealerContext context, string inputXml)
+    {
+        ImportPartDto[] partsDtos = new XmlHelper()
+            .Deserialize<ImportPartDto[]>(inputXml, "Parts");
+
+        int[] suppliers = context.Suppliers
+            .AsNoTracking()
+            .Select(s => s.Id)
+            .ToArray();
+
+        HashSet<Part> parts = new();
+
+        foreach(var partDto in partsDtos)
+        {
+            if(suppliers.Contains(partDto.SupplierId))
+            {
+                Part part = mapper.Map<Part>(partDto);
+                parts.Add(part);
+            }
+        }
+
+        context.Parts.AddRange(parts);
+        context.SaveChanges();
+
+        return $"Successfully imported {parts.Count}";
     }
 }
