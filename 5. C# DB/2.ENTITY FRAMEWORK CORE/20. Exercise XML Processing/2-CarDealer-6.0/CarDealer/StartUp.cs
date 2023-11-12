@@ -49,7 +49,11 @@ public class StartUp
         //Console.WriteLine(GetCarsWithDistance(context));
 
         //Query 15. Export Cars from Make BMW
-        Console.WriteLine(GetCarsFromMakeBmw(context));
+        //Console.WriteLine(GetCarsFromMakeBmw(context));
+
+        //Query 16. Export Local Suppliers
+        Console.WriteLine(GetLocalSuppliers(context));
+
 
     }
 
@@ -208,5 +212,19 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(BMWcars, "cars");
+    }
+
+    //Query 16. Export Local Suppliers
+    public static string GetLocalSuppliers(CarDealerContext context)
+    {
+        var localSuppliers = context
+            .Suppliers
+            .AsNoTracking()
+            .Where(s => s.IsImporter == false)
+            .ProjectTo<ExportSupplierDto>(mapper.ConfigurationProvider)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(localSuppliers, "suppliers");
     }
 }
