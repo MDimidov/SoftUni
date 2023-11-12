@@ -58,9 +58,10 @@ public class StartUp
         //Console.WriteLine(GetCarsWithTheirListOfParts(context));
 
         //Query 18. Export Total Sales by Customer
-        Console.WriteLine(GetTotalSalesByCustomer(context));
+        //Console.WriteLine(GetTotalSalesByCustomer(context));
 
-
+        //Query 19. Export Sales with Applied Discount
+        Console.WriteLine(GetSalesWithAppliedDiscount(context));
     }
 
     //2.	Import Data
@@ -268,5 +269,29 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(customers, "customers");
+    }
+
+    //Query 19. Export Sales with Applied Discount
+    public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+    {
+        var sales = context.Sales
+            .AsNoTracking()
+            .Select(s => new ExportSaleDto()
+            {
+                Car = new ExportCarAttributeDto()
+                {
+                    Make = s.Car.Make,
+                    Model = s.Car.Model,
+                    TraveledDistance = s.Car.TraveledDistance
+                },
+                Discount = s.Discount,
+                CustomerName = s.Customer.Name,
+                Price = s.Car.PartsCars.Sum(pc => pc.Part.Price)
+            })
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(sales, "sales");
+
     }
 }
