@@ -55,7 +55,10 @@ public class StartUp
         //Console.WriteLine(GetLocalSuppliers(context));
 
         //Query 17. Export Cars with Their List of Parts
-        Console.WriteLine(GetCarsWithTheirListOfParts(context));
+        //Console.WriteLine(GetCarsWithTheirListOfParts(context));
+
+        //Query 18. Export Total Sales by Customer
+        Console.WriteLine(GetTotalSalesByCustomer(context));
 
 
     }
@@ -246,4 +249,24 @@ public class StartUp
             .Serialize(carsWithParts, "cars");
     }
 
+    //Query 18. Export Total Sales by Customer
+    public static string GetTotalSalesByCustomer(CarDealerContext context)
+    {
+        var customers = context.Customers
+            .AsNoTracking()
+            .Where(c => c.Sales.Any())
+            .Select(c => new ExportCustomerDto()
+            {
+                Name = c.Name,
+                BoughtCars = c.Sales.Count,
+                SpentMoney = c.Sales
+                    .SelectMany(s => s.Car.PartsCars)
+                        .Sum(pc => pc.Part.Price)
+            })
+            .OrderByDescending(c => c.SpentMoney)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(customers, "customers");
+    }
 }

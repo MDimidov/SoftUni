@@ -38,6 +38,9 @@ public class CarDealerProfile : Profile
             .ForMember(d => d.BirthDate, opt =>
                 opt.MapFrom(s => DateTime.Parse(s.BirthDate, CultureInfo.InvariantCulture)));
 
+        CreateMap<Customer, ExportCustomerDto>()
+            .ForMember(d => d.BoughtCars, opt =>
+                opt.MapFrom(s => s.Sales.Any()));
         //Sale
         CreateMap<ImportSaleDto, Sale>();
     }
