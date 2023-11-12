@@ -49,7 +49,11 @@ public class StartUp
         //Console.WriteLine(GetSoldProducts(context));
 
         //Query 7. Export Categories By Products Count
-        Console.WriteLine(GetCategoriesByProductsCount(context));
+        //Console.WriteLine(GetCategoriesByProductsCount(context));
+
+        //Query 8. Export Users and Products
+        Console.WriteLine(GetUsersWithProducts(context));
+
 
     }
 
@@ -158,5 +162,45 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(categories, "Categories");
+    }
+
+    //Query 8. Export Users and Products
+    public static string GetUsersWithProducts(ProductShopContext context)
+    {
+        ExportUserWithProductsDto[] users = context
+            .Users
+            .AsNoTracking()
+            .Where(u => u.ProductsSold.Any())
+            .OrderByDescending(u => u.ProductsSold.Count)
+            .Select(u => new ExportUserWithProductsDto()
+            {
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Age = u.Age,
+                soldProducts = new ExportSoldProductsWithCount()
+                {
+                    Count = u.ProductsSold.Count,
+                    Products = u.ProductsSold
+                        .Select(p => new ExportProductNamePriceDto()
+                        {
+                            Name = p.Name,
+                            Price = p.Price
+                        })
+                        .OrderByDescending(p => p.Price)
+                        .ToArray()
+                }
+            })
+            .ToArray();
+
+        ExportUsersWithCountDto resultDto = new()
+        {
+            Count = users.Length,
+            Users = users
+                .Take(10)
+                .ToArray()
+        };
+
+        return new XmlHelper()
+            .Serialize(resultDto, "Users");
     }
 }
