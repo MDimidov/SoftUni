@@ -1,4 +1,7 @@
-﻿using CarDealer.DTOs.Import;
+﻿using CarDealer.DTOs.Export;
+using CarDealer.DTOs.Import;
+using CarDealer.Models;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace CarDealer.Utilities;
@@ -15,5 +18,29 @@ public class XmlHelper
 
         return (T)serializer
             .Deserialize(reader)!;
+    }
+
+    public string Serialize<T>(T obj, string rootName)
+    {
+        StringBuilder sb = new();
+
+        XmlRootAttribute xmlRoot = 
+            new(rootName);
+
+        XmlSerializerNamespaces xmlNamespace = 
+            new();
+        xmlNamespace
+            .Add(string.Empty, string.Empty);
+
+        StringWriter writer =
+            new(sb);
+
+        XmlSerializer serializer = 
+            new(typeof(T), xmlRoot);
+
+        serializer
+            .Serialize(writer, obj, xmlNamespace);
+
+        return sb.ToString().TrimEnd();
     }
 }

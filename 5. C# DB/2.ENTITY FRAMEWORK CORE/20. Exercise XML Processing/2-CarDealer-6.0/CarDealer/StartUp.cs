@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CarDealer.Data;
+using CarDealer.DTOs.Export;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using CarDealer.Utilities;
 using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace CarDealer;
@@ -38,8 +41,12 @@ public class StartUp
         //Console.WriteLine(ImportCustomers(context, inputXml));
 
         //Query 13. Import Sales
-        string inputXml = File.ReadAllText("../../../Datasets/sales.xml");
-        Console.WriteLine(ImportSales(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/sales.xml");
+        //Console.WriteLine(ImportSales(context, inputXml));
+
+        //3.	Query and Export Data
+        //Query 14. Export Cars With Distance
+        Console.WriteLine(GetCarsWithDistance(context));
 
     }
 
@@ -165,5 +172,23 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {sales.Count}";
+    }
+
+    //3.	Query and Export Data
+    //Query 14. Export Cars With Distance
+    public static string GetCarsWithDistance(CarDealerContext context)
+    {
+        ExportCarDto[] cars = context.Cars
+            .AsNoTracking()
+            .Where(c => c.TraveledDistance > 2_000_000)
+            .OrderBy(c => c.Make)
+            .ThenBy(c => c.Model)
+            .Take(10)
+            .ProjectTo<ExportCarDto>(mapper.ConfigurationProvider)
+            .ToArray();
+
+
+        return new XmlHelper()
+            .Serialize(cars, "cars");
     }
 }

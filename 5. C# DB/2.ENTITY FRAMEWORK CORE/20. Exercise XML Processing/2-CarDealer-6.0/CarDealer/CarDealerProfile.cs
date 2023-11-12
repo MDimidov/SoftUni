@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CarDealer.DTOs.Export;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using System.Globalization;
@@ -18,6 +19,8 @@ public class CarDealerProfile : Profile
         //Cars
         CreateMap<ImportCarDto, Car>()
             .IgnoreAllPropertiesWithAnInaccessibleSetter();
+
+        CreateMap<Car, ExportCarDto>();
 
         //Customer
         CreateMap<ImportCustomerDto, Customer>()
