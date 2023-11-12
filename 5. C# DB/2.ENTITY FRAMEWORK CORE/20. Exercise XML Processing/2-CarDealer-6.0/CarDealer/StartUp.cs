@@ -46,7 +46,10 @@ public class StartUp
 
         //3.	Query and Export Data
         //Query 14. Export Cars With Distance
-        Console.WriteLine(GetCarsWithDistance(context));
+        //Console.WriteLine(GetCarsWithDistance(context));
+
+        //Query 15. Export Cars from Make BMW
+        Console.WriteLine(GetCarsFromMakeBmw(context));
 
     }
 
@@ -190,5 +193,20 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(cars, "cars");
+    }
+
+    //Query 15. Export Cars from Make BMW
+    public static string GetCarsFromMakeBmw(CarDealerContext context)
+    {
+        var BMWcars = context.Cars
+            .AsNoTracking()
+            .Where(c => c.Make.ToUpper() == "BMW")
+            .OrderBy(c => c.Model)
+            .ThenByDescending(c => c.TraveledDistance)
+            .ProjectTo<ExportBMWCarDto>(mapper.ConfigurationProvider)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(BMWcars, "cars");
     }
 }

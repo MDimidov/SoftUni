@@ -21,6 +21,7 @@ public class CarDealerProfile : Profile
             .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         CreateMap<Car, ExportCarDto>();
+        CreateMap<Car, ExportBMWCarDto>();
 
         //Customer
         CreateMap<ImportCustomerDto, Customer>()
