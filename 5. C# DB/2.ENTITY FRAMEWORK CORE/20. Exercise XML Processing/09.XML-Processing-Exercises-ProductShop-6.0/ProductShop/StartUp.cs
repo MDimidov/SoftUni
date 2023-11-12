@@ -46,7 +46,10 @@ public class StartUp
         //Console.WriteLine(GetProductsInRange(context));
 
         //Query 6. Export Sold Products
-        Console.WriteLine(GetSoldProducts(context));
+        //Console.WriteLine(GetSoldProducts(context));
+
+        //Query 7. Export Categories By Products Count
+        Console.WriteLine(GetCategoriesByProductsCount(context));
 
     }
 
@@ -140,5 +143,20 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(soldProducts, "Users");
+    }
+
+    //Query 7. Export Categories By Products Count
+    public static string GetCategoriesByProductsCount(ProductShopContext context)
+    {
+        var categories = context
+            .Categories
+            .AsNoTracking()
+            .ProjectTo<ExportCategoryDto>(mapper.ConfigurationProvider)
+            .OrderByDescending(c => c.Count)
+            .ThenBy(c => c.TotalRevenue)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(categories, "Categories");
     }
 }

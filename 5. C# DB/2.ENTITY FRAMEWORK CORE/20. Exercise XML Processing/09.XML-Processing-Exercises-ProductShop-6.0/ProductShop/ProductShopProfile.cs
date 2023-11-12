@@ -23,6 +23,15 @@ public class ProductShopProfile : Profile
 
         // Categories
         CreateMap<ImportCategoryDto, Category>();
+        CreateMap<Category, ExportCategoryDto>()
+            .ForMember(d => d.AveragePrice, opt =>
+                        opt.MapFrom(s => s.CategoryProducts
+                                    .Average(cp => cp.Product.Price)))
+            .ForMember(d => d.TotalRevenue, opt =>
+                        opt.MapFrom(s => s.CategoryProducts
+                                    .Sum(cp => cp.Product.Price)))
+            .ForMember(d => d.Count, opt =>
+                        opt.MapFrom(s => s.CategoryProducts.Count));
 
         // CategoryProduct
         CreateMap<ImportCategoryProductDto, CategoryProduct>();
