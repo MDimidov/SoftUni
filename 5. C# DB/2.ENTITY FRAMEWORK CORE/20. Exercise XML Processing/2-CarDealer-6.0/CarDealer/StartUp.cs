@@ -3,6 +3,7 @@ using CarDealer.Data;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using CarDealer.Utilities;
+using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Serialization;
 
@@ -29,8 +30,13 @@ public class StartUp
         //Console.WriteLine(ImportParts(context, inputXml));
 
         //Query 11. Import Cars
-        string inputXml = File.ReadAllText("../../../Datasets/cars.xml");
-        Console.WriteLine(ImportCars(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/cars.xml");
+        //Console.WriteLine(ImportCars(context, inputXml));
+
+        //Query 12. Import Customers
+        string inputXml = File.ReadAllText("../../../Datasets/customers.xml");
+        Console.WriteLine(ImportCustomers(context, inputXml));
+
     }
 
     //2.	Import Data
@@ -114,5 +120,19 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {cars.Count}";
+    }
+
+    //Query 12. Import Customers
+    public static string ImportCustomers(CarDealerContext context, string inputXml)
+    {
+        ImportCustomerDto[] customerDtos = new XmlHelper()
+            .Deserialize<ImportCustomerDto[]>(inputXml, "Customers");
+
+        Customer[] customers = mapper.Map<Customer[]>(customerDtos);
+
+        context.Customers.AddRange(customers);
+        context.SaveChanges();
+
+        return $"Successfully imported {customers.Length}";
     }
 }

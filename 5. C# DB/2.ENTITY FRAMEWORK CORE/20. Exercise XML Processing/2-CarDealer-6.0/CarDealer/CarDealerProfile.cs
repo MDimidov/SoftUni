@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
+using System.Globalization;
 
 namespace CarDealer;
 
@@ -18,5 +19,9 @@ public class CarDealerProfile : Profile
         CreateMap<ImportCarDto, Car>()
             .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
+        //Customer
+        CreateMap<ImportCustomerDto, Customer>()
+            .ForMember(d => d.BirthDate, opt =>
+                opt.MapFrom(s => DateTime.Parse(s.BirthDate, CultureInfo.InvariantCulture)));
     }
 }
