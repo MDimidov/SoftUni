@@ -11,12 +11,15 @@ public class ProductShopProfile : Profile
     {
         // User
         CreateMap<ImportUserDto, User>();
+        CreateMap<User, ExportUserDto>()
+            .IgnoreAllPropertiesWithAnInaccessibleSetter();
 
         // Product
         CreateMap<ImportProductDto, Product>();
         CreateMap<Product, ExportProductDto>()
             .ForMember(d => d.BuyerName, 
                         opt => opt.MapFrom( s => $"{s.Buyer.FirstName} {s.Buyer.LastName}"));
+        CreateMap<Product, ExportProductNamePriceDto>();
 
         // Categories
         CreateMap<ImportCategoryDto, Category>();

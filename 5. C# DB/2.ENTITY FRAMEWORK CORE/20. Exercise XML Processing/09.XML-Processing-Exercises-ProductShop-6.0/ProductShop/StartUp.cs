@@ -43,7 +43,11 @@ public class StartUp
 
         //3.	Query and Export Data
         //Query 5. Export Products In Range
-        Console.WriteLine(GetProductsInRange(context));
+        //Console.WriteLine(GetProductsInRange(context));
+
+        //Query 6. Export Sold Products
+        Console.WriteLine(GetSoldProducts(context));
+
     }
 
     // 2.Import Data
@@ -119,5 +123,22 @@ public class StartUp
 
         return new XmlHelper()
             .Serialize(products, "Products");
+    }
+
+    //Query 6. Export Sold Products
+    public static string GetSoldProducts(ProductShopContext context)
+    {
+        var soldProducts = context
+            .Users
+            .AsNoTracking()
+            .Where(u => u.ProductsSold.Any())
+            .OrderBy(u => u.LastName)
+            .ThenBy(u => u.FirstName)
+            .Take(5)
+            .ProjectTo<ExportUserDto>(mapper.ConfigurationProvider)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(soldProducts, "Users");
     }
 }
