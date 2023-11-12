@@ -13,5 +13,10 @@ public class CarDealerProfile : Profile
 
         //Parts
         CreateMap<ImportPartDto, Part>();
+
+        //Cars
+        CreateMap<ImportCarDto, Car>()
+            .IgnoreAllPropertiesWithAnInaccessibleSetter();
+
     }
 }
