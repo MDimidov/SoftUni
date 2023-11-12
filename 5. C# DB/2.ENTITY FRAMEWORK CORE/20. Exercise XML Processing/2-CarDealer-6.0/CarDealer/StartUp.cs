@@ -34,8 +34,12 @@ public class StartUp
         //Console.WriteLine(ImportCars(context, inputXml));
 
         //Query 12. Import Customers
-        string inputXml = File.ReadAllText("../../../Datasets/customers.xml");
-        Console.WriteLine(ImportCustomers(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/customers.xml");
+        //Console.WriteLine(ImportCustomers(context, inputXml));
+
+        //Query 13. Import Sales
+        string inputXml = File.ReadAllText("../../../Datasets/sales.xml");
+        Console.WriteLine(ImportSales(context, inputXml));
 
     }
 
@@ -134,5 +138,32 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {customers.Length}";
+    }
+
+    //Query 13. Import Sales
+    public static string ImportSales(CarDealerContext context, string inputXml)
+    {
+        ImportSaleDto[] saleDtos = new XmlHelper()
+            .Deserialize<ImportSaleDto[]>(inputXml, "Sales");
+
+        HashSet<Sale> sales = new();
+        int[] carIds = context.Cars
+            .AsNoTracking()
+            .Select(c => c.Id)
+            .ToArray(); 
+
+        foreach(ImportSaleDto saleDto in saleDtos)
+        {
+            if(carIds.Contains(saleDto.CarId))
+            {
+                Sale sale = mapper.Map<Sale>(saleDto);
+                sales.Add(sale);
+            }
+        }
+
+        context.Sales.AddRange(sales);
+        context.SaveChanges();
+
+        return $"Successfully imported {sales.Count}";
     }
 }

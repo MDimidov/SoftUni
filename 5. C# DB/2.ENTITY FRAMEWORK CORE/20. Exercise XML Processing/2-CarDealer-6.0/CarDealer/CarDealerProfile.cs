@@ -23,5 +23,8 @@ public class CarDealerProfile : Profile
         CreateMap<ImportCustomerDto, Customer>()
             .ForMember(d => d.BirthDate, opt =>
                 opt.MapFrom(s => DateTime.Parse(s.BirthDate, CultureInfo.InvariantCulture)));
+
+        //Sale
+        CreateMap<ImportSaleDto, Sale>();
     }
 }
