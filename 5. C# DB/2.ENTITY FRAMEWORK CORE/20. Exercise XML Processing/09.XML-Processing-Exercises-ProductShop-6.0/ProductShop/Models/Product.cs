@@ -24,7 +24,7 @@ public class Product
 
     [ForeignKey(nameof(User))]
     public int? BuyerId { get; set; }
-    public virtual User? Buyer { get; set; } = null!;
+    public virtual User? Buyer { get; set; }
 
     public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
 }

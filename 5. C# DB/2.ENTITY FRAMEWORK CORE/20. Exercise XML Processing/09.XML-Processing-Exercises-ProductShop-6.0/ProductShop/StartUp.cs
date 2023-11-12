@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using ProductShop.Data;
+using ProductShop.DTOs.Export;
 using ProductShop.DTOs.Import;
 using ProductShop.Models;
 using ProductShop.Utilities;
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -34,8 +38,12 @@ public class StartUp
         //Console.WriteLine(ImportCategories(context, inputXml));
 
         //Query 4. Import Categories and Products
-        string inputXml = File.ReadAllText("../../../Datasets/categories-products.xml");
-        Console.WriteLine(ImportCategoryProducts(context, inputXml));
+        //string inputXml = File.ReadAllText("../../../Datasets/categories-products.xml");
+        //Console.WriteLine(ImportCategoryProducts(context, inputXml));
+
+        //3.	Query and Export Data
+        //Query 5. Export Products In Range
+        Console.WriteLine(GetProductsInRange(context));
     }
 
     // 2.Import Data
@@ -94,5 +102,22 @@ public class StartUp
         context.SaveChanges();
 
         return $"Successfully imported {categoryProducts.Length}";
+    }
+
+    //3.	Query and Export Data
+    //Query 5. Export Products In Range
+    public static string GetProductsInRange(ProductShopContext context)
+    {
+        ExportProductDto[] products = context
+            .Products
+            .AsNoTracking()
+            .Where(p => p.Price >= 500 && p.Price <= 1000)
+            .OrderBy(p => p.Price)
+            .Take(10)
+            .ProjectTo<ExportProductDto>(mapper.ConfigurationProvider)
+            .ToArray();
+
+        return new XmlHelper()
+            .Serialize(products, "Products");
     }
 }
