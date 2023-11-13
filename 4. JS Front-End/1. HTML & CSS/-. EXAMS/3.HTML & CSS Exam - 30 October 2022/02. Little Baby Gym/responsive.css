@@ -1,0 +1,93 @@
+@media screen and (max-width: 600px){
+    .site-navigation,
+    .site-information-image{
+        display: none;
+    }
+
+    .site-main{
+        margin: 0;
+    }
+
+    .entry-header {
+    background:
+      url("./images/header-image.jpg") center center;
+  }
+
+    .entry-header-description{
+        left: 90px;
+        font-size: 24px;
+    }
+
+    .button-primary{
+        max-width: 120px;
+    }
+
+    .entry-header{
+        border-radius: 0;
+    }
+
+    .site-logos .site-logos-container{
+        min-width: 50px;
+    }
+
+    .site-logos-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .site-logo{
+        width: min-content;
+        margin: auto;
+    }
+
+    .site-information{
+        justify-content: center;
+        text-align: center;
+    }
+
+    .entry-description{
+        margin: auto;
+        width: 100%;
+    }
+
+    .entry-subtitle{
+        font-size: 1.5rem;
+    }
+
+    .site-form{
+        margin-top: 0;
+    }
+
+    .entry-title{
+        font-size: xx-small;
+    }
+
+    .site-form form p{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .site-form button{
+        margin: auto;
+    }
+
+    .site-blog-container{
+        margin-top: 0;
+    }
+
+    .site-blog .site-blog-container .entry-title{
+       font-size: xx-large; 
+    }
+
+    .site-posts{
+        flex-direction: column;
+        max-width: 60vw;
+        align-items: center;
+        margin: auto;
+    }
+
+    .site-footer{
+        flex-direction: column;
+        align-items: center;
+    }
+}

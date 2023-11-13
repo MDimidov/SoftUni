@@ -1,0 +1,154 @@
+
+
+:root{
+    --color-red: #d01919;
+    --grey-bg: #efefef;
+}
+
+
+
+body{
+    font-family: "PT Sans", sans-serif;
+}
+
+header{
+    background-color: var(--color-red);
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 3rem;
+}
+
+header *{
+    color: white;
+}
+
+header i{
+    margin-right: 4px;
+}
+
+#hero{
+    background: url(image/fitness-main.jpg) center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#hero *{
+    color: white;
+}
+
+#hero ul{
+    margin-right: auto;
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    right: 3rem;
+}
+
+#hero ul li{
+    margin-left: 3rem;
+    
+}
+
+#hero .title{
+    font-size: xx-large;
+    letter-spacing: 4px;
+}
+
+#hero .subtitle{
+    margin: 1.5rem auto;
+}
+
+#hero div{
+    font-size: medium;
+    width: 500px;
+}
+
+.btn{
+    background-color: var(--color-red);
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    padding: 4px 12px;
+    margin-top: 1.5;
+}
+
+.white-sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: center;
+    height: 500px;
+}
+
+.horizontal-line{
+    width: 50px;
+    height: 4px;
+    background-color: var(--color-red);
+    margin: 1rem auto;
+}
+
+.title.second{
+    margin: auto;
+    font-size: xx-large;
+    margin: 2rem auto;
+}
+
+.cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    max-width: 300px;
+}
+.card img{
+    height: 60px;
+}
+
+.card .red{
+    font-size: medium;
+    margin: 1rem auto;
+    color: var(--color-red);
+}
+
+.grey{
+    background-color: var(--grey-bg);
+}
+
+.grey img{
+    height: 150px;
+    border-radius: 4px;
+}
+
+.red.black{
+    color: black;
+    margin-bottom: 0;
+}
+
+.red.small{
+    font-size: small;
+    margin-top: 8px;
+}
+
+footer{
+    background-color: var(--color-red);
+    padding: 4px 0;
+}
+
+footer p{
+    margin: auto;
+    text-align: center;
+}
