@@ -1,0 +1,57 @@
+@media only screen and (max-width: 800px){
+    nav, nav ul{
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    nav p{
+        margin: 1rem auto;
+    }
+
+    header div{
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)), url("image/dancing-girl.jpg") no-repeat center center;
+        background-size: cover;
+    }
+
+    .trainings{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .trainings div{
+        width: 60%;
+    }
+
+    .instructors-pic{
+        flex-direction: column;
+        align-content: center;
+        /* gap: 2rem; */
+    }
+
+    .classes li{
+        width: 45%;
+    }
+
+    .getInTouch{
+        display: block;
+    }
+
+    .form{
+        width: 90%;
+        margin: auto;
+    }
+
+    .map{
+        margin-bottom: 1rem;
+    }
+
+    .site-footer .wrapper{
+        flex-wrap: wrap;
+    }
+    .site-footer .about{
+        flex-basis: 100%;
+    }
+}
