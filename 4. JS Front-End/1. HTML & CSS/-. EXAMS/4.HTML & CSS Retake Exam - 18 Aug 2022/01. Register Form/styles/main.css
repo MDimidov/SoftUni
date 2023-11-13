@@ -1,0 +1,83 @@
+/* 
+
+:root{
+    
+} */
+
+
+body{
+    font-family: "Mulish", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    background: url(images/background.jpg) center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.card{
+    width: 60%;
+    max-height: 80vh;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 16px 8px 1rem 2px grey;
+    background: url(images/form-background.png) center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.portSide{
+    max-width: 50%;
+    margin: 6% 0 10% 2rem;
+}
+
+.title{
+margin-bottom: 1rem;
+text-align: center;
+font-weight: 500;
+}
+
+form div{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.names, .check{
+    flex-direction: row;
+}
+
+label{
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+    color: gray;
+    vertical-align: top;
+    line-height: 1;
+    font-size: small;
+}
+
+input{
+    border: 1px solid lightgray;
+    border-radius: 2rem;
+    height: 2.5rem;
+    background-color: transparent;
+}
+
+.names input{
+    width: 90%;
+}
+
+.lastName > label, .lastName input{
+    margin-left: 10%;
+}
+
+.btn{
+    border-radius: 1rem;
+    padding: 8px 20px;
+    border: none;
+    color: white;
+    background-color: brown;
+    margin: auto;
+}
