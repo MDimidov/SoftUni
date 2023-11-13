@@ -1,0 +1,65 @@
+/* 
+
+:root{
+    
+} */
+
+
+body{
+    font-family: "Courgette", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    background-color: lightgray;
+}
+
+.titles{
+    width: max-content;
+    margin: auto;
+}
+
+.titles h1{
+    margin-bottom: 0;
+}
+
+.titles h2{
+    text-align: right;
+    color: brown;
+}
+
+.hotels{
+    width: 80vw;
+    height: 65vh;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card{
+    width: 30%;
+    height: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.card__img{
+    object-fit: cover;
+}
+
+.card__info{
+    padding: 4%;
+    text-align: center;
+    background-color: white;
+}
+
+.card__info h3{
+    border-bottom: 1px solid brown;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card__info p{
+    margin: 1rem;
+}
+
