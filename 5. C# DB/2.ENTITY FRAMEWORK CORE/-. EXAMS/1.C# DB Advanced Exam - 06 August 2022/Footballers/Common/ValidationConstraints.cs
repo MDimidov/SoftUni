@@ -1,6 +1,6 @@
 ﻿namespace Footballers.Common;
 
-public static class ValidationConstaints
+public static class ValidationConstraints
 {
     //Footballer
     public const int FootballerNameMinLength = 2;

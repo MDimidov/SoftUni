@@ -13,9 +13,10 @@ public class Coach
     [Key]
     public int Id { get; set; }
 
-    [MaxLength(ValidationConstaints.CooachNameMaxLength)]
+    [MaxLength(ValidationConstraints.CooachNameMaxLength)]
     public string Name { get; set; } = null!;
 
+    [Required]
     public string Nationality { get; set; } = null!;
 
     public virtual ICollection<Footballer> Footballers { get; set; }

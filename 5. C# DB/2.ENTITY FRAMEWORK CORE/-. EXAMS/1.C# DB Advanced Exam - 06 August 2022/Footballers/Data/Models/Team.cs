@@ -13,11 +13,11 @@ public class Team
     [Key]
     public int Id { get; set; }
 
-    [MaxLength(ValidationConstaints.TeamNameMaxLength)]
+    [MaxLength(ValidationConstraints.TeamNameMaxLength)]
 
     public string Name { get; set; } = null!;
 
-    [MaxLength(ValidationConstaints.TeamNationalityMaxLength)]
+    [MaxLength(ValidationConstraints.TeamNationalityMaxLength)]
     public string Nationality { get; set; } = null!;
 
     public int Trophies { get; set; }

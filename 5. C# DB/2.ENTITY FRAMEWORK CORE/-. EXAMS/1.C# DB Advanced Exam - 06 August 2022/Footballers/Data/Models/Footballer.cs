@@ -15,7 +15,7 @@ public class Footballer
     [Key]
     public int Id { get; set; }
 
-    [MaxLength(ValidationConstaints.FootballerNameMaxLength)]
+    [MaxLength(ValidationConstraints.FootballerNameMaxLength)]
     public string Name { get; set; } = null!;
 
     public DateTime ContractStartDate { get; set; }
