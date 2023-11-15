@@ -1,7 +1,6 @@
-﻿namespace Trucks.Data
+﻿namespace Trucks.Data;
+
+public static class Configuration
 {
-    public static class Configuration
-    {
-        public static string ConnectionString = @".;Database=Trucks;Trusted_Connection=True";
-    }
+    public static string ConnectionString = @"Server=.\SQLEXPRESS;Database=Trucks;Trusted_Connection=True";
 }
