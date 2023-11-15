@@ -173,8 +173,8 @@
                 sb.AppendLine(string.Format(SuccessfullyImportedTeam, team.Name, team.TeamsFootballers.Count));
             }
 
-            //context.Teams.AddRange(validTeams);
-            //context.SaveChanges();
+            context.Teams.AddRange(validTeams);
+            context.SaveChanges();
 
             return sb.ToString().TrimEnd();
         }
