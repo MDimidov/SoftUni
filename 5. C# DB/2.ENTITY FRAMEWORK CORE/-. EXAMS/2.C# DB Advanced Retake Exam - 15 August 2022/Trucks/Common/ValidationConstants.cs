@@ -5,7 +5,7 @@ public static class ValidationConstants
     //Truck
     public const int TruckRegistrationNumberLength = 8;
     public const string TruckRegistrationNumberRegex = @"[A-Z]{2}\d{4}[A-Z]{2}";
-    public const int TruckVinNumber = 17;
+    public const int TruckVinNumberLength = 17;
     public const int TruckTankCapacityMinRange = 950;
     public const int TruckTankCapacityMaxRange = 1420;
     public const int TruckCargoCapacityMinRange = 5000;

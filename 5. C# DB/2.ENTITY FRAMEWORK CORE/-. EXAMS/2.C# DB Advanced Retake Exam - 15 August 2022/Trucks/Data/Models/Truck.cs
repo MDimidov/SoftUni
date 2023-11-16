@@ -16,9 +16,9 @@ public class Truck
     public int Id { get; set; }
 
     [StringLength(ValidationConstants.TruckRegistrationNumberLength)]
-    public string? RegistrationNumber { get; set; } //= null!;
+    public string RegistrationNumber { get; set; } = null!;
 
-    [StringLength(ValidationConstants.TruckVinNumber)]
+    [StringLength(ValidationConstants.TruckVinNumberLength)]
     public string VinNumber { get; set; } = null!;
 
     [Range(ValidationConstants.TruckTankCapacityMinRange, ValidationConstants.TruckTankCapacityMaxRange)]
