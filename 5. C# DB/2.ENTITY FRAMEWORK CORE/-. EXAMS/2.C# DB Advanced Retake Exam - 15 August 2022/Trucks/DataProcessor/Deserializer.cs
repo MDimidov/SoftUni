@@ -50,7 +50,9 @@
                 {
                     if (!IsValid(truckDto)
                         || string.IsNullOrEmpty(truckDto.VinNumber)
-                        || string.IsNullOrEmpty(truckDto.RegistrationNumber))
+                        || string.IsNullOrEmpty(truckDto.RegistrationNumber)
+                        || truckDto.TankCapacity == 0
+                        || truckDto.CargoCapacity == 0)
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
