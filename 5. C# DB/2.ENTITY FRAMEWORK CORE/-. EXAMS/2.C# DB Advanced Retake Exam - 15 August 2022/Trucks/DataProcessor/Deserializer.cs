@@ -32,9 +32,7 @@
 
             foreach (var despatcherDto in despatcherDtos)
             {
-                if (!IsValid(despatcherDto)
-                    || string.IsNullOrEmpty(despatcherDto.Name)
-                    || string.IsNullOrEmpty(despatcherDto.Position))
+                if (!IsValid(despatcherDto))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
@@ -48,11 +46,7 @@
 
                 foreach (var truckDto in despatcherDto.Trucks)
                 {
-                    if (!IsValid(truckDto)
-                        || string.IsNullOrEmpty(truckDto.VinNumber)
-                        || string.IsNullOrEmpty(truckDto.RegistrationNumber)
-                        || truckDto.TankCapacity == 0
-                        || truckDto.CargoCapacity == 0)
+                    if (!IsValid(truckDto))
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
@@ -70,7 +64,7 @@
                 }
 
                 despatchers.Add(despatcher);
-                sb.AppendLine($"Successfully imported despatcher – {despatcher.Name} with {despatcher.Trucks.Count} trucks.");
+                sb.AppendLine(String.Format(SuccessfullyImportedDespatcher, despatcher.Name, despatcher.Trucks.Count));
             }
 
             context.Despatchers.AddRange(despatchers);
@@ -127,7 +121,7 @@
                 }
 
                 clients.Add(client);
-                sb.AppendLine($"Successfully imported client - {client.Name} with {client.ClientsTrucks.Count} trucks.");
+                sb.AppendLine(string.Format(SuccessfullyImportedClient, client.Name, client.ClientsTrucks.Count));
             }
 
             context.Clients.AddRange(clients);

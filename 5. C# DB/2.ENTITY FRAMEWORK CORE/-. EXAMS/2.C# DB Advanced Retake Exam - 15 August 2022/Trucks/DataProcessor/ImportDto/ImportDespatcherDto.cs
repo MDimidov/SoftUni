@@ -11,13 +11,13 @@ public class ImportDespatcherDto
     [XmlElement("Name")]
     [MinLength(ValidationConstants.DespatcherNameMinLength)]
     [MaxLength(ValidationConstants.DespatcherNameMaxLength)]
-    [DisallowNull]
-    public string Name { get; set; }// = null!;
+    [Required]
+    public string Name { get; set; } = null!;
 
     [XmlElement("Position")]
-    [DisallowNull]
-    public string Position { get; set; }
+    [Required]
+    public string? Position { get; set; }
 
     [XmlArray("Trucks")]
-    public ImportTruckDto[] Trucks { get; set; }
+    public ImportTruckDto[] Trucks { get; set; } = null!;
 }

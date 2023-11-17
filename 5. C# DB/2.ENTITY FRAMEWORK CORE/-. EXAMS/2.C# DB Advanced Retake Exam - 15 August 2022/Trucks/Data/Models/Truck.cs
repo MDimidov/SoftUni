@@ -15,17 +15,16 @@ public class Truck
     [Key]
     public int Id { get; set; }
 
-    [StringLength(ValidationConstants.TruckRegistrationNumberLength)]
-    public string RegistrationNumber { get; set; } = null!;
+    [MaxLength(ValidationConstants.TruckRegistrationNumberLength)]
+    public string? RegistrationNumber { get; set; }
 
-    [StringLength(ValidationConstants.TruckVinNumberLength)]
+    [Required]
+    [MaxLength(ValidationConstants.TruckVinNumberLength)]
     public string VinNumber { get; set; } = null!;
 
-    [Range(ValidationConstants.TruckTankCapacityMinRange, ValidationConstants.TruckTankCapacityMaxRange)]
-    public int? TankCapacity { get; set; }
+    public int TankCapacity { get; set; }
 
-    [Range(ValidationConstants.TruckCargoCapacityMinRange, ValidationConstants.TruckCargoCapacityMaxRange)]
-    public int? CargoCapacity { get; set; }
+    public int CargoCapacity { get; set; }
 
     public CategoryType CategoryType { get; set; }
 

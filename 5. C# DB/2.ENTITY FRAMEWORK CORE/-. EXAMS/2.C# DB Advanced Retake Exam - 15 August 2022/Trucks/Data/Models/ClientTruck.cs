@@ -9,6 +9,7 @@ public class ClientTruck
 
     public virtual Client Client { get; set; } = null!;
 
+
     [ForeignKey(nameof(Truck))]
     public int TruckId { get; set; }
 
