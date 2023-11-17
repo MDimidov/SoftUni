@@ -7,6 +7,7 @@ using CarDealer.Models;
 using CarDealer.Utilities;
 using Castle.Core.Resource;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -58,10 +59,10 @@ public class StartUp
         //Console.WriteLine(GetCarsWithTheirListOfParts(context));
 
         //Query 18. Export Total Sales by Customer
-        //Console.WriteLine(GetTotalSalesByCustomer(context));
+        Console.WriteLine(GetTotalSalesByCustomer(context));
 
         //Query 19. Export Sales with Applied Discount
-        Console.WriteLine(GetSalesWithAppliedDiscount(context));
+        //Console.WriteLine(GetSalesWithAppliedDiscount(context));
     }
 
     //2.	Import Data
@@ -125,8 +126,8 @@ public class StartUp
         foreach (var carDto in carDtos)
         {
             Car car = mapper.Map<Car>(carDto);
-            
-            foreach(var part in carDto.Parts.DistinctBy(p => p.PartyId))
+
+            foreach (var part in carDto.Parts.DistinctBy(p => p.PartyId))
             {
                 if (partIds.Contains(part.PartyId))
                 {
@@ -137,7 +138,7 @@ public class StartUp
                         });
                 }
             }
-            
+
             cars.Add(car);
         }
 
@@ -171,11 +172,11 @@ public class StartUp
         int[] carIds = context.Cars
             .AsNoTracking()
             .Select(c => c.Id)
-            .ToArray(); 
+            .ToArray();
 
-        foreach(ImportSaleDto saleDto in saleDtos)
+        foreach (ImportSaleDto saleDto in saleDtos)
         {
-            if(carIds.Contains(saleDto.CarId))
+            if (carIds.Contains(saleDto.CarId))
             {
                 Sale sale = mapper.Map<Sale>(saleDto);
                 sales.Add(sale);
@@ -253,16 +254,27 @@ public class StartUp
     //Query 18. Export Total Sales by Customer
     public static string GetTotalSalesByCustomer(CarDealerContext context)
     {
-        var customers = context.Customers
-            .AsNoTracking()
+        var customersWithSales = context.Customers
+            .Include(c => c.Sales)
             .Where(c => c.Sales.Any())
+            .ToArray();
+
+        var customers = customersWithSales
             .Select(c => new ExportCustomerDto()
             {
                 Name = c.Name,
                 BoughtCars = c.Sales.Count,
                 SpentMoney = c.Sales
                     .SelectMany(s => s.Car.PartsCars)
-                        .Sum(pc => pc.Part.Price)
+                    .Join(
+                        context.Parts,
+                        pc => pc.PartId,
+                        p => p.Id,
+                        (pc, p) => c.IsYoungDriver
+                            ? ((decimal)Math.Round((double)pc.Part.Price * 0.95, 2))
+                            : pc.Part.Price
+                    )
+                    .Sum()
             })
             .OrderByDescending(c => c.SpentMoney)
             .ToArray();
