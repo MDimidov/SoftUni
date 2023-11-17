@@ -1,7 +1,12 @@
 ﻿namespace Invoices.DataProcessor
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Data;
+    using System.Text;
+    using CarDealer.Utilities;
     using Invoices.Data;
+    using Invoices.Data.Models;
+    using Invoices.DataProcessor.ImportDto;
 
     public class Deserializer
     {
@@ -19,7 +24,53 @@
 
         public static string ImportClients(InvoicesContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportClientDto[] clientsDtos = new XmlHelper()
+                .Deserialize<ImportClientDto[]>(xmlString, "Clients");
+
+            ICollection<Client> validClients = new HashSet<Client>();
+
+            foreach (ImportClientDto clientDto in clientsDtos)
+            {
+                if (!IsValid(clientDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Client client = new()
+                {
+                    Name = clientDto.Name,
+                    NumberVat = clientDto.NumberVat
+                };
+
+                foreach (var addressDto in clientDto.Addresses)
+                {
+                    if (!IsValid(addressDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    client.Addresses.Add(new Address()
+                    {
+                        StreetName = addressDto.StreetName,
+                        StreetNumber = addressDto.StreetNumber,
+                        PostCode = addressDto.PostCode,
+                        City = addressDto.City,
+                        Country = addressDto.Country,
+                    });
+                }
+
+                validClients.Add(client);
+                sb.AppendLine(string.Format(SuccessfullyImportedClients, client.Name));
+            }
+
+            context.Clients.AddRange(validClients);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
 
