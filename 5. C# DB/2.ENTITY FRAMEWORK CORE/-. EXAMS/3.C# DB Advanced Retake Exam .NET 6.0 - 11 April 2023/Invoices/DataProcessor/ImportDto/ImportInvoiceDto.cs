@@ -19,7 +19,7 @@ public class ImportInvoiceDto
     public decimal Amount { get; set; }
 
     [Required]
-    [Range(0, 2)]
+    [Range(0, ValidationConstants.InvoiceCurrencyTypeMaxRange)]
     public int CurrencyType { get; set; }
 
     [Required]

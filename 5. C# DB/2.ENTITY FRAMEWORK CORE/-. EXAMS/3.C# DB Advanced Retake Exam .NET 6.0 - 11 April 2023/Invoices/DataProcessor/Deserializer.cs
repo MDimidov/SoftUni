@@ -9,6 +9,7 @@
     using Invoices.Data.Models;
     using Invoices.Data.Models.Enums;
     using Invoices.DataProcessor.ImportDto;
+    using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
 
     public class Deserializer
@@ -87,19 +88,19 @@
 
             int[] clientsIds = context.Clients.Select(c => c.Id).ToArray();
 
-            foreach(ImportInvoiceDto invoiceDto in invoicesDtos)
+            foreach (ImportInvoiceDto invoiceDto in invoicesDtos)
             {
                 if (!IsValid(invoiceDto)
                     || !clientsIds.Contains(invoiceDto.ClientId))
                 {
-                    sb.AppendLine(ErrorMessage); 
+                    sb.AppendLine(ErrorMessage);
                     continue;
                 }
 
                 DateTime issueDate = DateTime.ParseExact(invoiceDto.IssueDate, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
                 DateTime dueDate = DateTime.ParseExact(invoiceDto.DueDate, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
 
-                if(dueDate < issueDate)
+                if (dueDate < issueDate)
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
@@ -127,9 +128,55 @@
 
         public static string ImportProducts(InvoicesContext context, string jsonString)
         {
+            StringBuilder sb = new();
 
+            ImportProductDto[] productDtos = JsonConvert
+                .DeserializeObject<ImportProductDto[]>(jsonString)!;
 
-            throw new NotImplementedException();
+            int[] clientsIds = context.Clients
+                .AsNoTracking()
+                .Select(c => c.Id)
+                .ToArray();
+
+            ICollection<Product> validProducts = new HashSet<Product>();
+
+            foreach (ImportProductDto productDto in productDtos)
+            {
+                if (!IsValid(productDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Product product = new()
+                {
+                    Name = productDto.Name,
+                    Price = productDto.Price,
+                    CategoryType = (CategoryType)productDto.CategoryType
+                };
+
+                foreach (int clientId in productDto.Clients.Distinct())
+                {
+                    if(!clientsIds.Contains(clientId))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    product.ProductsClients.Add(new ProductClient
+                    {
+                        ClientId = clientId
+                    });
+                }
+
+                validProducts.Add(product);
+                sb.AppendLine(string.Format(SuccessfullyImportedProducts, product.Name, product.ProductsClients.Count));
+            }
+
+            context.Products.AddRange(validProducts);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static bool IsValid(object dto)
@@ -139,5 +186,5 @@
 
             return Validator.TryValidateObject(dto, validationContext, validationResult, true);
         }
-    } 
+    }
 }
