@@ -68,6 +68,8 @@
                 bool isDublicate = validManufacturers
                     .Any(m => m.ManufacturerName == manufacturerDto.ManufacturerName);
 
+                //var uniqueManufacturer = validManufacturers.FirstOrDefault(x => x.ManufacturerName == manufacturerDto.ManufacturerName);
+
                 if (!IsValid(manufacturerDto)
                     || isDublicate)
                 {
