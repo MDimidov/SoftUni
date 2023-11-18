@@ -23,7 +23,7 @@ public class Gun
 
     public double BarrelLength { get; set; }
 
-    public int NumberBuild { get; set; }
+    public int? NumberBuild { get; set; }
 
     public int Range { get; set; }
 

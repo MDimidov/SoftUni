@@ -1,12 +1,11 @@
-﻿namespace Artillery
-{
-    using AutoMapper;
+﻿namespace Artillery;
 
-    class ArtilleryProfile : Profile
+using AutoMapper;
+
+public class ArtilleryProfile : Profile
+{
+    // Configure your AutoMapper here if you wish to use it. If not, DO NOT DELETE THIS CLASS
+    public ArtilleryProfile()
     {
-        // Configure your AutoMapper here if you wish to use it. If not, DO NOT DELETE THIS CLASS
-        public ArtilleryProfile()
-        {
-        }
     }
 }
