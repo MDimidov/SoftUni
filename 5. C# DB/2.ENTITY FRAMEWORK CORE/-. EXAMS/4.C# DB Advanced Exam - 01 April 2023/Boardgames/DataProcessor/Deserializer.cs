@@ -7,6 +7,8 @@
     using Boardgames.Data.Models.Enums;
     using Boardgames.DataProcessor.ImportDto;
     using CarDealer.Utilities;
+    using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
 
     public class Deserializer
     {
@@ -71,7 +73,57 @@
 
         public static string ImportSellers(BoardgamesContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportSellerDto[] sellerDtos = JsonConvert
+                .DeserializeObject<ImportSellerDto[]>(jsonString)!;
+
+            ICollection<Seller> validSellers = new HashSet<Seller>();
+
+            int[] boardgamesIDs = context.Boardgames
+                .AsNoTracking()
+                .Select(b => b.Id)
+                .ToArray();
+
+            foreach(ImportSellerDto sellerDto in sellerDtos)
+            {
+                if(!IsValid(sellerDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Seller seller = new()
+                {
+                    Name = sellerDto.Name,
+                    Address = sellerDto.Address,
+                    Country = sellerDto.Country,
+                    Website = sellerDto.Website
+                };
+
+                foreach(int boardgameId in sellerDto.Boardgames.Distinct())
+                {
+                    if(!IsValid(boardgameId)
+                        || !boardgamesIDs.Contains(boardgameId))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    seller.BoardgamesSellers.Add(new BoardgameSeller
+                    {
+                        BoardgameId = boardgameId
+                    });
+                }
+
+                validSellers.Add(seller);
+                sb.AppendLine(string.Format(SuccessfullyImportedSeller, seller.Name, seller.BoardgamesSellers.Count));
+            }
+
+            context.Sellers.AddRange(validSellers);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object dto)
