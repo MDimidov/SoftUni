@@ -2,6 +2,7 @@
 {
     using CarDealer.Utilities;
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
     using System.Text;
@@ -92,7 +93,7 @@
                 Cast cast = new()
                 {
                     FullName = castDto.FullName,
-                    IsMainCharacter = castDto.IsMainCharacter,
+                    IsMainCharacter = bool.Parse(castDto.IsMainCharacter),
                     PhoneNumber = castDto.PhoneNumber,
                     PlayId = castDto.PlayId
                 };
@@ -110,7 +111,52 @@
 
         public static string ImportTtheatersTickets(TheatreContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportTheatreDto[] theatreDtos = JsonConvert
+                .DeserializeObject<ImportTheatreDto[]>(jsonString)!;
+
+            ICollection<Theatre> validTheatres = new HashSet<Theatre>();
+
+            foreach(var theatreDto in theatreDtos)
+            {
+                if (!IsValid(theatreDto))
+                {
+                    sb.AppendLine(ErrorMessage); 
+                    continue;
+                }
+
+                Theatre theatre = new()
+                {
+                    Name = theatreDto.Name,
+                    NumberOfHalls = theatreDto.NumberOfHalls,
+                    Director = theatreDto.Director
+                };
+
+                foreach (var ticketDto in theatreDto.Tickets)
+                {
+                    if (!IsValid(ticketDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    theatre.Tickets.Add(new Ticket()
+                    {
+                        Price = ticketDto.Price,
+                        RowNumber = ticketDto.RowNumber,
+                        PlayId = ticketDto.PlayId
+                    });
+                }
+
+                validTheatres.Add(theatre);
+                sb.AppendLine(string.Format(SuccessfulImportTheatre, theatre.Name, theatre.Tickets.Count()));
+            }
+
+            context.Theatres.AddRange(validTheatres);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
 

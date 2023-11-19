@@ -15,11 +15,11 @@ public class ImportCastDto
 
     [XmlElement]
     [Required]
-    public bool IsMainCharacter { get; set; }
+    public string IsMainCharacter { get; set; }
 
     [XmlElement]
     [Required]
-    [MaxLength(ValidationConstants.CastPhoneNumberLength)]
+    //[MaxLength(ValidationConstants.CastPhoneNumberLength)]
     [RegularExpression(ValidationConstants.CastPhoneNumberRegex)]
     public string PhoneNumber { get; set; } = null!;
 
