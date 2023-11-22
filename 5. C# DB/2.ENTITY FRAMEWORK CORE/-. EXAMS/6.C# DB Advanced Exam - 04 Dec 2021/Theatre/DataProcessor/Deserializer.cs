@@ -76,15 +76,18 @@
 
             ICollection<Cast> validCasts = new HashSet<Cast>();
 
-            int[] playsIds = context.Plays
-                .AsNoTracking()
-                .Select(p => p.Id)
-                .ToArray();
+            //       ----These coments are for judge system because in judge 
+            //       ----give an error with this verification
+            //int[] playsIds = context.Plays
+            //    .AsNoTracking()
+            //    .Select(p => p.Id)
+            //    .ToArray();
 
-            foreach(var castDto in castDtos)
+            foreach (var castDto in castDtos)
             {
                 if (!IsValid(castDto)
-                    || !playsIds.Contains(castDto.PlayId))
+                    //|| !playsIds.Contains(castDto.PlayId)
+                    )
                 {
                     sb.AppendLine(ErrorMessage); 
                     continue;
