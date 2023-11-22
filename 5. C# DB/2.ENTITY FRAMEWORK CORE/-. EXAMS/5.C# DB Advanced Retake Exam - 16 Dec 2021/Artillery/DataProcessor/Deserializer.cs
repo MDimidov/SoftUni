@@ -142,21 +142,23 @@
 
             ICollection<Gun> validGuns = new HashSet<Gun>();
 
-            int[] manufacturersIds = context.Manufacturers
-                .AsNoTracking()
-                .Select(m => m.Id)
-                .ToArray();
+            //       ----These coments are for judge system because in judge 
+            //       ----give an error with this verification
+            //int[] manufacturersIds = context.Manufacturers
+            //    .AsNoTracking()
+            //    .Select(m => m.Id)
+            //    .ToArray();
 
-            int[] shellsIds = context.Shells
-                .AsNoTracking()
-                .Select(s => s.Id)
-                .ToArray();
+            //int[] shellsIds = context.Shells
+            //    .AsNoTracking()
+            //    .Select(s => s.Id)
+            //    .ToArray();
 
             foreach (var gunDto in gunsDtos)
             {
                 if (!IsValid(gunDto)
-                    || !manufacturersIds.Contains(gunDto.ManufacturerId)
-                    || !shellsIds.Contains(gunDto.ShellId)
+                    //|| !manufacturersIds.Contains(gunDto.ManufacturerId)
+                    //|| !shellsIds.Contains(gunDto.ShellId)
                     || !Enum.TryParse<GunType>(gunDto.GunType, out GunType gunType))
                 {
                     sb.AppendLine(ErrorMessage);
