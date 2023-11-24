@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VaporStore.Data.Models.Interfaces;
 
 namespace VaporStore.Data.Models;
 
-public class Genre
+public class Genre : IHasName
 {
     public Genre()
     {
