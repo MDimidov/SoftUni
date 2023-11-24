@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
     using VaporStore.Data.Models;
+    using VaporStore.Data.Models.Enums;
     using VaporStore.Data.Models.Interfaces;
     using VaporStore.DataProcessor.ImportDto;
 
@@ -107,7 +108,60 @@
 
         public static string ImportUsers(VaporStoreDbContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportUserDto[] userDtos = JsonConvert.DeserializeObject<ImportUserDto[]>(jsonString)!;
+
+            ICollection<User> validUsers = new HashSet<User>();
+
+            foreach (ImportUserDto userDto in userDtos)
+            {
+                if (!IsValid(userDto)
+                    || userDto.Cards.Length < 1)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                User user = new()
+                {
+                    Username = userDto.Username,
+                    FullName = userDto.FullName,
+                    Email = userDto.Email,
+                    Age = userDto.Age
+                };
+
+                bool hasCardError = false;
+                foreach (ImportCardDto cardDto in userDto.Cards)
+                {
+                    
+                    if (!IsValid(cardDto)
+                        || !Enum.TryParse(cardDto.Type, out CardType cardType))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        hasCardError = true;
+                        break;
+                    }
+
+                    user.Cards.Add(new Card
+                    {
+                        Number = cardDto.Number,
+                        Cvc = cardDto.CVC,
+                        Type = cardType
+                    });
+                }
+
+                if (!hasCardError)
+                {
+                    validUsers.Add(user);
+                    sb.AppendLine(string.Format(SuccessfullyImportedUser, user.Username, user.Cards.Count));
+                }
+            }
+
+            context.Users.AddRange(validUsers);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string ImportPurchases(VaporStoreDbContext context, string xmlString)
