@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
     using System.Text;
+    using CarDealer.Utilities;
     using Data;
     using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json;
@@ -134,7 +135,7 @@
                 bool hasCardError = false;
                 foreach (ImportCardDto cardDto in userDto.Cards)
                 {
-                    
+
                     if (!IsValid(cardDto)
                         || !Enum.TryParse(cardDto.Type, out CardType cardType))
                     {
@@ -166,7 +167,48 @@
 
         public static string ImportPurchases(VaporStoreDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportPurchaseDto[] purchaseDtos = new XmlHelper()
+                .Deserialize<ImportPurchaseDto[]>(xmlString, "Purchases");
+
+            ICollection<Purchase> validPurchases = new HashSet<Purchase>();
+
+            Card[] cards = context.Cards
+                .ToArray();
+
+            Game[] games = context.Games
+                .ToArray();
+
+            foreach (ImportPurchaseDto purchaseDto in purchaseDtos)
+            {
+                if (!IsValid(purchaseDto)
+                    || !cards.Any(c => c.Number == purchaseDto.Card)
+                    || !games.Any(g => g.Name == purchaseDto.Title)
+                    || !DateTime.TryParseExact(purchaseDto.Date, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime purchaseDate)
+                    || !Enum.TryParse(purchaseDto.Type, out PurchaseType purchaseType))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Purchase purchase = new()
+                {
+                    Type = purchaseType,
+                    ProductKey = purchaseDto.Key,
+                    Card = cards.FirstOrDefault(c => c.Number == purchaseDto.Card)!,
+                    Date = purchaseDate,
+                    Game = games.FirstOrDefault(g => g.Name == purchaseDto.Title)!
+                };
+
+                validPurchases.Add(purchase);
+                sb.AppendLine(string.Format(SuccessfullyImportedPurchase, purchase.Game.Name, purchase.Card.User.Username));
+            }
+
+            context.Purchases.AddRange(validPurchases);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object dto)
