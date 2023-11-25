@@ -12,8 +12,8 @@ using ProductShop.Data;
 namespace ProductShop.Migrations
 {
     [DbContext(typeof(ProductShopContext))]
-    [Migration("20231111200035_Initial")]
-    partial class Initial
+    [Migration("20231125182724_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

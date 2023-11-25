@@ -43,7 +43,7 @@ public class StartUp
 
         //3.	Query and Export Data
         //Query 5. Export Products In Range
-        //Console.WriteLine(GetProductsInRange(context));
+        Console.WriteLine(GetProductsInRange(context));
 
         //Query 6. Export Sold Products
         //Console.WriteLine(GetSoldProducts(context));
@@ -52,7 +52,7 @@ public class StartUp
         //Console.WriteLine(GetCategoriesByProductsCount(context));
 
         //Query 8. Export Users and Products
-        Console.WriteLine(GetUsersWithProducts(context));
+        //Console.WriteLine(GetUsersWithProducts(context));
 
 
     }
