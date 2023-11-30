@@ -2,6 +2,6 @@
 {
     public static class Configuration
     {
-        public static string ConnectionString = @".;Database=SoftJail;Integrated Security=True;Encrypt=False;";
+        public static string ConnectionString = @"Server=.\SQLEXPRESS;Database=SoftJail;Integrated Security=True;Encrypt=False;";
     }
 }
