@@ -1,6 +1,7 @@
 ﻿namespace SoftJail.DataProcessor
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
     using System.Text;
     using Data;
     using Newtonsoft.Json;
@@ -79,7 +80,85 @@
 
         public static string ImportPrisonersMails(SoftJailDbContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportPrisonerDto[] prisonerDtos = JsonConvert
+                .DeserializeObject<ImportPrisonerDto[]>(jsonString)!;
+
+            ICollection<Prisoner> validPrisoners = new HashSet<Prisoner>();
+
+            foreach (var prisonerDto in prisonerDtos)
+            {
+                if(!IsValid(prisonerDto)
+                    || !DateTime.TryParseExact(prisonerDto.IncarcerationDate, "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime incarcerationDate))
+                {
+                    sb.AppendLine(ErrorMessage); 
+                    continue;
+                }
+
+                DateTime? releaseDate = null;
+                if (!String.IsNullOrWhiteSpace(prisonerDto.ReleaseDate))
+                {
+                    bool isReleaseDateValid = DateTime.TryParseExact(prisonerDto.ReleaseDate, "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime releaseDateDt);
+
+                    if (!isReleaseDateValid)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    releaseDate = releaseDateDt;
+                }
+
+                Prisoner prisoner = new()
+                {
+                    FullName = prisonerDto.FullName,
+                    Nickname = prisonerDto.Nickname,
+                    Age = prisonerDto.Age,
+                    IncarcerationDate = incarcerationDate,
+                    ReleaseDate = releaseDate, 
+                    Bail = prisonerDto.Bail,
+                    CellId = prisonerDto.CellId,
+                };
+
+                bool isAddressValid = true;
+
+                foreach (var mailDto in prisonerDto.Mails)
+                {
+                    if (!IsValid(mailDto.Address))
+                    {
+                        isAddressValid = false;
+                        sb.AppendLine(ErrorMessage);
+                        break;
+                    }
+
+                    if (!IsValid(mailDto))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    prisoner.Mails.Add(new Mail
+                    {
+                        Description = mailDto.Description,
+                        Sender = mailDto.Sender,
+                        Address = mailDto.Address
+                    });
+                }
+
+                if(isAddressValid)
+                {
+                    validPrisoners.Add(prisoner);
+                    sb.AppendLine(string.Format(SuccessfullyImportedPrisoner, prisoner.FullName, prisoner.Age));
+                }
+            }
+
+            context.Prisoners.AddRange(validPrisoners);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string ImportOfficersPrisoners(SoftJailDbContext context, string xmlString)
