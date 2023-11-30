@@ -3,9 +3,11 @@
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
     using System.Text;
+    using CarDealer.Utilities;
     using Data;
     using Newtonsoft.Json;
     using SoftJail.Data.Models;
+    using SoftJail.Data.Models.Enums;
     using SoftJail.DataProcessor.ImportDto;
 
     public class Deserializer
@@ -163,7 +165,49 @@
 
         public static string ImportOfficersPrisoners(SoftJailDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new();
+
+            ImportOfficerDto[] officerDtos = new XmlHelper()
+                .Deserialize<ImportOfficerDto[]>(xmlString, "Officers");
+
+            ICollection<Officer> validOfficers = new HashSet<Officer>();
+
+            foreach(var officerDto in officerDtos)
+            {
+                if(!IsValid(officerDto)
+                    || !Enum.TryParse<Position>(officerDto.Position, out var position)
+                    || !Enum.TryParse<Weapon>(officerDto.Weapon, out var weapon))
+                    
+                {
+                    sb.AppendLine(ErrorMessage); 
+                    continue;
+                }
+
+                Officer officer = new()
+                {
+                    FullName = officerDto.Name,
+                    Salary = officerDto.Money,
+                    Position = position,
+                    Weapon = weapon,
+                    DepartmentId = officerDto.DepartmentId
+                };
+
+                foreach(var prisoner in  officerDto.Prisoners.DistinctBy(p => p.Id))
+                {
+                    officer.OfficerPrisoners.Add(new OfficerPrisoner
+                    {
+                        PrisonerId = prisoner.Id
+                    });
+                }
+
+                validOfficers.Add(officer);
+                sb.AppendLine(string.Format(SuccessfullyImportedOfficer, officer.FullName, officer.OfficerPrisoners.Count));
+            }
+
+            context.Officers.AddRange(validOfficers);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object obj)
