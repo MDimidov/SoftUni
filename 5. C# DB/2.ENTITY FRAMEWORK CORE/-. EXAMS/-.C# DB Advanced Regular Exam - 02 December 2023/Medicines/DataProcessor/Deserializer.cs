@@ -40,7 +40,7 @@
                 {
                     Name = pharmacyDto.Name,
                     PhoneNumber = pharmacyDto.PhoneNumber,
-                    IsNonStop = true
+                    IsNonStop = isNonStop
                 };
 
                 foreach(var medicineDto in pharmacyDto.Medicines)
