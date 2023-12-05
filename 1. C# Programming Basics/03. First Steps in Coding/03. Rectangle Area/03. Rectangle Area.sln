@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Rectangle Area", "03. Rectangle Area\03. Rectangle Area.csproj", "{9082A839-3A8E-49DA-ADA0-353938A85F11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9082A839-3A8E-49DA-ADA0-353938A85F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9082A839-3A8E-49DA-ADA0-353938A85F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9082A839-3A8E-49DA-ADA0-353938A85F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9082A839-3A8E-49DA-ADA0-353938A85F11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B436D0C3-7F8E-42A9-B254-345B4899EF73}
+	EndGlobalSection
+EndGlobal
