@@ -8,41 +8,84 @@
     {
         private class Node
         {
-            
+            public Node(T element)
+            {
+                this.Element = element;
+            }
+
+            public Node(T element, Node next)
+            {
+                this.Element = element;
+                this.Next = next;
+            }
+
+            public T Element { get; set; }
+            public Node Next { get; set; }
         }
 
         private Node head;
 
-        public int Count => throw new NotImplementedException();
+        public int Count { get; private set; }
 
         public void Enqueue(T item)
         {
-            throw new NotImplementedException();
+            Node oldHead = this.head;
+            this.head.Next = oldHead;
+            this.head = new Node(item);
         }
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            this.IsEmptyQueue();
+
+            Node oldHead = this.head;
+            this.head = oldHead.Next;
+
+            this.Count--;
+            return oldHead.Element;
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            this.IsEmptyQueue();
+            return this.head.Element;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            Node node = this.head;
+            while (node != null)
+            {
+                if(node.Element.Equals(item))
+                {
+                    return true;
+                }
+
+                node = node.Next;
+            }
+
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            Node node = this.head;
+            while(node != null)
+            {
+                yield return node;
+                node = node.Next;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
+
+        private void IsEmptyQueue()
         {
-            throw new NotImplementedException();
+            if(this.head == null)
+            {
+                throw new InvalidOperationException("The queue is empty!");
+            }
         }
     }
 }
