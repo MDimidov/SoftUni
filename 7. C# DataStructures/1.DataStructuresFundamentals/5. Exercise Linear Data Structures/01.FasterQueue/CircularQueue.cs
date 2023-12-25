@@ -6,36 +6,93 @@
 
     public class CircularQueue<T> : IAbstractQueue<T>
     {
-        public int Count => throw new NotImplementedException();
+        private T[] elements;
+
+        private int startIndex;
+
+        private int endIndex;
+
+        private const int InitialCapacity = 4;
+
+
+        CircularQueue(int capacity = InitialCapacity)
+        {
+            elements = new T[capacity];
+        }
+
+        public int Count { get; private set; }
+
+        public int Capacity { get => this.elements.Length; }
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            ValidateQueue();
+            T item = this.elements[this.startIndex];
+            this.startIndex = (this.startIndex + 1) % this.Capacity;
+            this.Count--;
+            return item;
         }
 
         public void Enqueue(T item)
         {
-            throw new NotImplementedException();
+            if(Count >= this.Capacity)
+            {
+                Grow();
+            }
+
+            this.elements[this.endIndex] = item;
+            this.endIndex = (this.endIndex + 1) % this.Capacity;
+            this.Count++;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < this.Count; i++)
+            {
+                yield return this.elements[(this.startIndex + i) % this.Capacity];
+            }
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            this.ValidateQueue();
+            this.elements[this.startIndex];
         }
-
         public T[] ToArray()
-        {
-            throw new NotImplementedException();
-        }
+            => this.CoppyArray(this.Count);
+
+        
 
         IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
+
+        private void Grow()
         {
-            throw new NotImplementedException();
+            this.elements = this.CoppyArray(this.Capacity * 2);
+            this.startIndex = 0;
+            this.endIndex = this.Count;
+        }
+
+        private void ValidateQueue()
+        {
+            if(Count <= 0)
+            {
+                throw new InvalidOperationException("The queue is empty!");
+            }
+        }
+
+        private T[] CoppyArray(int capacity)
+        {
+            T[] newArray = new T[capacity];
+            int sourceIndex = this.startIndex;
+
+            for (int i = 0; i < capacity; i++)
+            {
+                newArray[i] = this.elements[sourceIndex];
+                sourceIndex = (sourceIndex + 1) % this.Capacity;
+            }
+
+            return newArray;
         }
     }
 
