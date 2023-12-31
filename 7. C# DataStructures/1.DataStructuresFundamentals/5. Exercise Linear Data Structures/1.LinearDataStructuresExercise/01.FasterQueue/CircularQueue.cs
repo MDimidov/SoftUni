@@ -15,7 +15,7 @@
         private const int InitialCapacity = 4;
 
 
-        CircularQueue(int capacity = InitialCapacity)
+        public CircularQueue(int capacity = InitialCapacity)
         {
             elements = new T[capacity];
         }
@@ -56,7 +56,7 @@
         public T Peek()
         {
             this.ValidateQueue();
-            this.elements[this.startIndex];
+            return this.elements[this.startIndex];
         }
         public T[] ToArray()
             => this.CoppyArray(this.Count);

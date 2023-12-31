@@ -28,10 +28,12 @@
         {
             get
             {
-                this.items[this.Count - 1 - index];
+                ValidateIndex(index);
+                return this.items[this.Count - 1 - index];
             }
             set
             {
+                ValidateIndex(index);
                 this.items[this.Count - 1 - index] = value;
             }
         }
@@ -46,7 +48,7 @@
 
         public bool Contains(T item)
         {
-            if(IndexOf(item) < 0)
+            if (IndexOf(item) < 0)
             {
                 return false;
             }
@@ -56,15 +58,15 @@
 
         public int IndexOf(T item)
         {
-            for (int i = this.Count - 1; i <= 0; i--)
+            for (int i = this.Count - 1; i >= 0; i--)
             {
-                if (this.items[i] == item)
+                if (this.items[i].Equals(item))
                 {
                     return this.Count - 1 - i;
                 }
 
-                return -1;
             }
+            return -1;
         }
 
         public void Insert(int index, T item)
@@ -72,7 +74,7 @@
             ValidateIndex(index);
             this.Grow();
             index = this.Count - 1 - index;
-            for(int i = index; i < this.Count; i++)
+            for (int i = index; i < this.Count; i++)
             {
                 this.items[i + 1] = this.items[i];
             }
@@ -84,12 +86,12 @@
         public bool Remove(T item)
         {
             int index = IndexOf(item);
-            if(index < 0)
+            if (index < 0)
             {
                 return false;
             }
 
-            RemoveAt(index);    
+            RemoveAt(index);
             return true;
         }
 
@@ -97,7 +99,7 @@
         {
             ValidateIndex(index);
             index = this.Count - 1 - index;
-            for(int i = index; i < this.Count; i++)
+            for (int i = index; i < this.Count; i++)
             {
                 this.items[i] = this.items[i + 1];
             }
@@ -119,9 +121,9 @@
 
         private void ValidateIndex(int index)
         {
-            if(index < 0 || index > this.Count - 1)
+            if (index < 0 || index > this.Count - 1)
             {
-                throw new IndexOutOfRangeException(index);
+                throw new IndexOutOfRangeException();
             }
         }
 
@@ -130,7 +132,7 @@
             if (this.items.Length <= this.Count)
             {
                 T[] newArray = new T[this.items.Length * 2];
-                for(int i = 0; i < this.Count; i++)
+                for (int i = 0; i < this.Count; i++)
                 {
                     newArray[i] = this.items[i];
                 }

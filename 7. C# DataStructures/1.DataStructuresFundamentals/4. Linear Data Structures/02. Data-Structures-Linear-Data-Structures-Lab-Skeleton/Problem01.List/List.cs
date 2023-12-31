@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class List<T> : IAbstractList<T>
     {
@@ -18,7 +19,7 @@
         {
             if (capacity < 0)
             {
-                throw new NotImplementedException(capacity);
+                throw new NotImplementedException();
             }
 
             this.items = new T[capacity];
@@ -69,7 +70,7 @@
         {
             for (int i = 0; i < this.Count; i++)
             {
-                if (item = this.items[i])
+                if (item.Equals(this.items[i]))
                 {
                     return i;
                 }
@@ -97,6 +98,7 @@
         {
             int index = IndexOf(item);
             RemoveAt(index);
+            return true;
         }
 
         public void RemoveAt(int index)
@@ -126,10 +128,10 @@
 
         private void Grow()
         {
-            if (this.items.length <= this.Count)
+            if (this.items.Length <= this.Count)
             {
-                T[] coppyArray = new T[this.items.length * 2];
-                for (int i = 0; i < items.length; i++)
+                T[] coppyArray = new T[this.Count * 2];
+                for (int i = 0; i < items.Length; i++)
                 {
                     coppyArray[i] = this.items[i];
                 }
