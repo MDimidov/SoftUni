@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7.EvenNumbersThread", "7.EvenNumbersThread\7.EvenNumbersThread.csproj", "{972531C2-FF99-4483-A89F-F7862EAC7B6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8.SumEvensInRange", "8.SumEvensInRange\8.SumEvensInRange.csproj", "{1D17B28C-A995-49D0-A31D-46F4377B91AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{972531C2-FF99-4483-A89F-F7862EAC7B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{972531C2-FF99-4483-A89F-F7862EAC7B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{972531C2-FF99-4483-A89F-F7862EAC7B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D17B28C-A995-49D0-A31D-46F4377B91AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D17B28C-A995-49D0-A31D-46F4377B91AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D17B28C-A995-49D0-A31D-46F4377B91AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D17B28C-A995-49D0-A31D-46F4377B91AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
