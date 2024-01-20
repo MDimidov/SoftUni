@@ -37,8 +37,16 @@ public class ProductController : Controller
 	//}
 
 	[Route("My-products")]
-	public IActionResult All()
+	public IActionResult All(string keyword)
 	{
+		if(keyword != null)
+		{
+			var foundProducts = products
+				.Where(p => p.Name
+					.ToLower()
+					.Contains(keyword.ToLower()));
+			products = foundProducts;
+		}
 		return View(products);
 	}
 
