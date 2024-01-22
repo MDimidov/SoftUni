@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1.MVCIntroDemo", "1.MVCIntr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2.ChatApp", "2.ChatApp\2.ChatApp.csproj", "{94CE11B3-0048-40AE-BAA9-CA8F357346C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.TextSplitterApp", "3.TextSplitterApp\3.TextSplitterApp.csproj", "{BB810756-BD96-4833-BE83-1DF2BAD9640F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{94CE11B3-0048-40AE-BAA9-CA8F357346C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94CE11B3-0048-40AE-BAA9-CA8F357346C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94CE11B3-0048-40AE-BAA9-CA8F357346C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB810756-BD96-4833-BE83-1DF2BAD9640F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB810756-BD96-4833-BE83-1DF2BAD9640F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB810756-BD96-4833-BE83-1DF2BAD9640F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB810756-BD96-4833-BE83-1DF2BAD9640F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
