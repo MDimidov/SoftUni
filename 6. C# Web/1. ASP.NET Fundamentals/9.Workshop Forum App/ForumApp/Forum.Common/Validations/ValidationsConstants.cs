@@ -2,7 +2,7 @@
 
 public class ValidationsConstants
 {
-	public class Post
+	public class Posts
 	{
 		public const int TitleMinLength = 2;
 		public const int TitleMaxLength = 50;

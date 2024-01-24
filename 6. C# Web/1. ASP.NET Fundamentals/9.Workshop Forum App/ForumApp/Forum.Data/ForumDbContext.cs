@@ -1,6 +1,6 @@
 ﻿using Forum.Data.Configuration;
+using Forum.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using static Forum.Common.Validations.ValidationsConstants;
 
 namespace Forum.Data;
 
@@ -17,6 +17,8 @@ public class ForumDbContext : DbContext
 	{
 		modelBuilder.ApplyConfiguration(new PostEntityConfiguration());
 
+		modelBuilder.Entity<Post>().HasKey(p => p.PostId);
+		
 		base.OnModelCreating(modelBuilder);
 	}
 }

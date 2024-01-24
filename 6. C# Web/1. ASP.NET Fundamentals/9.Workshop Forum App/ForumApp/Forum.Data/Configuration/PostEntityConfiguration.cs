@@ -1,7 +1,7 @@
 ﻿using Forum.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Forum.Common.Validations.ValidationsConstants;
+using Forum.Data.Models;
 
 namespace Forum.Data.Configuration;
 

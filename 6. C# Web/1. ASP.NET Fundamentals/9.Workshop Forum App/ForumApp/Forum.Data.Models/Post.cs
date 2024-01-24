@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static Forum.Common.Validations.ValidationsConstants.Post;
+using static Forum.Common.Validations.ValidationsConstants.Posts;
 
 namespace Forum.Data.Models;
 
@@ -7,11 +7,11 @@ public class Post
 {
 	public Post()
 	{
-		Id = Guid.NewGuid();
+		this.PostId = Guid.NewGuid();
 	}
 
 	[Key]
-	public Guid Id { get; set; }
+	public Guid PostId { get; set; }
 
 	[Required]
 	[MaxLength(TitleMaxLength)]
