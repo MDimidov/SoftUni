@@ -1,18 +1,16 @@
-﻿using Forum.Data;
-using Forum.Data.Models;
+﻿using Forum.Services.Interfaces;
 using Forum.ViewModels.Post;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Forum.App.Controllers;
 
 public class PostController : Controller
 {
-	private readonly ForumDbContext dbContext;
+	private readonly IPostService postService;
 
-	public PostController(ForumDbContext dbContext)
+	public PostController(IPostService postService)
 	{
-		this.dbContext = dbContext;
+		this.postService = postService;
 	}
 
 	//public IActionResult Index()
@@ -22,16 +20,7 @@ public class PostController : Controller
 
 	public async Task<IActionResult> All()
 	{
-		var posts = await dbContext
-			.Posts
-			.AsNoTracking()
-			.Select(p => new PostViewModel()
-			{
-				Id = p.PostId.ToString(),
-				Title = p.Title,
-				Content = p.Content,
-			})
-			.ToListAsync();
+		IEnumerable<PostViewModel> posts = await postService.ListAllAsync();
 
 		return View(posts);
 	}
@@ -45,14 +34,7 @@ public class PostController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Add(PostFormViewModel model)
 	{
-		var post = new Post()
-		{
-			Title = model.Title,
-			Content = model.Content,
-		};
-
-		await dbContext.Posts.AddAsync(post);
-		await dbContext.SaveChangesAsync();
+		await postService.AddPostAsync(model);
 
 		return RedirectToAction("All");
 	}
@@ -60,58 +42,44 @@ public class PostController : Controller
 	[HttpGet]
 	public async Task<IActionResult> Edit(string id)
 	{
-		Post? model = await dbContext
-			.Posts
-			.FirstOrDefaultAsync(p => p.PostId.ToString() == id);
-
-		if(model == null)
+		try
 		{
-			return RedirectToAction("All");
+			PostFormViewModel postFormModel = await postService.GetForEditOrDeleteByIdAsync(id);
+			return View(postFormModel);
 		}
-		else
+		catch (Exception)
 		{
-			return View(new PostFormViewModel()
-			{
-				Title = model.Title,
-				Content = model.Content,
-			});
-		}	
+			return RedirectToAction("All", "Post");
+		}
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> Edit(string id, PostFormViewModel model)
 	{
-		var post = await dbContext
-			.Posts
-			.FirstOrDefaultAsync(p => p.PostId.ToString().Equals(id));
-
-		if (post == null)
+		if (!ModelState.IsValid)
 		{
+			return this.View(model);
+		}
+
+		try
+		{
+			await postService.EditPostAsync(id, model);
+
+		}
+		catch
+		{
+			ModelState.AddModelError(string.Empty, "Unexpected error occurred while updating your post!");
+
 			return RedirectToAction("All");
 		}
 
-		post.Title = model.Title;
-		post.Content = model.Content;
-
-		await dbContext.SaveChangesAsync();
-
-		return RedirectToAction("All");
+		return RedirectToAction("All", "Post");
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> Delete(string id)
 	{
-		Post? model = await dbContext
-			.Posts
-			.FirstOrDefaultAsync(p => p.PostId.ToString().Equals(id));
-
-		if(model == null)
-		{
-			return RedirectToAction("All");
-		}
-
-		dbContext.Posts.Remove(model);
-		await dbContext.SaveChangesAsync();
+		await postService.DeletePostAsync(id);
 
 		return RedirectToAction("All");
 	}

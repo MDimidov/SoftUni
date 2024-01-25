@@ -8,5 +8,9 @@ public interface IPostService
 
 	Task AddPostAsync(PostFormViewModel postViewModel);
 
-	Task EditPostAsync(PostFormViewModel postViewModel);
+	Task<PostFormViewModel> GetForEditOrDeleteByIdAsync(string id);
+
+	Task EditPostAsync(string id, PostFormViewModel postViewModel);
+
+	Task DeletePostAsync(string id);
 }

@@ -1,4 +1,6 @@
 using Forum.Data;
+using Forum.Services;
+using Forum.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ForumApp
@@ -20,6 +22,9 @@ namespace ForumApp
 				.Services
 				.AddDbContext<ForumDbContext>(
 				   options => options.UseSqlServer(conncentionString));
+
+			// Add custom service
+			builder.Services.AddScoped<IPostService, PostService>();
 
 			var app = builder.Build();
 
