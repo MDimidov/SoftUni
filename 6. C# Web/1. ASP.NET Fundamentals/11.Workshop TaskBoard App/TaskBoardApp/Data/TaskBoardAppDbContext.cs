@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TaskBoardApp.Models;
-using Task = TaskBoardApp.Models.Task;
+using TaskBoardApp.Data.Models;
+using Task = TaskBoardApp.Data.Models.Task;
 
 namespace TaskBoardApp.Data
 {
-	public class TaskBoardAppDbContext : IdentityDbContext
+    public class TaskBoardAppDbContext : IdentityDbContext
 	{
 		public TaskBoardAppDbContext(DbContextOptions<TaskBoardAppDbContext> options)
 			: base(options)
@@ -51,7 +51,7 @@ namespace TaskBoardApp.Data
 					{
 						Id = 1,
 						Title = "Improve CSS Styles",
-						Dectipriton = "Implement better styling for all public pages",
+						Decription = "Implement better styling for all public pages",
 						CreatedOn = DateTime.Now.AddDays(-200),
 						OwnerId = TestUser.Id,
 						BoardId = OpenBoard.Id
@@ -60,7 +60,7 @@ namespace TaskBoardApp.Data
 					{
 						Id = 2,
 						Title = "Android Client App",
-						Dectipriton = "Create Android client app for the TaskBoard RESTful API",
+						Decription = "Create Android client app for the TaskBoard RESTful API",
 						CreatedOn = DateTime.Now.AddMonths(-5),
 						OwnerId = TestUser.Id,
 						BoardId = OpenBoard.Id
@@ -69,7 +69,7 @@ namespace TaskBoardApp.Data
 					{
 						Id = 3,
 						Title = "Desctop Client App",
-						Dectipriton = "Create Windows Forms app for the TaskBoard RESTful API",
+						Decription = "Create Windows Forms app for the TaskBoard RESTful API",
 						CreatedOn = DateTime.Now.AddMonths(-1),
 						OwnerId = TestUser.Id,
 						BoardId = InProgressBoard.Id
@@ -78,7 +78,7 @@ namespace TaskBoardApp.Data
 					{
 						Id = 4,
 						Title = "Create Tasks",
-						Dectipriton = "Implement [Create Task] page for adding new tasks",
+						Decription = "Implement [Create Task] page for adding new tasks",
 						CreatedOn = DateTime.Now.AddYears(-1),
 						OwnerId = TestUser.Id,
 						BoardId = DoneBoard.Id

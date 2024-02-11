@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskBoardApp.Data;
 
@@ -11,9 +12,10 @@ using TaskBoardApp.Data;
 namespace TaskBoardApp.Data.Migrations
 {
     [DbContext(typeof(TaskBoardAppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240211141640_FixScaffold")]
+    partial class FixScaffold
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,22 +139,6 @@ namespace TaskBoardApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "04d5be8a-616c-4cc5-bd10-0ef51a5f61f1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "de9926d9-764d-4f07-a5e9-c5142ce0d8d1",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "TEST@SOFTUNI.BG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM9QJtX+E2WrLL/jVdUTgulIRrfl9meJ40scGc0GWnbN3aKM9XrH15qbnBb6MEF/wA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "2904c374-3fe4-4e07-adbd-c1ff3bc5f652",
-                            TwoFactorEnabled = false,
-                            UserName = "test@softuni.bg"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -256,23 +242,6 @@ namespace TaskBoardApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Boards");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Open"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "In Progress"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Done"
-                        });
                 });
 
             modelBuilder.Entity("TaskBoardApp.Data.Models.Task", b =>
@@ -313,44 +282,6 @@ namespace TaskBoardApp.Data.Migrations
                     b.ToTable("Tasks");
 
                     b.HasComment("Task table");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BoardId = 1,
-                            CreatedOn = new DateTime(2023, 7, 26, 16, 18, 27, 217, DateTimeKind.Local).AddTicks(3283),
-                            Decription = "Implement better styling for all public pages",
-                            OwnerId = "04d5be8a-616c-4cc5-bd10-0ef51a5f61f1",
-                            Title = "Improve CSS Styles"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BoardId = 1,
-                            CreatedOn = new DateTime(2023, 9, 11, 16, 18, 27, 217, DateTimeKind.Local).AddTicks(3331),
-                            Decription = "Create Android client app for the TaskBoard RESTful API",
-                            OwnerId = "04d5be8a-616c-4cc5-bd10-0ef51a5f61f1",
-                            Title = "Android Client App"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BoardId = 2,
-                            CreatedOn = new DateTime(2024, 1, 11, 16, 18, 27, 217, DateTimeKind.Local).AddTicks(3337),
-                            Decription = "Create Windows Forms app for the TaskBoard RESTful API",
-                            OwnerId = "04d5be8a-616c-4cc5-bd10-0ef51a5f61f1",
-                            Title = "Desctop Client App"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BoardId = 3,
-                            CreatedOn = new DateTime(2023, 2, 11, 16, 18, 27, 217, DateTimeKind.Local).AddTicks(3342),
-                            Decription = "Implement [Create Task] page for adding new tasks",
-                            OwnerId = "04d5be8a-616c-4cc5-bd10-0ef51a5f61f1",
-                            Title = "Create Tasks"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
