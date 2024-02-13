@@ -1,10 +1,7 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Intrinsics.X86;
-using System.Security.Policy;
 using static Homies.Common.ValidationConstants.Event;
 
 namespace Homies.Data.Models;
