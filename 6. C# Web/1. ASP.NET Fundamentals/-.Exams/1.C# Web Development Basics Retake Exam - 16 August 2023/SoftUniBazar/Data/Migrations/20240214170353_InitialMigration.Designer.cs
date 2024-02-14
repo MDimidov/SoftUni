@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftUniBazar.Data;
 
@@ -11,9 +12,10 @@ using SoftUniBazar.Data;
 namespace SoftUniBazar.Data.Migrations
 {
     [DbContext(typeof(BazarDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214170353_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,7 +267,7 @@ namespace SoftUniBazar.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Ads", (string)null);
+                    b.ToTable("Ads");
                 });
 
             modelBuilder.Entity("SoftUniBazar.Data.Models.AdBuyer", b =>
@@ -280,7 +282,7 @@ namespace SoftUniBazar.Data.Migrations
 
                     b.HasIndex("AdId");
 
-                    b.ToTable("AdsBuyers", (string)null);
+                    b.ToTable("AdsBuyers");
                 });
 
             modelBuilder.Entity("SoftUniBazar.Data.Models.Category", b =>
@@ -298,7 +300,7 @@ namespace SoftUniBazar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
