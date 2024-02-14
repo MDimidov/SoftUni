@@ -79,9 +79,14 @@ namespace SoftUniBazar.Areas.Identity.Pages.Account
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task <IActionResult> OnGetAsync(string returnUrl = null)
         {
-            ReturnUrl = returnUrl;
+            if(User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("All", "Ad");
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
