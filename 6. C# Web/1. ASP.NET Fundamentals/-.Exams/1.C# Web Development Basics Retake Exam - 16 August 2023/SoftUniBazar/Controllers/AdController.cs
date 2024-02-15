@@ -223,6 +223,8 @@ namespace SoftUniBazar.Controllers
 
             return RedirectToAction(nameof(All));
         }
+
+
         private string GetUserId()
             => User.FindFirstValue(ClaimTypes.NameIdentifier);
         private async Task<IEnumerable<CategoryViewModel>> GetCategoriesAsync()
