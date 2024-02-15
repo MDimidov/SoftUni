@@ -1,4 +1,5 @@
-﻿@*
+﻿@page
+@model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -48,7 +49,7 @@
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                         <div>
                             <p>
-                                @foreach (var provider in Model.ExternalLogins)
+                                @foreach (var provider in Model.ExternalLogins!)
                                 {
                                     <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
                                 }
@@ -64,4 +65,3 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-*@
