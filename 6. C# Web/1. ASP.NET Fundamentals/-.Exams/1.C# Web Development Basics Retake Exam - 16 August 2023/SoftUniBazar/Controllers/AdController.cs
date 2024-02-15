@@ -57,6 +57,11 @@ namespace SoftUniBazar.Controllers
                 ModelState.AddModelError(nameof(model.CategoryId), WrongCategory);
             }
 
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             Ad ad = new()
             {
                 Name = model.Name,
@@ -126,6 +131,12 @@ namespace SoftUniBazar.Controllers
             if(!categories.Any(c => c.Id == model.CategoryId))
             {
                 ModelState.AddModelError(nameof(model.CategoryId), WrongCategory); 
+            }
+
+            if(!ModelState.IsValid)
+            {
+                model.Categories = await GetCategoriesAsync();
+                return View(model);
             }
 
             ad.Name = model.Name;
