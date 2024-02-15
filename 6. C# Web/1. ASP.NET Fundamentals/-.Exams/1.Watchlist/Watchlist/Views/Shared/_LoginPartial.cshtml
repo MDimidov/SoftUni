@@ -1,4 +1,6 @@
-﻿@*
+﻿@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -18,7 +20,7 @@
         </li>
     }
 </ul>
-*@
+
 
 @*
     USE THIS CODE IF YOU ARE SCAFFOLDING IDENTITY
