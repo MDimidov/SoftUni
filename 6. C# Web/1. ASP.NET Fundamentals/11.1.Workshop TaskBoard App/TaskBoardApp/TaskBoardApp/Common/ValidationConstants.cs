@@ -9,7 +9,10 @@ public static class ValidationConstants
 
         public const int DescriptionMinLength = 10;
         public const int DescriptionMaxLength = 1000;
-    }
+
+        public const string DateFormat = "yyyy-MM-dd HH:mm";
+
+	}
 
     public static class Board
     {
