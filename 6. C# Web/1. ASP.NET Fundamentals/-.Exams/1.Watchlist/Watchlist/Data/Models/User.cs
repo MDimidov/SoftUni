@@ -7,6 +7,10 @@ using System.Security.Policy;
 namespace Watchlist.Data.Models;
 public class User : IdentityUser
 {
+    public User()
+    {
+        UsersMovies = new HashSet<UserMovie>();
+    }
     //[Key]
     ////check this Prop
     //public string Id { get; set; }
@@ -20,7 +24,7 @@ public class User : IdentityUser
     //[Required]//check this Prop
     //public HashCode Password { get; set; }
 
-    public virtual ICollection<UserMovie> UsersMovies { get; set;}
+    public virtual ICollection<UserMovie> UsersMovies { get; set; }
 }
 
 

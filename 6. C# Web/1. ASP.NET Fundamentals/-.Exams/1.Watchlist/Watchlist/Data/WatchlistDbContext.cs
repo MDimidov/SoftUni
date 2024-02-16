@@ -30,6 +30,16 @@ namespace Watchlist.Data
                     um.MovieId
                 });
 
+            builder.Entity<User>()
+                .Property(u => u.UserName)
+                .HasMaxLength(20)
+                .IsRequired(true);
+
+            builder.Entity<User>()
+                .Property(u => u.Email)
+                .HasMaxLength(60)
+                .IsRequired(true);
+
             builder
                 .Entity<Genre>()
                 .HasData(new Genre()

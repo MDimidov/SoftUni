@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MoviesAllViewModel>
+
+@{
     ViewBag.Title = "All Movies";
 }
 
@@ -6,7 +8,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@*<div class="text-center row">
+<div class="text-center row">
     @foreach (var movie in Model)
     {
         <div class="card col-4" style="width: 20rem;">
@@ -20,10 +22,9 @@
                 <p>Genre: @movie.Genre</p>
             </div>
 
-            <form class="input-group-sm" asp-route-movieId="@movie.Id" asp-controller="Movies" asp-action="AddToCollection" method="post">
+            <form class="input-group-sm" asp-route-id="@movie.Id" asp-controller="Movies" asp-action="AddToCollection" method="post">
                 <input type="submit" value="Mark as Watched" class="fs-6 btn btn-success mb-3 p-2" />
             </form>
         </div>
     }
 </div>
-*@
