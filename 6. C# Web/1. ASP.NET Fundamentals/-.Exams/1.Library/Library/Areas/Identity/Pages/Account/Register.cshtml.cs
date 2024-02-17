@@ -36,7 +36,7 @@ namespace Library.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public string ReturnUrl { get; set; }
+        //public string ReturnUrl { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -74,9 +74,14 @@ namespace Library.Areas.Identity.Pages.Account
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            ReturnUrl = returnUrl;
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("All", "Book");
+			}
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
