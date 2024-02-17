@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using TaskBoardApp.ViewModels;
 
 namespace TaskBoardApp.Controllers;
 
+[Authorize]
 public class TaskController : Controller
 {
 	private readonly TaskBoardAppDbContext dbContext;
@@ -159,6 +161,27 @@ public class TaskController : Controller
 		};
 
 		return View(taskModel);
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> Delete(TaskViewModel deleteModel)
+	{
+		var taskToDelete = await dbContext.Tasks.FindAsync(deleteModel.Id);
+
+		if(taskToDelete == null)
+		{
+			return View (deleteModel);
+		}
+
+		if(taskToDelete.OwnerId != GetUserId())
+		{
+			return Unauthorized();
+		}
+
+		dbContext.Tasks.Remove(taskToDelete);
+		await dbContext.SaveChangesAsync();
+
+		return RedirectToAction("All", "Board");
 	}
 
 	private string GetUserId()

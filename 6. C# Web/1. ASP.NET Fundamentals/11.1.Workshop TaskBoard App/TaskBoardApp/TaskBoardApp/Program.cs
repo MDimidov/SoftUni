@@ -30,6 +30,11 @@ namespace TaskBoardApp
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.ConfigureApplicationCookie(optionos =>
+            {
+                optionos.LoginPath = "/Identity/Account/Login";
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
