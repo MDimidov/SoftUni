@@ -49,7 +49,7 @@ public class BookController : Controller
 
 		if (book == null)
 		{
-			return BadRequest();
+			return RedirectToAction(nameof(All));
 		}
 
 		string userId = GetUserId();
@@ -89,6 +89,11 @@ public class BookController : Controller
 			})
 			.ToArrayAsync();
 
+		if(model == null)
+		{
+			return RedirectToAction(nameof(All));
+		}
+
 		return View(model);
 	}
 
@@ -99,7 +104,7 @@ public class BookController : Controller
 
 		if (book == null)
 		{
-			return BadRequest();
+			return RedirectToAction(nameof(Mine));
 		}
 
 		var bookToDelete = await dbContext
