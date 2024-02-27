@@ -8,6 +8,11 @@ namespace HouseRentingSystem.Data.Models;
 
 public class Agent
 {
+    public Agent()
+    {
+        Id = Guid.NewGuid();
+    }
+
     [Key]
     public Guid Id { get; set; }
 
@@ -20,4 +25,6 @@ public class Agent
     public Guid UserId { get; set; }
 
     public virtual ApplicationUser User { get; set; }
+
+    public virtual ICollection<House> Houses { get; set; } = new HashSet<House>();
 }

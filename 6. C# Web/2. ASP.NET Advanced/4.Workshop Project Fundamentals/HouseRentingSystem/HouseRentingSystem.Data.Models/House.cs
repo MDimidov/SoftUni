@@ -8,10 +8,10 @@ namespace HouseRentingSystem.Data.Models;
 
 public class House
 {
-    //public House()
-    //{
-    //    Id = Guid.NewGuid();
-    //}
+    public House()
+    {
+        Id = Guid.NewGuid();
+    }
 
     [Key]
     public Guid Id { get; set; }
