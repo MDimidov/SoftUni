@@ -1,6 +1,8 @@
 using HouseRentingSystem.Data;
 using HouseRentingSystem.Data.Models;
+using HouseRentingSystem.Services.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HouseRentingSystem.Web.Infrastructure.Extensions;
 
 namespace HouseRentingSystem.Web
 {
@@ -36,6 +38,8 @@ namespace HouseRentingSystem.Web
                     .Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
 				.AddEntityFrameworkStores<HouseRentingDbContext>();
+
+			builder.Services.AddApplicationServices(typeof(IHouseService));
 
 			builder.Services.AddControllersWithViews();
 

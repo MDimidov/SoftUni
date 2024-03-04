@@ -1,4 +1,5 @@
-﻿using HouseRentingSystem.Web.ViewModels.Home;
+﻿using HouseRentingSystem.Services.Data.Interfaces;
+using HouseRentingSystem.Web.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,9 +7,19 @@ namespace HouseRentingSystem.Web.Controllers
 {
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+		private readonly IHouseService houseService;
+
+		public HomeController(IHouseService houseService)
 		{
-			return View();
+			this.houseService = houseService;
+		}
+
+		public async Task <IActionResult> Index()
+		{
+			IEnumerable<IndexViewModel> model = await houseService
+				.LastThreeHousesAsync();
+
+			return View(model);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

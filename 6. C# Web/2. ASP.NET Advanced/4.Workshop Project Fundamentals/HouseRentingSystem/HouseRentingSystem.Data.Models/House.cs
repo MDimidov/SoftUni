@@ -35,6 +35,8 @@ public class House
     [Required]
     public decimal PricePerMonth { get; set; }
 
+    public DateTime CreatedOn { get; set; }
+
     [Required]
     [ForeignKey(nameof(Category))]
     public int CategoryId { get; set; }
