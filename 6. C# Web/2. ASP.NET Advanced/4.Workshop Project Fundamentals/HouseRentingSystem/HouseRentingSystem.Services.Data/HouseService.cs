@@ -56,6 +56,7 @@ public class HouseService : IHouseService
 		};
 
 		IEnumerable<HouseAllViewModel> allHouses = await housesQuery
+			.Where(h => h.isActive)
 			.Skip((queryModel.CurrentPage - 1) * queryModel.HousesPerPage)
 			.Take(queryModel.HousesPerPage)
 			.Select(h => new HouseAllViewModel
@@ -100,6 +101,7 @@ public class HouseService : IHouseService
 		IEnumerable<IndexViewModel> lastThreeHouses = await dbContext
 			.Houses
 			.AsNoTracking()
+			.Where(h => h.isActive)
 			.OrderByDescending(h => h.CreatedOn)
 			.Select(h => new IndexViewModel
 			{

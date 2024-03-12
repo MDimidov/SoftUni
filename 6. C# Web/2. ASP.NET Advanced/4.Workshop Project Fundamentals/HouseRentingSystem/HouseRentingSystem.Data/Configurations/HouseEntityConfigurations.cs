@@ -13,6 +13,10 @@ public class HouseEntityConfigurations : IEntityTypeConfiguration<House>
             .HasDefaultValueSql("GETDATE()");
 
         builder
+            .Property(h => h.isActive)
+            .HasDefaultValue(true);
+
+        builder
             .HasOne(h => h.Category)
             .WithMany(c => c.Houses)
             .HasForeignKey(h => h.CategoryId)

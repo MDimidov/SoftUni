@@ -37,6 +37,8 @@ public class House
 
     public DateTime CreatedOn { get; set; }
 
+    public bool isActive { get; set; }
+
     [Required]
     [ForeignKey(nameof(Category))]
     public int CategoryId { get; set; }
