@@ -24,4 +24,9 @@ public class CategoryService : ICategoryService
                 Name = c.Name,
             })
             .ToArrayAsync();
+
+    public async Task<bool> ExistByIdAsync(int id)
+        => await dbContext
+        .Categories
+        .AnyAsync(c => c.Id == id); 
 }

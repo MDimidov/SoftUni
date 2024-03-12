@@ -3,6 +3,8 @@ using HouseRentingSystem.Data.Models;
 using HouseRentingSystem.Services.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using HouseRentingSystem.Web.Infrastructure.Extensions;
+using Microsoft.Extensions.ObjectPool;
+using HouseRentingSystem.Web.Infrastructure.ModelBinders;
 
 namespace HouseRentingSystem.Web
 {
@@ -41,7 +43,12 @@ namespace HouseRentingSystem.Web
 
 			builder.Services.AddApplicationServices(typeof(IHouseService));
 
-			builder.Services.AddControllersWithViews();
+			builder.Services
+				.AddControllersWithViews()
+				.AddMvcOptions(options =>
+				{
+					options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+				});
 
 			WebApplication app = builder.Build();
 
