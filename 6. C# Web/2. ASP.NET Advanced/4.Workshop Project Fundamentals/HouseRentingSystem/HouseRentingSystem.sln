@@ -5,23 +5,25 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Web", "HouseRentingSystem\HouseRentingSystem.Web.csproj", "{58042D0B-56A6-4158-AC65-75F30D2B5225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Common", "HouseRentingSystem.Common\HouseRentingSystem.Common.csproj", "{5D398AF0-DA7D-4558-B44A-6C1514F9ACB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Common", "HouseRentingSystem.Common\HouseRentingSystem.Common.csproj", "{5D398AF0-DA7D-4558-B44A-6C1514F9ACB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{29C221F3-B21E-490E-A51E-2C282685F3E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{420D0C74-711A-4858-B212-F92299E7300C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Data", "HouseRentingSystem.Data\HouseRentingSystem.Data.csproj", "{BED6506E-A6C3-47FF-BE42-8671C01473B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Data", "HouseRentingSystem.Data\HouseRentingSystem.Data.csproj", "{BED6506E-A6C3-47FF-BE42-8671C01473B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Data.Models", "HouseRentingSystem.Data.Models\HouseRentingSystem.Data.Models.csproj", "{3393BE84-BD9F-451B-A146-8AD29C7A5AB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Data.Models", "HouseRentingSystem.Data.Models\HouseRentingSystem.Data.Models.csproj", "{3393BE84-BD9F-451B-A146-8AD29C7A5AB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Web.ViewModels", "HouseRentingSystem.Web.ViewModels\HouseRentingSystem.Web.ViewModels.csproj", "{E9FFAD5E-BA80-4CE3-B4BF-CCFE96170191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Web.ViewModels", "HouseRentingSystem.Web.ViewModels\HouseRentingSystem.Web.ViewModels.csproj", "{E9FFAD5E-BA80-4CE3-B4BF-CCFE96170191}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8CEE3EE2-475A-42AA-BE91-B10F34315483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Services.Data", "HouseRentingSystem.Services.Data\HouseRentingSystem.Services.Data.csproj", "{6DDDA676-D49E-426E-80AD-854D040E0587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Services.Data", "HouseRentingSystem.Services.Data\HouseRentingSystem.Services.Data.csproj", "{6DDDA676-D49E-426E-80AD-854D040E0587}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Web.Infrastructure", "HouseRentingSystem.Web.Infrastructure\HouseRentingSystem.Web.Infrastructure.csproj", "{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Web.Infrastructure", "HouseRentingSystem.Web.Infrastructure\HouseRentingSystem.Web.Infrastructure.csproj", "{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Services.Data.Models", "HouseRentingSystem.Services.Data.Models\HouseRentingSystem.Services.Data.Models.csproj", "{94B590D6-ACEC-4B63-808A-DC793D77B80D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B590D6-ACEC-4B63-808A-DC793D77B80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B590D6-ACEC-4B63-808A-DC793D77B80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B590D6-ACEC-4B63-808A-DC793D77B80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B590D6-ACEC-4B63-808A-DC793D77B80D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{E9FFAD5E-BA80-4CE3-B4BF-CCFE96170191} = {29C221F3-B21E-490E-A51E-2C282685F3E9}
 		{6DDDA676-D49E-426E-80AD-854D040E0587} = {8CEE3EE2-475A-42AA-BE91-B10F34315483}
 		{D0D57138-89D6-46F3-9DD3-8BDEBD9E42C8} = {29C221F3-B21E-490E-A51E-2C282685F3E9}
+		{94B590D6-ACEC-4B63-808A-DC793D77B80D} = {8CEE3EE2-475A-42AA-BE91-B10F34315483}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0607B4D2-2953-4B36-A291-8203502296BD}

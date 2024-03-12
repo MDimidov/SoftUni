@@ -25,7 +25,14 @@ public class CategoryService : ICategoryService
             })
             .ToArrayAsync();
 
-    public async Task<bool> ExistByIdAsync(int id)
+	public async Task<IEnumerable<string>> AllCategoryNamesAsync()
+	    => await dbContext
+        .Categories
+        .AsNoTracking()
+        .Select (c => c.Name)
+        .ToArrayAsync();
+
+	public async Task<bool> ExistByIdAsync(int id)
         => await dbContext
         .Categories
         .AnyAsync(c => c.Id == id); 
