@@ -16,5 +16,10 @@ public interface IHouseService
 
 	Task<IEnumerable<HouseAllViewModel>> AllByUserIdAsync(string userId);
 
-	Task<HouseDetailsViewModel?> GetDetailsByIdAsync(string houseId);
+	Task<bool> ExistByIdAsync(string houseId);
+
+
+	Task<HouseDetailsViewModel> GetDetailsByIdAsync(string houseId);
+
+	Task<HouseFormModel> GetHouseForEditByIdAsync(string houseId);
 }
