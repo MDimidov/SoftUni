@@ -184,6 +184,12 @@ public class HouseService : IHouseService
 		};
 	}
 
+	public async Task<bool> IsAgentWithIdOwnerOfHouseWithIdAsync(string agentId, string houseId)
+		=> await dbContext
+		.Houses
+		.Where(h => h.isActive && h.Id.ToString() == houseId)
+		.AllAsync(h => h.AgentId.ToString() == agentId);
+
 	public async Task<IEnumerable<IndexViewModel>> LastThreeHousesAsync()
 	{
 		IEnumerable<IndexViewModel> lastThreeHouses = await dbContext

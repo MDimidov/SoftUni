@@ -27,7 +27,7 @@ public class HouseController : Controller
 
 	[HttpGet]
 	[AllowAnonymous]
-	public async Task<IActionResult> All([FromQuery]AllHousesQueryModel queryModel)
+	public async Task<IActionResult> All([FromQuery] AllHousesQueryModel queryModel)
 	{
 		AllHousesFilteredAndPagedServiceModel serviceModel = await houseService.AllAsync(queryModel);
 
@@ -43,7 +43,7 @@ public class HouseController : Controller
 	{
 		bool isAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
 
-		if(!isAgent)
+		if (!isAgent)
 		{
 			this.TempData[ErrorMessage] = "You must become an agent in order to add new houses!";
 			return RedirectToAction("Become", "Agent");
@@ -70,12 +70,12 @@ public class HouseController : Controller
 		}
 
 		bool categoryExist = await categoryService.ExistByIdAsync(model.CategoryId);
-		if(!categoryExist)
+		if (!categoryExist)
 		{
 			ModelState.AddModelError(nameof(model.CategoryId), "Selected category does not exist");
 		}
 
-		if(!ModelState.IsValid)
+		if (!ModelState.IsValid)
 		{
 			model.Categories = await categoryService.AllCategoriesAsync();
 			return View(model);
@@ -114,13 +114,13 @@ public class HouseController : Controller
 	[HttpGet]
 	public async Task<IActionResult> Mine()
 	{
-		List<HouseAllViewModel>  myHouses = new();
+		List<HouseAllViewModel> myHouses = new();
 
 		string userId = User.GetId()!;
 
 		bool isUserAgent = await agentService.AgentExistByUserIdAsync(userId);
 
-		if(isUserAgent)
+		if (isUserAgent)
 		{
 			string? agentId = await agentService.GetAgentIdByUserIdAsync(userId);
 
@@ -137,6 +137,31 @@ public class HouseController : Controller
 	[HttpGet]
 	public async Task<IActionResult> Edit(string id)
 	{
+		bool houseExist = await houseService.ExistByIdAsync(id);
+		if (!houseExist)
+		{
+			TempData[ErrorMessage] = "House with the provided id does not exist!";
+			return RedirectToAction(nameof(All));
+		}
 
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
+		if (!isUserAgent)
+		{
+			TempData[ErrorMessage] = "You must become an agent in order to edit house info!";
+			return RedirectToAction("Become", "Agent");
+		}
+
+		string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
+
+		bool isAgentOwner = await houseService.IsAgentWithIdOwnerOfHouseWithIdAsync(agentId, id);
+		if (!isAgentOwner)
+		{
+			TempData[ErrorMessage] = "You must become the agent owner of the house you want to edit!";
+			return RedirectToAction(nameof(Mine));
+		}
+
+		HouseFormModel formModel = await houseService.GetHouseForEditByIdAsync(id);
+		formModel.Categories = await categoryService.AllCategoriesAsync();
+		return View(formModel);
 	}
 }

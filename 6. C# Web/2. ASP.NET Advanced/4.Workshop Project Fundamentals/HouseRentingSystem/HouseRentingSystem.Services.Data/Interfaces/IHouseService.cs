@@ -22,4 +22,6 @@ public interface IHouseService
 	Task<HouseDetailsViewModel> GetDetailsByIdAsync(string houseId);
 
 	Task<HouseFormModel> GetHouseForEditByIdAsync(string houseId);
+
+	Task<bool> IsAgentWithIdOwnerOfHouseWithIdAsync(string agentId, string houseId);
 }
