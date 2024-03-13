@@ -93,4 +93,27 @@ public class HouseController : Controller
 
 		return RedirectToAction(nameof(All));
 	}
+
+	[HttpGet]
+	public async Task<IActionResult> Mine()
+	{
+		List<HouseAllViewModel>  myHouses = new();
+
+		string userId = User.GetId()!;
+
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(userId);
+
+		if(isUserAgent)
+		{
+			string? agentId = await agentService.GetAgentIdByUserIdAsync(userId);
+
+			myHouses.AddRange(await houseService.AllByAgentIdAsync(agentId));
+		}
+		else
+		{
+			myHouses.AddRange(await houseService.AllByUserIdAsync(userId));
+		}
+
+		return View(myHouses);
+	}
 }

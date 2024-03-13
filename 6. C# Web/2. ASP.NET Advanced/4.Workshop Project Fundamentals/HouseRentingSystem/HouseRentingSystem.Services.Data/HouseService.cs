@@ -79,6 +79,41 @@ public class HouseService : IHouseService
 		};
 	}
 
+	public async Task<IEnumerable<HouseAllViewModel>> AllByAgentIdAsync(string agentId)
+		=> await dbContext
+			.Houses
+			.AsNoTracking()
+			.Where(h => h.AgentId.ToString() == agentId
+							&& h.isActive == true)
+			.Select(h => new HouseAllViewModel
+			{
+				Id = h.Id.ToString(),
+				Title = h.Title,
+				Address = h.Address,
+				ImageUrl = h.ImageUrl,
+				PricePerMonth = h.PricePerMonth,
+				IsRented = h.RenterId.HasValue
+			})
+			.ToArrayAsync();
+
+	public async Task<IEnumerable<HouseAllViewModel>> AllByUserIdAsync(string userId)
+	=> await dbContext
+			.Houses
+			.AsNoTracking()
+			.Where(h => h.RenterId.HasValue == true
+							&& h.RenterId.ToString() == userId
+							&& h.isActive == true)
+			.Select(h => new HouseAllViewModel
+			{
+				Id = h.Id.ToString(),
+				Title = h.Title,
+				Address = h.Address,
+				ImageUrl = h.ImageUrl,
+				PricePerMonth = h.PricePerMonth,
+				IsRented = h.RenterId.HasValue
+			})
+			.ToArrayAsync();
+
 	public async Task CreateAsync(HouseFormModel houseModel, string agentId)
 	{
 		House newHouse = new()
