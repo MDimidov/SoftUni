@@ -134,6 +134,17 @@ public class HouseService : IHouseService
 		return newHouse.Id.ToString();
 	}
 
+	public async Task DeleteHouseByIdAsync(string houseId)
+	{
+		House houseToDelete = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString() == houseId);
+
+		dbContext.Houses.Remove(houseToDelete);
+		await dbContext.SaveChangesAsync();
+	}
+
 	public async Task EditHouseByIdAndFormModelAsync(string houseId, HouseFormModel formModel)
 	{
 		House house = await dbContext
@@ -184,6 +195,18 @@ public class HouseService : IHouseService
 			}
 		};
 	}
+
+	public async Task<HousePreDeleteDetailsViewModel> GetHouseForDeleteByIdAsync(string id)
+		=> await dbContext
+		.Houses
+		.Where(h => h.isActive && h.Id.ToString() == id)
+		.Select(h => new HousePreDeleteDetailsViewModel()
+		{
+			Title = h.Title,
+			Address = h.Address,
+			ImageUrl = h.ImageUrl
+		})
+		.FirstAsync();
 
 	public async Task<HouseFormModel> GetHouseForEditByIdAsync(string houseId)
 	{

@@ -252,6 +252,82 @@ public class HouseController : Controller
 		return RedirectToAction(nameof(Details), new { id });
 	}
 
+	[HttpGet]
+	public async Task<IActionResult> Delete(string id)
+	{
+		bool houseExist = await houseService.ExistByIdAsync(id);
+		if (!houseExist)
+		{
+			TempData[ErrorMessage] = "House with the provided id does not exist!";
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
+		if (!isUserAgent)
+		{
+			TempData[ErrorMessage] = "You must become an agent in order to edit house info!";
+			return RedirectToAction("Become", "Agent");
+		}
+
+		string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
+
+		bool isAgentOwner = await houseService.IsAgentWithIdOwnerOfHouseWithIdAsync(agentId, id);
+		if (!isAgentOwner)
+		{
+			TempData[ErrorMessage] = "You must become the agent owner of the house you want to edit!";
+			return RedirectToAction(nameof(Mine));
+		}
+
+		try
+		{
+			HousePreDeleteDetailsViewModel deleteModel = await houseService.GetHouseForDeleteByIdAsync(id);
+
+			return View(deleteModel);
+		}
+		catch
+		{
+			return GeneralError();
+		}
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> Delete(string id, HousePreDeleteDetailsViewModel model)
+	{
+		bool houseExist = await houseService.ExistByIdAsync(id);
+		if (!houseExist)
+		{
+			TempData[ErrorMessage] = "House with the provided id does not exist!";
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
+		if (!isUserAgent)
+		{
+			TempData[ErrorMessage] = "You must become an agent in order to edit house info!";
+			return RedirectToAction("Become", "Agent");
+		}
+
+		string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
+
+		bool isAgentOwner = await houseService.IsAgentWithIdOwnerOfHouseWithIdAsync(agentId, id);
+		if (!isAgentOwner)
+		{
+			TempData[ErrorMessage] = "You must become the agent owner of the house you want to edit!";
+			return RedirectToAction(nameof(Mine));
+		}
+
+		try
+		{
+			await houseService.DeleteHouseByIdAsync(id);
+
+			TempData[WarningMessage] = "The House was succesfully delete!";
+			return RedirectToAction(nameof(Mine));
+		}
+		catch
+		{
+			return GeneralError();
+		}
+	}
 
 	private IActionResult GeneralError()
 	{
