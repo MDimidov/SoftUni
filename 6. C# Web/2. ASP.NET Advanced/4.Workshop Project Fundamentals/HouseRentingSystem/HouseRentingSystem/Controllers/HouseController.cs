@@ -100,6 +100,8 @@ public class HouseController : Controller
 			string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
 			string houseId = await houseService.CreateAndReturnIdAsync(model, agentId);
 
+			TempData[SuccessMessage] = "House was added successfully.";
+
 			return RedirectToAction(nameof(Details), new { id = houseId });
 		}
 		catch
@@ -246,6 +248,7 @@ public class HouseController : Controller
 			return View(model);
 		}
 
+		TempData[SuccessMessage] = "House was added successfully.";
 		return RedirectToAction(nameof(Details), new { id });
 	}
 
