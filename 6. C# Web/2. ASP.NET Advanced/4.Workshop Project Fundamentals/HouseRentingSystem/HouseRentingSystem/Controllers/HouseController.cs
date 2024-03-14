@@ -97,15 +97,16 @@ public class HouseController : Controller
 
 		try
 		{
-			string? agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId());
-			await houseService.CreateAsync(model, agentId!);
+			string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
+			string houseId = await houseService.CreateAndReturnIdAsync(model, agentId);
+
+			return RedirectToAction(nameof(Details), new { id = houseId });
 		}
 		catch
 		{
 			ModelState.AddModelError(string.Empty, "Unexpeted error occured while trying to save changes please try again later or contact with administrator!");
+			return View(model);
 		}
-
-		return RedirectToAction(nameof(All));
 	}
 
 	[HttpGet]
@@ -164,7 +165,7 @@ public class HouseController : Controller
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Edit(string id) 
+	public async Task<IActionResult> Edit(string id)
 	{
 		bool houseExist = await houseService.ExistByIdAsync(id);
 		if (!houseExist)
@@ -199,7 +200,7 @@ public class HouseController : Controller
 		catch
 		{
 			return GeneralError();
-		}		
+		}
 	}
 
 	[HttpPost]

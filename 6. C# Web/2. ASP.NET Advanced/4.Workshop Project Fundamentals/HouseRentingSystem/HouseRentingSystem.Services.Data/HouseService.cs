@@ -115,7 +115,7 @@ public class HouseService : IHouseService
 			})
 			.ToArrayAsync();
 
-	public async Task CreateAsync(HouseFormModel houseModel, string agentId)
+	public async Task<string> CreateAndReturnIdAsync(HouseFormModel houseModel, string agentId)
 	{
 		House newHouse = new()
 		{
@@ -130,6 +130,8 @@ public class HouseService : IHouseService
 
 		await dbContext.Houses.AddAsync(newHouse);
 		await dbContext.SaveChangesAsync();
+
+		return newHouse.Id.ToString();
 	}
 
 	public async Task EditHouseByIdAndFormModelAsync(string houseId, HouseFormModel formModel)

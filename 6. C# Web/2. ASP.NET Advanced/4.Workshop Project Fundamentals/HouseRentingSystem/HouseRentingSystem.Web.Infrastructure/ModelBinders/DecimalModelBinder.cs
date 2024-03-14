@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 
 namespace HouseRentingSystem.Web.Infrastructure.ModelBinders;
@@ -17,7 +16,7 @@ public class DecimalModelBinder : IModelBinder
 		ValueProviderResult valueResult =
 			bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
-		if (valueResult != ValueProviderResult.None && string.IsNullOrWhiteSpace(valueResult.FirstValue))
+		if (valueResult != ValueProviderResult.None && !string.IsNullOrWhiteSpace(valueResult.FirstValue))
 		{
 			decimal parsedValue = 0m;
 			bool binderSucceeded = false;
@@ -29,7 +28,7 @@ public class DecimalModelBinder : IModelBinder
 				formDecValue = formDecValue.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 				formDecValue = formDecValue.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
-				Convert.ToDecimal(formDecValue);
+				parsedValue = Convert.ToDecimal(formDecValue);
 				binderSucceeded = true;
 			}
 			catch (FormatException fe)
