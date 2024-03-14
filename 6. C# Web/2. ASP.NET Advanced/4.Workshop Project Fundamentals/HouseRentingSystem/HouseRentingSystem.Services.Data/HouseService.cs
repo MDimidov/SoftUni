@@ -132,6 +132,23 @@ public class HouseService : IHouseService
 		await dbContext.SaveChangesAsync();
 	}
 
+	public async Task EditHouseByIdAndFormModelAsync(string houseId, HouseFormModel formModel)
+	{
+		House house = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString() == houseId);
+
+		house.Title = formModel.Title;
+		house.Address = formModel.Address;
+		house.Description = formModel.Description;
+		house.ImageUrl = formModel.ImageUrl;
+		house.PricePerMonth = formModel.PricePerMonth;
+		house.CategoryId = formModel.CategoryId;	
+
+		await dbContext.SaveChangesAsync();
+	}
+
 	public async Task<bool> ExistByIdAsync(string houseId)
 		=> await dbContext
 		.Houses

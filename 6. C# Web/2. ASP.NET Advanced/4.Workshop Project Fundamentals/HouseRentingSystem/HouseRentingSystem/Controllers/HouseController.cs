@@ -29,13 +29,20 @@ public class HouseController : Controller
 	[AllowAnonymous]
 	public async Task<IActionResult> All([FromQuery] AllHousesQueryModel queryModel)
 	{
-		AllHousesFilteredAndPagedServiceModel serviceModel = await houseService.AllAsync(queryModel);
+		try
+		{
+			AllHousesFilteredAndPagedServiceModel serviceModel = await houseService.AllAsync(queryModel);
 
-		queryModel.Houses = serviceModel.Houses;
-		queryModel.TotalHouses = serviceModel.TotalHousesCount;
-		queryModel.Categories = await categoryService.AllCategoryNamesAsync();
+			queryModel.Houses = serviceModel.Houses;
+			queryModel.TotalHouses = serviceModel.TotalHousesCount;
+			queryModel.Categories = await categoryService.AllCategoryNamesAsync();
 
-		return View(queryModel);
+			return View(queryModel);
+		}
+		catch
+		{
+			return GeneralError();
+		}
 	}
 
 	[HttpGet]
@@ -49,12 +56,19 @@ public class HouseController : Controller
 			return RedirectToAction("Become", "Agent");
 		}
 
-		HouseFormModel model = new HouseFormModel()
+		try
 		{
-			Categories = await categoryService.AllCategoriesAsync()
-		};
+			HouseFormModel model = new HouseFormModel()
+			{
+				Categories = await categoryService.AllCategoriesAsync()
+			};
 
-		return View(model);
+			return View(model);
+		}
+		catch
+		{
+			return GeneralError();
+		}
 
 	}
 
@@ -105,10 +119,18 @@ public class HouseController : Controller
 			TempData[ErrorMessage] = "House with the provided id does not exist!";
 			return RedirectToAction(nameof(All));
 		}
-		HouseDetailsViewModel viewModel = await houseService
+
+		try
+		{
+			HouseDetailsViewModel viewModel = await houseService
 			.GetDetailsByIdAsync(id);
 
-		return View(viewModel);
+			return View(viewModel);
+		}
+		catch
+		{
+			return GeneralError();
+		}
 	}
 
 	[HttpGet]
@@ -120,22 +142,29 @@ public class HouseController : Controller
 
 		bool isUserAgent = await agentService.AgentExistByUserIdAsync(userId);
 
-		if (isUserAgent)
+		try
 		{
-			string? agentId = await agentService.GetAgentIdByUserIdAsync(userId);
+			if (isUserAgent)
+			{
+				string? agentId = await agentService.GetAgentIdByUserIdAsync(userId);
 
-			myHouses.AddRange(await houseService.AllByAgentIdAsync(agentId));
+				myHouses.AddRange(await houseService.AllByAgentIdAsync(agentId));
+			}
+			else
+			{
+				myHouses.AddRange(await houseService.AllByUserIdAsync(userId));
+			}
 		}
-		else
+		catch
 		{
-			myHouses.AddRange(await houseService.AllByUserIdAsync(userId));
+			return GeneralError();
 		}
 
 		return View(myHouses);
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Edit(string id)
+	public async Task<IActionResult> Edit(string id) 
 	{
 		bool houseExist = await houseService.ExistByIdAsync(id);
 		if (!houseExist)
@@ -160,8 +189,70 @@ public class HouseController : Controller
 			return RedirectToAction(nameof(Mine));
 		}
 
-		HouseFormModel formModel = await houseService.GetHouseForEditByIdAsync(id);
-		formModel.Categories = await categoryService.AllCategoriesAsync();
-		return View(formModel);
+		try
+		{
+			HouseFormModel formModel = await houseService.GetHouseForEditByIdAsync(id);
+			formModel.Categories = await categoryService.AllCategoriesAsync();
+
+			return View(formModel);
+		}
+		catch
+		{
+			return GeneralError();
+		}		
+	}
+
+	[HttpPost]
+	public async Task<IActionResult> Edit(string id, HouseFormModel model)
+	{
+		if (!ModelState.IsValid)
+		{
+			model.Categories = await categoryService.AllCategoriesAsync();
+			return View(model);
+		}
+
+		bool houseExist = await houseService.ExistByIdAsync(id);
+		if (!houseExist)
+		{
+			TempData[ErrorMessage] = "House with the provided id does not exist!";
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
+		if (!isUserAgent)
+		{
+			TempData[ErrorMessage] = "You must become an agent in order to edit house info!";
+			return RedirectToAction("Become", "Agent");
+		}
+
+		string agentId = await agentService.GetAgentIdByUserIdAsync(User.GetId()!);
+
+		bool isAgentOwner = await houseService.IsAgentWithIdOwnerOfHouseWithIdAsync(agentId, id);
+		if (!isAgentOwner)
+		{
+			TempData[ErrorMessage] = "You must become the agent owner of the house you want to edit!";
+			return RedirectToAction(nameof(Mine));
+		}
+
+		try
+		{
+			await houseService.EditHouseByIdAndFormModelAsync(id, model);
+		}
+		catch
+		{
+			ModelState.AddModelError(string.Empty, "Unexpectet error occured while trying to update the house. Please try again later or contact with administrator!");
+			model.Categories = await categoryService.AllCategoriesAsync();
+			return View(model);
+		}
+
+		return RedirectToAction(nameof(Details), new { id });
+	}
+
+
+	private IActionResult GeneralError()
+	{
+		TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact with administrator!";
+
+		return RedirectToAction("Index", "Home");
 	}
 }
