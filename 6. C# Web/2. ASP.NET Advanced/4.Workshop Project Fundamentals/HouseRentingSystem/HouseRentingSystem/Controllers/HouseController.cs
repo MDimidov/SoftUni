@@ -329,6 +329,88 @@ public class HouseController : Controller
 		}
 	}
 
+	[HttpPost]
+	public async Task<IActionResult> Rent(string id)
+	{
+		bool houseExists = await houseService.ExistByIdAsync(id);
+		if(!houseExists)
+		{
+			TempData[ErrorMessage] = "House with provided Id does not exist! Please try again.";
+
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isHouseRented = await houseService.IsRentedByIdAsync(id);
+		if(isHouseRented)
+		{
+			TempData[ErrorMessage] = "Selected house is already rented by another user, please select another house";
+
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isUserAgent = await agentService.AgentExistByUserIdAsync(User.GetId()!);
+		if(isUserAgent)
+		{
+			TempData[ErrorMessage] = "Agents can't rent a houses. Please register as a user.";
+
+			return RedirectToAction("Index", "Home");
+		}
+
+		try
+		{
+			await houseService.RentHouseAsync(id, User.GetId()!);
+
+			TempData[SuccessMessage] = "You rent a house succesfully.";
+		}
+		catch
+		{
+			return GeneralError();
+		}
+
+		return RedirectToAction(nameof(Mine));
+	}
+
+
+	[HttpPost]
+	public async Task<IActionResult> Leave(string id)
+	{
+		bool houseExists = await houseService.ExistByIdAsync(id);
+		if (!houseExists)
+		{
+			TempData[ErrorMessage] = "House with provided Id does not exist! Please try again.";
+
+			return RedirectToAction(nameof(All));
+		}
+
+		bool isHouseRented = await houseService.IsRentedByIdAsync(id);
+		if (!isHouseRented)
+		{
+			TempData[ErrorMessage] = "Selected house is not rented! Please select another house if you wish to leave it";
+
+			return RedirectToAction(nameof(Mine));
+		}
+
+		bool isCurrentUserRenterOfTheHouse = await houseService.IsRentedByUserWithIdAsync(id, User.GetId()!);
+		if (!isCurrentUserRenterOfTheHouse)
+		{
+			TempData[ErrorMessage] = "You must be renter of the house in order to leave it! Please try again with one of your rented house if you wish to leave it!";
+
+			return RedirectToAction(nameof(Mine));
+		}
+
+		try
+		{
+			await houseService.LeaveHouseAsync(id);
+
+			TempData[SuccessMessage] = "You succefuly leave this house!";
+		}
+		catch
+		{
+			return GeneralError();
+		}
+
+		return RedirectToAction(nameof(Mine));
+	}
 	private IActionResult GeneralError()
 	{
 		TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact with administrator!";

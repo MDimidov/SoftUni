@@ -157,7 +157,7 @@ public class HouseService : IHouseService
 		house.Description = formModel.Description;
 		house.ImageUrl = formModel.ImageUrl;
 		house.PricePerMonth = formModel.PricePerMonth;
-		house.CategoryId = formModel.CategoryId;	
+		house.CategoryId = formModel.CategoryId;
 
 		await dbContext.SaveChangesAsync();
 	}
@@ -232,6 +232,27 @@ public class HouseService : IHouseService
 		.Where(h => h.isActive && h.Id.ToString() == houseId)
 		.AllAsync(h => h.AgentId.ToString() == agentId);
 
+	public async Task<bool> IsRentedByIdAsync(string houseId)
+	{
+		House house = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString().Equals(houseId));
+
+		return house.RenterId.HasValue;
+	}
+
+	public async Task<bool> IsRentedByUserWithIdAsync(string houseId, string userId)
+	{
+		House house = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString() == houseId);
+
+		return house.RenterId.HasValue &&
+			   house.RenterId.ToString() == userId;
+	}
+
 	public async Task<IEnumerable<IndexViewModel>> LastThreeHousesAsync()
 	{
 		IEnumerable<IndexViewModel> lastThreeHouses = await dbContext
@@ -249,5 +270,27 @@ public class HouseService : IHouseService
 			.ToArrayAsync();
 
 		return lastThreeHouses;
+	}
+
+	public async Task LeaveHouseAsync(string houseId)
+	{
+		House house = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString().Equals(houseId));
+
+		house.RenterId = null;
+		await dbContext.SaveChangesAsync();
+	}
+
+	public async Task RentHouseAsync(string houseId, string userId)
+	{
+		House house = await dbContext
+			.Houses
+			.Where(h => h.isActive)
+			.FirstAsync(h => h.Id.ToString() == houseId);
+
+		house.RenterId = Guid.Parse(userId);
+		await dbContext.SaveChangesAsync();
 	}
 }

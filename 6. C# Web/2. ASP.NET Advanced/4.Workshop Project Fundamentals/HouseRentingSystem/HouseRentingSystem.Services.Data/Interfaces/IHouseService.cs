@@ -30,4 +30,12 @@ public interface IHouseService
 	Task<HousePreDeleteDetailsViewModel> GetHouseForDeleteByIdAsync(string id);
 
 	Task DeleteHouseByIdAsync(string houseId);
+
+	Task<bool> IsRentedByIdAsync(string houseId);
+
+	Task RentHouseAsync(string houseId, string userId);
+
+	Task<bool> IsRentedByUserWithIdAsync(string houseId, string userId);
+
+	Task LeaveHouseAsync(string houseId);
 }
