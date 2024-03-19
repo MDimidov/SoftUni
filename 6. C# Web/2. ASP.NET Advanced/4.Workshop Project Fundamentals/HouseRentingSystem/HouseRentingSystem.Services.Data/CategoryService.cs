@@ -25,6 +25,17 @@ public class CategoryService : ICategoryService
             })
             .ToArrayAsync();
 
+    public async Task<IEnumerable<AllCategoriesViewModel>> AllCategoriesForListAsync()
+        => await dbContext
+        .Categories
+        .AsNoTracking()
+        .Select(c => new AllCategoriesViewModel
+        {
+            Id = c.Id,
+            Name = c.Name,
+        })
+        .ToArrayAsync();
+
 	public async Task<IEnumerable<string>> AllCategoryNamesAsync()
 	    => await dbContext
         .Categories

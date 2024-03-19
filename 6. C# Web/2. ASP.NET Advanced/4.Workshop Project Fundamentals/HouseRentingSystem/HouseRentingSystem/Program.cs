@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseRentingSystem.Web
 {
-    public class Program
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
 			WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
-			string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+			string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
 				?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 			builder.Services.AddDbContext<HouseRentingDbContext>(options =>
@@ -30,16 +30,16 @@ namespace HouseRentingSystem.Web
 				options.SignIn.RequireConfirmedAccount = builder
 					.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
 				options.Password.RequireNonAlphanumeric = builder
-                    .Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric"); 
+					.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
 				options.Password.RequireLowercase = builder
-                    .Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
-                options.Password.RequireUppercase = builder
-                    .Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
-                options.Password.RequireDigit = builder
-                    .Configuration.GetValue<bool>("Identity:Password:RequireDigit");
-                options.Password.RequiredLength = builder
-                    .Configuration.GetValue<int>("Identity:Password:RequiredLength");
-            })
+					.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+				options.Password.RequireUppercase = builder
+					.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+				options.Password.RequireDigit = builder
+					.Configuration.GetValue<bool>("Identity:Password:RequireDigit");
+				options.Password.RequiredLength = builder
+					.Configuration.GetValue<int>("Identity:Password:RequiredLength");
+			})
 				.AddEntityFrameworkStores<HouseRentingDbContext>();
 
 			builder.Services.AddApplicationServices(typeof(IHouseService));
@@ -81,9 +81,10 @@ namespace HouseRentingSystem.Web
 			//	pattern: "{controller=Home}/{action=Index}/{id?}");
 			app.UseEndpoints(endpoints =>
 			{
-				//endpoints.MapControllerRoute(
-				//	name: "ProtectingUrlPattern",
-				//	pattern: "/{controller}/{action}/{id}/{information}");
+				endpoints.MapControllerRoute(
+					name: "ProtectingUrlPattern",
+					pattern: "/{controller}/{action}/{id}/{information}",
+					defaults: new { Controller = "Category", Action = "Details" });
 				endpoints.MapDefaultControllerRoute();
 				endpoints.MapRazorPages();
 			});

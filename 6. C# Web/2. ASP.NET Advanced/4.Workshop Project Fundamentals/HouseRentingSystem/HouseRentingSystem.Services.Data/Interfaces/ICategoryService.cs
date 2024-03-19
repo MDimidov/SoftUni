@@ -6,6 +6,8 @@ public interface ICategoryService
 {
     Task<IEnumerable<HouseSelectCategoryFormModel>> AllCategoriesAsync();
 
+    Task<IEnumerable<AllCategoriesViewModel>> AllCategoriesForListAsync();
+
     Task<bool> ExistByIdAsync(int id);
 
     Task<IEnumerable<string>> AllCategoryNamesAsync();
