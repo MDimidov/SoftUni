@@ -340,7 +340,7 @@ public class HouseController : Controller
 			return RedirectToAction(nameof(All));
 		}
 
-		bool isHouseRented = await houseService.IsRentedByIdAsync(id);
+		bool isHouseRented = await houseService.IsRentedAsync(id);
 		if(isHouseRented)
 		{
 			TempData[ErrorMessage] = "Selected house is already rented by another user, please select another house";
@@ -382,7 +382,7 @@ public class HouseController : Controller
 			return RedirectToAction(nameof(All));
 		}
 
-		bool isHouseRented = await houseService.IsRentedByIdAsync(id);
+		bool isHouseRented = await houseService.IsRentedAsync(id);
 		if (!isHouseRented)
 		{
 			TempData[ErrorMessage] = "Selected house is not rented! Please select another house if you wish to leave it";

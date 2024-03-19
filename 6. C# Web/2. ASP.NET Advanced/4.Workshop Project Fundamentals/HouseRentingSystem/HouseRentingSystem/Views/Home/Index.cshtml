@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<IndexViewModel>
+
+@inject IAgentService AgentService
+@{
+	bool isUserAgent = await AgentService.AgentExistByUserIdAsync(User.GetId()!);
+}
+
 @{
 	ViewData["Title"] = "Home Page";
 	var houses = Model.ToList();
@@ -15,9 +21,11 @@
 		<p class="lead">
 			@if (User.Identity?.IsAuthenticated ?? false)
 			{
-				<a asp-controller="House" asp-action="Add" class="btn btn-primary
-btn-lg"
-				   role="button">Add House</a>
+				@if (isUserAgent)
+				{
+					<a asp-controller="House" asp-action="Add" class="btn btn-primary btn-lg"
+					   role="button">Add House</a>
+				}				
 			}
 		</p>
 	</div>

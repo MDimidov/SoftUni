@@ -247,7 +247,7 @@ public class HouseService : IHouseService
 		.Where(h => h.isActive && h.Id.ToString() == houseId)
 		.AllAsync(h => h.AgentId.ToString() == agentId);
 
-	public async Task<bool> IsRentedByIdAsync(string houseId)
+	public async Task<bool> IsRentedAsync(string houseId)
 	{
 		House house = await dbContext
 			.Houses

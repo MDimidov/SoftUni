@@ -51,6 +51,22 @@ public class AgentService : IAgentService
 		return agent.Id.ToString();
 	}
 
+	public async Task<bool> HasHouseWithIdAsync(string? userId, string houseId)
+	{
+		Agent? agent = await dbContext
+			.Agents
+			.Include(a => a.Houses)
+			.FirstOrDefaultAsync(a => a.UserId.ToString() == userId);
+
+		if(agent == null)
+		{
+			return false;
+		}
+
+		houseId = houseId.ToLower();
+		return agent.Houses.Any(h => h.Id.ToString() == houseId);
+	}
+
 	public async Task<bool> HasRentsByUserIdAsync(string userId)
 	{
 		ApplicationUser? user = await dbContext

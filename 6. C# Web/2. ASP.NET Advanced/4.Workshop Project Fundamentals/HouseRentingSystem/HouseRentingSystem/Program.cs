@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using HouseRentingSystem.Web.Infrastructure.Extensions;
 using Microsoft.Extensions.ObjectPool;
 using HouseRentingSystem.Web.Infrastructure.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HouseRentingSystem.Web
 {
@@ -48,6 +49,8 @@ namespace HouseRentingSystem.Web
 				.AddMvcOptions(options =>
 				{
 					options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+					//Protetct your web site from CSRF
+					options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 				});
 
 			WebApplication app = builder.Build();
@@ -76,9 +79,16 @@ namespace HouseRentingSystem.Web
 			//app.MapControllerRoute(
 			//	name: "default",
 			//	pattern: "{controller=Home}/{action=Index}/{id?}");
-
-			app.MapDefaultControllerRoute();
-			app.MapRazorPages();
+			app.UseEndpoints(endpoints =>
+			{
+				//endpoints.MapControllerRoute(
+				//	name: "ProtectingUrlPattern",
+				//	pattern: "/{controller}/{action}/{id}/{information}");
+				endpoints.MapDefaultControllerRoute();
+				endpoints.MapRazorPages();
+			});
+			//app.MapDefaultControllerRoute();
+			//app.MapRazorPages();
 
 			app.Run();
 		}
