@@ -1,4 +1,5 @@
 ﻿using HouseRentingSystem.Services.Data.Interfaces;
+using HouseRentingSystem.Web.Infrastructure.Extensions;
 using HouseRentingSystem.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,25 @@ public class CategoryController : Controller
 	{
 		IEnumerable<AllCategoriesViewModel> viewModel = 
 			await categoryService.AllCategoriesForListAsync();
+
+		return View(viewModel);
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> Details(int id, string information)
+	{
+		
+		bool categoryExist = await categoryService.ExistByIdAsync(id);
+		if(!categoryExist)
+		{
+			return NotFound();
+		}
+		CategoryDetailsViewModel viewModel = await categoryService.GetDetailsByIdAsync(id);
+
+        if (viewModel.GetUrlInformation() != information)
+		{
+			return NotFound();
+		}
 
 		return View(viewModel);
 	}

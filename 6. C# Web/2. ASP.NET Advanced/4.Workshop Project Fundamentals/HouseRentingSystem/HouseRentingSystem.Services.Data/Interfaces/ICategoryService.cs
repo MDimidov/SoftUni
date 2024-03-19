@@ -10,5 +10,7 @@ public interface ICategoryService
 
     Task<bool> ExistByIdAsync(int id);
 
-    Task<IEnumerable<string>> AllCategoryNamesAsync();
+    Task<IEnumerable<string>> AllCategoryNamesAsync();  
+
+    Task<CategoryDetailsViewModel> GetDetailsByIdAsync(int id);
 }

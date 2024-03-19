@@ -1,6 +1,8 @@
-﻿namespace HouseRentingSystem.Web.ViewModels.Category;
+﻿using HouseRentingSystem.Web.ViewModels.Category.Interfaces;
 
-public class AllCategoriesViewModel : HouseSelectCategoryFormModel
+namespace HouseRentingSystem.Web.ViewModels.Category;
+
+public class AllCategoriesViewModel : HouseSelectCategoryFormModel, ICategoryDetailsModel
 {
 
 }
