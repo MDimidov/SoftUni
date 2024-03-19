@@ -1,4 +1,5 @@
 ﻿using HouseRentingSystem.Services.Data.Models.House;
+using HouseRentingSystem.Services.Data.Models.Statistics;
 using HouseRentingSystem.Web.ViewModels.Home;
 using HouseRentingSystem.Web.ViewModels.House;
 
@@ -38,4 +39,8 @@ public interface IHouseService
 	Task<bool> IsRentedByUserWithIdAsync(string houseId, string userId);
 
 	Task LeaveHouseAsync(string houseId);
+
+
+	//Statistics
+	Task<StatisticsServiceModel> GetStatisticsAsync();
 }
