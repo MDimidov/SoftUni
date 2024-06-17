@@ -237,3 +237,101 @@ test('Verify Welcome, user@email text is visible after log in', async ({page}) =
     expect(isElementVisible).toBe(true);
     expect(userEmailText).toEqual(`Welcome, ${userMail}`);
 });
+
+test('Verify submit the form with valid credentials', async ({page}) =>{
+    // Open the application
+    await page.goto(url);
+
+    // Locate page toolbar
+    await page.waitForSelector('nav.navbar');
+
+    // Get Log In link
+    const loginLink = await page.$('a[href="/login"]');
+    await loginLink.click();
+
+    await page.fill('#email', 'peter@abv.bg');
+    await page.fill('#password', '123456');
+
+    // Log In with account
+    await page.click('input[type="submit"]');
+
+    //Verify if the URL is correct
+    await page.$('a[href="/catalog"]')
+    expect(page.url()).toEqual(`${url}/catalog`);
+});
+
+test('Verify submit the form with empty input fields', async ({page}) =>{
+     // open the application
+     await page.goto(url);
+
+     // locate page toolbar
+     await page.waitForSelector('nav.navbar');
+
+     // get log in link
+     const loginLink = await page.$('a[href="/login"]');
+     await loginLink.click();
+
+     // log in with empty account
+     await page.click('input[type="submit"]');
+    
+     page.on('dialog', async dialog => {
+         expect(dialog.type()).toContain('alert');
+         expect(dialog.message()).toContain('all fields are required!');
+         await dialog.accept();
+     });
+
+     //verify if the element is visible
+     expect(page.url()).toEqual(`${url}/login`);
+ });
+
+test('Verify submit the form with empty email field', async ({page}) =>{
+    // open the application
+    await page.goto(url);
+
+    // locate page toolbar
+    await page.waitForSelector('nav.navbar');
+
+    // get log in link
+    const loginLink = await page.$('a[href="/login"]');
+    await loginLink.click();
+
+    await page.fill('#password', '123456');
+
+    // log in with empty account
+    await page.click('input[type="submit"]');
+   
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain('alert');
+        expect(dialog.message()).toContain('all fields are required!');
+        await dialog.accept();
+    });
+
+    //verify if the element is visible
+    expect(page.url()).toEqual(`${url}/login`);
+});
+
+test('Verify submit the form with empty password field', async ({page}) =>{
+    // open the application
+    await page.goto(url);
+
+    // locate page toolbar
+    await page.waitForSelector('nav.navbar');
+
+    // get log in link
+    const loginLink = await page.$('a[href="/login"]');
+    await loginLink.click();
+
+    await page.fill('#email', 'peter@abv.bg');
+
+    // log in with empty account
+    await page.click('input[type="submit"]');
+   
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain('alert');
+        expect(dialog.message()).toContain('all fields are required!');
+        await dialog.accept();
+    });
+
+    //verify if the element is visible
+    expect(page.url()).toEqual(`${url}/login`);
+});
