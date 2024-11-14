@@ -12,4 +12,16 @@ function isYearLeap(year) {
 
 }
 
-isYearLeap(1984)
+isYearLeap(1984);
+
+// --------------Variant 2---------------------
+
+function isYearLeap(year) {
+    if((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ){
+        console.log('yes');
+    } else{
+        console.log('no');
+    }
+}
+
+isYearLeap(2003);
