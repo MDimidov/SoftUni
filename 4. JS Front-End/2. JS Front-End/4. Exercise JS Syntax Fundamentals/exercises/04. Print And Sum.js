@@ -11,3 +11,20 @@ function SumArray(startNum, endNum){
 }
 
 SumArray(0, 26)
+
+// --------------Variant 2---------------------
+
+function SumArray(startNum, endNum){
+    let allNumsBetween = [];
+    let sum = 0;
+
+    for (let i = startNum; i <= endNum; i++) {
+        sum += i;
+        allNumsBetween.push(i);
+    }
+
+    console.log(allNumsBetween.join(' '));
+    console.log(`Sum: ${sum}`)
+}
+
+SumArray(0, 26)
