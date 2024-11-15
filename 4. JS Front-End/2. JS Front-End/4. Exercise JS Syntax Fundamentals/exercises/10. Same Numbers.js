@@ -30,4 +30,29 @@ function isAllDigitsTheSame(num) {
   console.log(sum);
 }
 
-isAllDigitsTheSame(22222);
+isAllDigitsTheSame(22222); 
+
+
+// --------------Variant 2---------------------
+
+
+
+function isAllDigitsTheSame(num) {
+  const digits = num
+  .toString()
+  .split('');
+
+  const allSame = digits
+  .every(digit => digit === digits[0]);
+
+  const sum = digits
+  .map(Number)
+  .reduce(function (a, b) {
+    return a + b;
+  })
+  
+  console.log(allSame);
+  console.log(sum);
+}
+
+isAllDigitsTheSame(222223); 
