@@ -10,3 +10,21 @@ function SumOfDigits(num) {
 }
 
 SumOfDigits(543)
+
+
+// --------------Variant 2---------------------
+
+
+function SumOfDigits(num) {
+  const sum = num
+            .toString()
+            .split('')
+            .map(Number)
+            .reduce(function (a, b) {
+                return a + b;
+            }, 0);
+
+    console.log(sum);
+}
+
+SumOfDigits(256)
