@@ -17,3 +17,25 @@ function SortNums(array) {
 }
 
 SortNums([1, 65, 3, 52, 48, 63, 31, -3, 18, 56]);
+
+
+
+// --------------Variant 2---------------------
+
+
+function SortNums(array) {
+  let sortArray = array.sort((a, b) => a - b);
+  const finalArray = sortArray.reduce((acc, _, index) => {
+    if (index % 2 === 0) {
+      acc.push(sortArray.shift());
+    } else {
+      acc.push(sortArray.pop());
+    }
+
+    return acc;
+  }, []);
+
+    console.log(finalArray);
+}
+
+SortNums([1, 65, 3, 52, 48, 63, 31, -3, 18, 56]);
