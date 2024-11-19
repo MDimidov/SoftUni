@@ -22,3 +22,19 @@ function printCharacters(ch1, ch2) {
 }
 
 printCharacters("#", ":");
+
+// -----------------Method 2--------------------
+
+function printCharacters(ch1, ch2) {
+  const min = Math.min(ch1.charCodeAt(0), ch2.charCodeAt(0));
+  const max = Math.max(ch1.charCodeAt(0), ch2.charCodeAt(0));
+
+  const arrayOfChars = [];
+  for (let i = min + 1; i < max; i++) {
+    arrayOfChars.push(String.fromCharCode(i));    
+  }
+
+  console.log(arrayOfChars.join(" "));
+}
+
+printCharacters("a", "d");

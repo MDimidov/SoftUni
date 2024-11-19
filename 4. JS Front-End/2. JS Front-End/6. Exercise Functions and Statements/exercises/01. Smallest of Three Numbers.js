@@ -17,3 +17,11 @@ function getSmallestNum(a, b, c) {
 }
 
 getSmallestNum(2, 5, 3);
+
+// -----------------Method 2--------------------
+
+function getSmallestNum(a, b, c) {
+  console.log(Math.min(a, b, c));
+}
+
+getSmallestNum(2, 5, 3);
