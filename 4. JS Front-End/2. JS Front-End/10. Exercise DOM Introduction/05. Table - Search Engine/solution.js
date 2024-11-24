@@ -18,3 +18,26 @@ function solve() {
     console.log(activeRows);
   }
 }
+
+// -----------------Method 2--------------------
+
+function solve() {
+  document.querySelector("#searchBtn").addEventListener("click", onClick);
+
+  
+  function onClick() {  
+    const searchField = document.getElementById('searchField').value.toLowerCase();
+    const rowsArr = document.querySelectorAll('tbody>tr');
+
+    for (const row of rowsArr) {
+      row.classList.remove('select');
+      const cells = row.children;
+      for (const cell of cells) {
+        if (cell.textContent.toLowerCase().includes(searchField) && searchField.length > 0) {
+          row.classList.add('select');
+        }
+      }
+    }
+    document.getElementById('searchField').value = '';
+  }
+}

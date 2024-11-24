@@ -16,3 +16,30 @@ function solve() {
     resultSpan.textContent = "Error!";
   }
 }
+
+// -----------------Method 2--------------------
+
+function solve() {
+  const textArr = document.getElementById('text').value.toLowerCase().split(' ');
+  const commandCase = document.getElementById('naming-convention').value;
+
+  let result = textArr.reduce((acc, curr) =>{
+    acc += curr.replace(/^./, curr[0].toUpperCase());
+    return acc;
+  }, '');
+
+  switch (commandCase) {
+    case 'Camel Case':
+      result = result.replace(result[0], result[0].toLowerCase())
+      break;
+    case 'Pascal Case':
+      break;
+    default:
+      result = 'Error!';
+      break;
+  }
+
+  const resultSpan = document.getElementById('result');
+  resultSpan.textContent = result;
+  console.log(result);
+}
