@@ -51,3 +51,61 @@ function solve() {
       return bestRestaurant;
    }
 }
+
+// -----------------Method 2--------------------
+
+function solve() {
+   document.querySelector('#btnSend').addEventListener('click', onClick);
+   
+   function onClick() {
+      const inputArr = JSON.parse(document.querySelector('#inputs>textarea').value);
+      let restaurants = [];
+
+      for (const restInfo of inputArr) {
+         const restObj = getRestObj(restInfo);
+         restaurants.push(restObj);
+      }
+      
+      const bestRest = getBestRestaurant(restaurants);
+      const bestRestaurant = document.querySelector('#bestRestaurant>p');
+      bestRestaurant.textContent = `Name: ${bestRest.restName} Average Salary: ${bestRest.avgSalary.toFixed(2)} Best Salary: ${bestRest.persons.sort((a, b) => b.salary - a.salary)[0].salary.toFixed(2)}`;
+
+      const bestWorkers = getBestWorkers(bestRest);
+      const showBestWorkers = document.querySelector('#workers>p');
+      showBestWorkers.textContent = bestWorkers;
+
+      function getRestObj(restInfo) {
+         const [restName, personInfo] = restInfo.split(' - ');
+         const persons = personInfo.split(', ').map( x => {
+            const [name, salary] = x.split(' ');
+            return {
+               name: name,
+               salary: Number(salary),
+            }
+         });
+
+         const avgSalary = persons.reduce((acc, curr) => {
+            acc += curr.salary;
+            return acc;
+         }, 0) / persons.length;
+
+         return {
+            restName,
+            persons,
+            avgSalary,
+         }
+      }
+
+      function getBestRestaurant(restaurants) {
+         return restaurants.sort((a, b) => b.avgSalary - a.avgSalary)[0];
+      }
+
+      function getBestWorkers(restaurant) {
+         const bestWorkers = restaurant.persons.sort((a, b) => b.salary - a.salary);
+         return bestWorkers.reduce((acc, curr) => {
+            acc += `Name: ${curr.name} With Salary: ${curr.salary} `;
+            return acc;
+         }, '')
+      }
+   }
+}
