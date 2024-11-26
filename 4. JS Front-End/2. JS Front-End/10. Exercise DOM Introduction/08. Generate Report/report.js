@@ -29,5 +29,32 @@ function generateReport() {
         result.push(object);
     }
     output.textContent = JSON.stringify(result, null, 1);
+}
 
+// -----------------Method 2--------------------
+
+
+function generateReport() {
+    const columnNames = Array.from(document.querySelectorAll('thead>tr>th'))
+        .map(col => ({
+            name: col.textContent.trim().toLowerCase(),
+            isChecked: col.querySelector('input').checked,
+        }));
+
+    const rows = Array.from(document.querySelectorAll('tbody>tr'));
+    const columns = [];
+
+    for (const colTr of rows) {
+        const colTd = Array.from(colTr.children).map(c => c.textContent);
+        const obj = {};
+        for (let i = 0; i < colTd.length; i++) {
+            if(columnNames[i].isChecked){
+                obj[columnNames[i].name] = colTd[i];
+            } 
+        }
+        columns.push(obj);
+    }
+
+    const output = document.querySelector('#output');
+    output.textContent = JSON.stringify(columns, null, 1);
 }
