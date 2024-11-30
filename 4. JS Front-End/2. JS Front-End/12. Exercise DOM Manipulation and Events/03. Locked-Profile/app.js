@@ -22,3 +22,29 @@ function lockedProfile() {
         }
     }
 }
+
+// -----------------Method 2--------------------
+
+function lockedProfile() {
+    const buttons = document.querySelectorAll('button');
+    
+    for (const btn of buttons) {
+        btn.addEventListener('click', () => {
+
+            const hiddenFields = btn.parentElement.querySelector('div[id]');
+            const isProfileLocked = btn.parentElement.querySelector('input[value=lock]').checked;
+            const btnName = btn.textContent;
+            if (isProfileLocked){
+                return;
+            }
+                
+            if (btnName === 'Show more') {
+                btn.textContent = 'Hide it';
+                hiddenFields.style.display = 'block';
+            } else {
+                btn.textContent = 'Show more';
+                hiddenFields.style.display = 'none';
+            }
+        });
+    }
+}

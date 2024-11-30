@@ -38,3 +38,51 @@ function attachEventsListeners() {
     }
 
 }
+
+// -----------------Method 2--------------------
+
+function attachEventsListeners() {
+
+    
+    const selectedBtn = {
+        elements: ['days', 'hours', 'minutes', 'seconds'],
+    };
+
+    const daysInput = document.querySelector(`#${selectedBtn.elements[0]}`);
+    const hoursInput = document.querySelector(`#${selectedBtn.elements[1]}`);
+    const minutesInput = document.querySelector(`#${selectedBtn.elements[2]}`);
+    const secondsInput = document.querySelector(`#${selectedBtn.elements[3]}`);
+
+   for (const element of selectedBtn.elements) {
+    const inputNum = document.querySelector(`#${element}`);
+    const btn = document.querySelector(`#${element}Btn`);
+
+    btn.addEventListener('click', () => {
+            switch (element) {
+                case selectedBtn.elements[0]:
+                    hoursInput.value = inputNum.value * 24;
+                    minutesInput.value = inputNum.value * 60 * 24;
+                    secondsInput.value = inputNum.value * 60 * 60 *24;
+                    break;
+
+                case selectedBtn.elements[1]:
+                    daysInput.value = inputNum.value / 24;
+                    minutesInput.value = inputNum.value * 60;
+                    secondsInput.value = minutesInput.value * 60;
+                    break;
+
+                case selectedBtn.elements[2]:
+                    hoursInput.value = inputNum.value / 60;
+                    daysInput.value = hoursInput.value / 24;
+                    secondsInput.value = inputNum.value * 60;
+                    break;
+            
+                case selectedBtn.elements[3]:
+                    minutesInput.value = inputNum.value / 60;
+                    hoursInput.value = minutesInput.value / 60;
+                    daysInput.value = hoursInput.value / 24;
+                    break;
+            } 
+    });
+   }
+}

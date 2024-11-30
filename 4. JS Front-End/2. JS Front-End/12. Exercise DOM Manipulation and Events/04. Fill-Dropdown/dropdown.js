@@ -11,3 +11,20 @@ function addItem() {
     text.value = '';
     value.value = '';
 }
+
+// -----------------Method 2--------------------
+
+function addItem() {
+    const dropDownMenu = document.querySelector('#menu');
+    const optionElement = document.createElement('option');
+
+    const newItemText = document.querySelector('#newItemText');
+    const newItemValue = document.querySelector('#newItemValue');
+
+    optionElement.textContent = newItemText.value;
+    optionElement.value = newItemValue.value;
+    dropDownMenu.appendChild(optionElement);
+
+    newItemText.value = '';
+    newItemValue.value = '';
+}
