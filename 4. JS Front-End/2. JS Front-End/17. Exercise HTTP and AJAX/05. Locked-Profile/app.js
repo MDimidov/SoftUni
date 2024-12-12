@@ -36,7 +36,7 @@ function lockedProfile() {
         divUserInfo.appendChild(createInputEl('email', `user${counter}Email`,profile.email));
         const labelAge = document.createElement('label');
         divUserInfo.appendChild(labelAge);
-        divUserInfo.appendChild(createInputEl('text', `user${counter}Age`,profile.age));
+        divUserInfo.appendChild(createInputEl('number', `user${counter}Age`,profile.age));
 
         profileDiv.appendChild(divUserInfo);
 
@@ -48,15 +48,15 @@ function lockedProfile() {
         mainDiv.appendChild(profileDiv);
     }
     
-function addInnerHtml(username, counter) {
-    return `<img src="./iconProfile2.png" class="userIcon" />
+    function addInnerHtml(counter) {
+        return `<img src="./iconProfile2.png" class="userIcon" />
 				<label>Lock</label>
 				<input type="radio" name="user${counter}Locked" value="lock" checked>
 				<label>Unlock</label>
 				<input type="radio" name="user${counter}Locked" value="unlock"><br>
 				<hr>
 				<label>Username</label>`;
-}
+    }
 
     function createInputEl(type, nameValue, value) {
         const inputUsername = document.createElement('input');

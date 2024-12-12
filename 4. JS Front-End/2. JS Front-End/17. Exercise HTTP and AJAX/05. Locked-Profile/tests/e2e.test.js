@@ -97,17 +97,18 @@ describe('E2E tests', function () {
       const data = mockData.profile;
       const { get } = await handle(endpoints.list);
       get(data);
-
+    
       await page.goto(host);
       await page.waitForSelector('.profile');
-
+    
       await page.click('input[value="unlock"]');
       await page.click('text=Show more');
-      const post = await page.$$eval(`input[type="email"]`, (t) =>
-        t.map((s) => s.value)
-      );
-      expect(post[0]).to.equal(data[0].email);
-      expect(post[1]).to.equal(`${data[0].age}`);
+    
+      const emailValue = await page.$eval('input[type="email"]', (input) => input.value);
+      const numberValue = await page.$eval('input[type="number"]', (input) => input.value);
+    
+      expect(emailValue).to.equal(data[0].email);
+      expect(numberValue).to.equal(`${data[0].age}`);
     });
   });
 });
