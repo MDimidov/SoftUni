@@ -1,7 +1,7 @@
-# SoftUni
-AllMyExercise
+# <p align="center"> SoftUni </p>
+## <p align="center"> AllMyExercise </p>
 
-# <p align="center"> Courses from the main program in SoftUni <p>
+# <p align="center"> Courses from the main program in SoftUni </p>
 
 <a href="https://softuni.bg/trainings/courses" rel="Courses"><img src="https://softuni.bg/content/images/svg-logos/software-university-logo.svg?sanitize=true" alt="Software University Logo"></a>
 
@@ -29,7 +29,6 @@ AllMyExercise
 | <a href="https://softuni.bg/trainings/3836/programming-fundamentals-with-csharp-september-2022"> Programming Fundamentals with C# </a> | <a href="https://softuni.bg/certificates/details/151789/bc29bef1"> Link</a> |
 | <a href="https://softuni.bg/trainings/3957/csharp-advanced-january-2023"> C# Advanced </a>                                             | <a href="https://softuni.bg/certificates/details/158110/a859b5fa"> Link</a> |
 | <a href="https://softuni.bg/trainings/3958/csharp-oop-february-2023"> C# OOP </a>                                                      | <a href="https://softuni.bg/certificates/details/168808/8729c778"> Link</a> |
-| <a href="https://softuni.bg/trainings/2495/databases-basics-ms-sql-server-september-2019"> Databases Basics - MS SQL Server </a>   | <a href="https://softuni.bg/certificates/details/71212/a8c15a18"> Link</a> |
 | <a href="https://softuni.bg/trainings/4182/ms-sql-september-2023"> MS SQL </a>                         | <a href="https://softuni.bg/certificates/details/185889/d40eb039"> Link</a> |
 | <a href="https://softuni.bg/trainings/4234/entity-framework-core-october-2023"> Entity Framework Core </a>                         | <a href="https://softuni.bg/certificates/details/194164/16a25706"> Link</a> |
 | <a href="https://softuni.bg/trainings/4367/asp-net-fundamentals-january-2024"> ASP.NET Fundamentals </a>                                     | <a href="https://softuni.bg/certificates/details/206693/3d33e8c5"> Link</a> |
