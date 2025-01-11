@@ -1,5 +1,5 @@
 # <p align="center"> SoftUni </p>
-## <p align="center"> AllMyExercise </p>
+## <p align="center"> *AllMyExercise* </p>
 
 # <p align="center"> Courses from the main program in SoftUni </p>
 
