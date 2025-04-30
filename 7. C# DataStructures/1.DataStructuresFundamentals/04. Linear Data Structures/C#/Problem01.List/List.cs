@@ -10,21 +10,57 @@
         private T[] items;
 
         public List()
-            : this(DEFAULT_CAPACITY) {
+            : this(DEFAULT_CAPACITY)
+        {
         }
 
         public List(int capacity)
         {
-            throw new NotImplementedException();
+            if (capacity < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(capacity));
+            }
+
+            this.items = new T[capacity];
         }
 
-        public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public T this[int index]
+        {
+            get
+            {
+                if (index < Count)
+                {
+                    return items[index];
+                }
+
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+            set
+            {
+                if (index < Count)
+                {
+                   items[index] = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
+            }
+        }
 
         public int Count { get; private set; }
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if (items.Length == Count)
+            {
+                T[] itemsCopy = new T[items.Length * 2];
+                Array.Copy(items, itemsCopy, items.Length);
+                items = itemsCopy;
+            }
+
+            items[Count++] = item;
         }
 
         public bool Contains(T item)
@@ -34,7 +70,10 @@
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Count; i++)
+            {
+                yield return items[i];
+            }
         }
 
         public int IndexOf(T item)
@@ -58,8 +97,6 @@
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+            => GetEnumerator();
     }
 }
