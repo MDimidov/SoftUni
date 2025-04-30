@@ -110,7 +110,20 @@
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            int index = IndexOf(item);
+
+            if (index == -1)
+            {
+                return false;
+            }
+
+            Count--;
+            for (int i = index; i < Count; i++)
+            {
+                items[i] = items[i + 1];
+            }
+
+            return true;
         }
 
         public void RemoveAt(int index)
