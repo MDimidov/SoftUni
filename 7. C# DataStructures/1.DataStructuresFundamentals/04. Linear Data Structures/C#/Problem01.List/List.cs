@@ -28,7 +28,7 @@
         {
             get
             {
-                if (index < Count)
+                if (CheckIndexRange(index))
                 {
                     return items[index];
                 }
@@ -37,9 +37,9 @@
             }
             set
             {
-                if (index < Count)
+                if (CheckIndexRange(index))
                 {
-                   items[index] = value;
+                    items[index] = value;
                 }
                 else
                 {
@@ -53,11 +53,9 @@
 
         public void Add(T item)
         {
-            if (items.Length == Count)
+            if (items.Length <= Count)
             {
-                T[] itemsCopy = new T[items.Length * 2];
-                Array.Copy(items, itemsCopy, items.Length);
-                items = itemsCopy;
+                GrowArray();
             }
 
             items[Count++] = item;
@@ -65,7 +63,13 @@
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Count; i++)
+            {
+                if (item.Equals(items[i]))
+                    return true;
+            }
+
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -78,12 +82,30 @@
 
         public int IndexOf(T item)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Count; i++)
+            {
+                if (item.Equals(items[i]))
+                    return i;
+            }
+
+            return -1;
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            if (items.Length <= Count)
+            {
+                GrowArray();
+            }
+
+            CheckIndexRange(index);
+
+            for (int i = Count++; i > index; i--)
+            {
+                items[i] = items[i - 1];
+            }
+
+            items[index] = item;
         }
 
         public bool Remove(T item)
@@ -98,5 +120,22 @@
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
+
+        private void GrowArray()
+        {
+            T[] itemsCopy = new T[items.Length * 2];
+            Array.Copy(items, itemsCopy, items.Length);
+            items = itemsCopy;
+        }
+
+        private bool CheckIndexRange(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                throw new IndexOutOfRangeException(nameof(index));
+            }
+
+            return true;
+        }
     }
 }
