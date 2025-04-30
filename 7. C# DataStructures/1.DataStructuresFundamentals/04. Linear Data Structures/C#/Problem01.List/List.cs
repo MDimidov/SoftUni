@@ -28,7 +28,7 @@
         {
             get
             {
-                if (CheckIndexRange(index))
+                if (IsIndexValid(index))
                 {
                     return items[index];
                 }
@@ -37,7 +37,7 @@
             }
             set
             {
-                if (CheckIndexRange(index))
+                if (IsIndexValid(index))
                 {
                     items[index] = value;
                 }
@@ -98,7 +98,7 @@
                 GrowArray();
             }
 
-            CheckIndexRange(index);
+            IsIndexValid(index);
 
             for (int i = Count++; i > index; i--)
             {
@@ -128,7 +128,14 @@
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            if (IsIndexValid(index))
+            {
+                Count--;
+                for (int i = index; i < Count; i++)
+                {
+                    items[i] = items[i + 1];
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -141,7 +148,7 @@
             items = itemsCopy;
         }
 
-        private bool CheckIndexRange(int index)
+        private bool IsIndexValid(int index)
         {
             if (index < 0 || index >= Count)
             {
