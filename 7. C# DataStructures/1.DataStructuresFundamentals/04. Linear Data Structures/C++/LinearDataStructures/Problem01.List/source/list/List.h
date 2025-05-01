@@ -8,11 +8,12 @@
 #include "algorithm"
 
 template <typename T>
-class List	 : public IAbstractList<T>
+class List : public IAbstractList<T>
 {
 private:
 	int DEFAULT_SIZE = 4;
 	std::T[] items;
+	int Count = 0;
 public:
 	List() {
 		items = new T[DEFAULT_SIZE];
@@ -35,6 +36,7 @@ public:
 
 };
 
-#include <List.tpp>
+#include "List.cpp"
+
 
 #endif // LIST_H
