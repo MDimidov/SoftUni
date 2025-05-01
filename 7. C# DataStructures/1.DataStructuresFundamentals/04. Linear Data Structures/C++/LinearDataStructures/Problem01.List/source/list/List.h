@@ -11,27 +11,27 @@ template <typename T>
 class List : public IAbstractList<T>
 {
 private:
-	int DEFAULT_SIZE = 4;
-	T items[];
-	int Count = 0;
+	//static int const DEFAULT_SIZE = 4;
+	int size = 0;
+	T items[4];
 
 public:
-	List() {
-		items = new T[DEFAULT_SIZE];
-	}
+	///*List() {
+	//	items = new T[DEFAULT_SIZE];
+	//}*/
 
-	List(int size) {
-		items = new T[size];
-	}
+	///*List(int newSize) {
+	//	items[] = new T[newSize];
+	//}*/
 
-	//int Count() const override;
+	int Count() const override;
 	T& operator[](int index) override;
 	const T& operator[](int index) const override;
 
 	void Add(const T& item) override;
 	void Insert(int index, const T& item) override;
-	bool Contains(const T& item) const override;
-	int IndexOf(const T& item) const override;
+	bool Contains(const T& item) override;
+	int IndexOf(const T& item)  override;
 	bool Remove(const T& item) override;
 	void RemoveAt(int index) override;
 

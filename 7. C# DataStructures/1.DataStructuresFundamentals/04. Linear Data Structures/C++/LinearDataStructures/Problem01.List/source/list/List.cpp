@@ -1,14 +1,14 @@
 #include "List.h"
 
-//template<typename T>
-//int List<T>::Count() const {
-//	return this.Count;
-//}
+template<typename T>
+int List<T>::Count() const {
+	return this.size;
+}
 
 
 template<typename T>
 T& List<T>::operator[](int index) {
-	if (index >= this->Count || index < 0) throw std::out_of_range("Index out of range");
+	if (index >= this->size || index < 0) throw std::out_of_range("Index out of range");
 	return items[index];
 }
 
@@ -30,12 +30,12 @@ void List<T>::Insert(int index, const T& item) {
 }
 
 template<typename T>
-bool List<T>::Contains(const T& item) const {
+bool List<T>::Contains(const T& item) {
 	return std::find(items.begin(), items.end(), item) != items.end();
 }
 
 template<typename T>
-int List<T>::IndexOf(const T& item) const {
+int List<T>::IndexOf(const T& item) {
 	auto it = std::find(items.begin(), items.end(), item);
 	return it != items.end() ? static_cast<int>(std::distance(items.begin(), it)) : -1;
 }
