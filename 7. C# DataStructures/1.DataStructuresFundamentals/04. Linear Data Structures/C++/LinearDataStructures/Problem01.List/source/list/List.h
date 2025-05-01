@@ -12,8 +12,9 @@ class List : public IAbstractList<T>
 {
 private:
 	int DEFAULT_SIZE = 4;
-	std::T[] items;
+	T items[];
 	int Count = 0;
+
 public:
 	List() {
 		items = new T[DEFAULT_SIZE];
@@ -23,7 +24,7 @@ public:
 		items = new T[size];
 	}
 
-	int Count() const override;
+	//int Count() const override;
 	T& operator[](int index) override;
 	const T& operator[](int index) const override;
 
@@ -36,7 +37,7 @@ public:
 
 };
 
-#include "List.cpp"
+//#include "List.cpp"
 
 
 #endif // LIST_H
