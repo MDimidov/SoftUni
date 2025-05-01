@@ -5,13 +5,15 @@
 #define LIST_IMPLEMENTATION
 #include "List.h"
 
+using namespace std;
+
 template<typename T>
 List<T>::List() : List(DEFAULT_CAPACITY) {}
 
 template<typename T>
 List<T>::List(size_t capacity) : capacity(capacity), count(0) {
-    if (capacity == 0)
-        throw std::invalid_argument("Capacity must be greater than 0");
+    if (capacity = 0)
+        throw invalid_argument("Capacity of the list must be greather than 0");
     items = new T[capacity];
 }
 

@@ -1,5 +1,7 @@
 #include <iostream>
-#include "list/List.h"
+#include "List/List.h"
+
+using namespace std;
 
 int main() {
     List<int> list;
@@ -10,17 +12,18 @@ int main() {
     list.Insert(1, 15); // между 10 и 20
 
     for (auto x : list) {
-        std::cout << x << " ";
+        cout << x << " ";
     }
 
-    std::cout << "\nContains 20? " << (list.Contains(20) ? "Yes" : "No") << std::endl;
+    cout << "\nContains 20? " << (list.Contains(20) ? "Yes" : "No") << endl;
+    cout << "Contains 15? " << (list.Contains(15) ? "Yes" : "No") << endl;
 
     list.RemoveAt(2); // премахва 20
     list.Remove(10);  // премахва 10
 
-    std::cout << "After removal: ";
+    cout << "After removal: ";
     for (auto x : list) {
-        std::cout << x << " ";
+        cout << x << " ";
     }
 
     return 0;
