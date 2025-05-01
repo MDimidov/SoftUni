@@ -1,43 +1,46 @@
-#pragma once
+// List.h
 #ifndef LIST_H
 #define LIST_H
 
 #include "IAbstractList.h"
-#include "vector"
-#include "stdexcept"
-#include "algorithm"
+#include <stdexcept>
+#include <iterator>
 
-template <typename T>
-class List : public IAbstractList<T>
-{
+template<typename T>
+class List : public IAbstractList<T> {
 private:
-	//static int const DEFAULT_SIZE = 4;
-	int size = 0;
-	T items[4];
+    static const size_t DEFAULT_CAPACITY = 4;
+    T* items;
+    size_t capacity;
+    size_t count;
+
+    void GrowArray();
+    bool IsIndexValid(size_t index) const;
 
 public:
-	///*List() {
-	//	items = new T[DEFAULT_SIZE];
-	//}*/
+    List();
+    List(size_t capacity);
+    ~List();
 
-	///*List(int newSize) {
-	//	items[] = new T[newSize];
-	//}*/
+    size_t Count() const override;
 
-	int Count() const override;
-	T& operator[](int index) override;
-	const T& operator[](int index) const override;
+    T& operator[](size_t index) override;
+    const T& operator[](size_t index) const override;
 
-	void Add(const T& item) override;
-	void Insert(int index, const T& item) override;
-	bool Contains(const T& item) override;
-	int IndexOf(const T& item)  override;
-	bool Remove(const T& item) override;
-	void RemoveAt(int index) override;
+    void Add(const T& item) override;
+    void Insert(size_t index, const T& item) override;
 
+    bool Contains(const T& item) const override;
+    int IndexOf(const T& item) const override;
+
+    bool Remove(const T& item) override;
+    void RemoveAt(size_t index) override;
+
+    // Optional: итератор за range-based for
+    T* begin() { return items; }
+    T* end() { return items + count; }
 };
 
-//#include "List.cpp"
+#include "List.hpp"
 
-
-#endif // LIST_H
+#endif
