@@ -1,19 +1,19 @@
 #include "List.h"
 
 template<typename T>
-size_t List<T>::Count() const {
+int List<T>::Count() const {
 	return this.Count;
 }
 
 
 template<typename T>
-T& List<T>::operator[](size_t index) {
+T& List<T>::operator[](int index) {
 	if (index >= data.size()) throw std::out_of_range("Index out of range");
 	return data[index];
 }
 
 template<typename T>
-const T& List<T>::operator[](size_t index) const {
+const T& List<T>::operator[](int index) const {
 	if (index >= data.size()) throw std::out_of_range("Index out of range");
 	return data[index];
 }
@@ -24,7 +24,7 @@ void List<T>::Add(const T& item) {
 }
 
 template<typename T>
-void List<T>::Insert(size_t index, const T& item) {
+void List<T>::Insert(int index, const T& item) {
 	if (index > data.size()) throw std::out_of_range("Index out of range");
 	data.insert(data.begin() + index, item);
 }
@@ -51,7 +51,7 @@ bool List<T>::Remove(const T& item) {
 }
 
 template<typename T>
-void List<T>::RemoveAt(size_t index) {
+void List<T>::RemoveAt(int index) {
 	if (index >= data.size()) throw std::out_of_range("Index out of range");
 	data.erase(data.begin() + index);
 }

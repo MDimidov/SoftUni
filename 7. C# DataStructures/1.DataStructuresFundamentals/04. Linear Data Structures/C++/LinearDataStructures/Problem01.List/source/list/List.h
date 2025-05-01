@@ -23,16 +23,16 @@ public:
 		items = new T[size];
 	}
 
-	size_t Count() const override;
-	T& operator[](size_t index) override;
-	const T& operator[](size_t index) const override;
+	int Count() const override;
+	T& operator[](int index) override;
+	const T& operator[](int index) const override;
 
 	void Add(const T& item) override;
-	void Insert(size_t index, const T& item) override;
+	void Insert(int index, const T& item) override;
 	bool Contains(const T& item) const override;
 	int IndexOf(const T& item) const override;
 	bool Remove(const T& item) override;
-	void RemoveAt(size_t index) override;
+	void RemoveAt(int index) override;
 
 };
 
