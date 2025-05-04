@@ -1,5 +1,5 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef IABSTRACTSTACK_H
+#define IABSTRACTSTACK_H
 
 #include <cstddef>
 #include <iterator>
