@@ -29,5 +29,14 @@
     <ClInclude Include="source\List\IAbstractList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Stack\Stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stack\Stack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Stack\IAbstractStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
