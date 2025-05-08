@@ -3,49 +3,145 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
 
     public class SinglyLinkedList<T> : IAbstractLinkedList<T>
     {
-        public int Count => throw new NotImplementedException();
+        private class Node
+        {
+            public Node(T value)
+            {
+                Element = value;
+            }
+
+            public Node(T value, Node node)
+            {
+                Element = value;
+                Next = node;
+            }
+
+            public T Element { get; set; }
+
+            public Node Next { get; set; } = null;
+        }
+
+        private Node head;
+        public int Count { get; private set; } = 0;
 
         public void AddFirst(T item)
         {
-            throw new NotImplementedException();
+            Node node = new Node(item, head);
+            head = node;
+
+            Count++;
         }
 
         public void AddLast(T item)
         {
-            throw new NotImplementedException();
+            if (head == null)
+            {
+                AddFirst(item);
+                return;
+            }
+            else
+            {
+                Node node = head;
+
+                while (node.Next != null)
+                {
+                    node = node.Next;
+                }
+
+                Node newNode = new Node(item);
+                node.Next = newNode;
+            }
+
+            Count++;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            Node node = head;
+            while (node != null)
+            {
+                yield return node.Element;
+                node = node.Next;
+            }
         }
 
         public T GetFirst()
         {
-            throw new NotImplementedException();
+            if (head == null)
+            {
+                throw new InvalidOperationException(nameof(head));
+            }
+
+            return head.Element;
         }
 
         public T GetLast()
         {
-            throw new NotImplementedException();
+            if (head == null)
+            {
+                throw new InvalidOperationException(nameof(head));
+            }
+
+            Node node = head;
+            while (node.Next != null)
+            {
+                node = node.Next;
+            }
+
+            return node.Element;
         }
 
         public T RemoveFirst()
         {
-            throw new NotImplementedException();
+            if (head == null)
+            {
+                throw new InvalidOperationException(nameof(head));
+            }
+
+            T item = head.Element;
+
+            head = head.Next;
+            Count--;
+
+            return item;
         }
 
         public T RemoveLast()
         {
-            throw new NotImplementedException();
+            T element;
+            if (head == null)
+            {
+                throw new InvalidOperationException(nameof(head));
+            }
+            else if (Count == 1)
+            {
+                element = head.Element;
+                head = null;
+            }
+            else
+            {
+
+
+                Node node = head;
+
+                while (node.Next?.Next != null)
+                {
+                    node = node.Next;
+                }
+
+                element = node.Next.Element;
+                node.Next = null;
+            }
+
+            Count--;
+            return element;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+            => GetEnumerator();
     }
 }
