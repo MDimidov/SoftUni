@@ -37,12 +37,7 @@ namespace Problem04.BalancedParentheses
                 }
             }
 
-            if (brackets.Any())
-            {
-                return false;
-            }
-
-            return true;
+            return !brackets.Any();
         }
     }
 }
