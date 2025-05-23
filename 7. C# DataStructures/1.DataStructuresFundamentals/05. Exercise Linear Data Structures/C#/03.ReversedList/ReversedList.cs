@@ -25,54 +25,111 @@
         {
             get
             {
-                throw new NotImplementedException();
+                ValidateIndex(index);
+
+                return items[Count - 1 - index];
             }
             set
             {
-                throw new NotImplementedException();
+                ValidateIndex(index);
+
+                items[index] = value;
             }
+        }
+
+        private void ValidateIndex(int index)
+        {
+            if (index < 0 || index > Count - 1) throw new IndexOutOfRangeException(nameof(index));
         }
 
         public int Count { get; private set; }
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if (items.Length <= Count)
+            {
+                Grow();
+            }
+
+            items[Count++] = item;
+        }
+
+        private void Grow()
+        {
+            T[] array = new T[items.Length * 2];
+            Array.Copy(items, array, Count);
+            items = array;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            if (IndexOf(item) >= 0) return true;
+
+            return false;
         }
 
         public int IndexOf(T item)
         {
-            throw new NotImplementedException();
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (items[i].Equals(item)) return Count - 1 - i;
+            }
+
+            return -1;
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            ValidateIndex(index);
+
+            if (items.Length <= Count)
+            {
+                Grow();
+            }
+
+
+            for (int i = Count - 1; i > Count - 1 - index; i--)
+            {
+                items[i + 1] = items[i];
+            }
+
+            Count++;
+            items[Count - 1 - index] = item;
+
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            int index = IndexOf(item);
+            if (index >= 0)
+            {
+                RemoveAt(index);
+                return true;
+            }
+            return false;
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            ValidateIndex(index);
+
+            for (int i = Count - 1 - index; i < Count - 1; i++)
+            {
+                items[i] = items[i + 1];
+            }
+
+            Count--;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                yield return items[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+            => GetEnumerator();
     }
 }
