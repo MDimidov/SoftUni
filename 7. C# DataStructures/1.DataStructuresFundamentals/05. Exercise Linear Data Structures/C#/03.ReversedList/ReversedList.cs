@@ -37,11 +37,6 @@
             }
         }
 
-        private void ValidateIndex(int index)
-        {
-            if (index < 0 || index > Count - 1) throw new IndexOutOfRangeException(nameof(index));
-        }
-
         public int Count { get; private set; }
 
         public void Add(T item)
@@ -52,13 +47,6 @@
             }
 
             items[Count++] = item;
-        }
-
-        private void Grow()
-        {
-            T[] array = new T[items.Length * 2];
-            Array.Copy(items, array, Count);
-            items = array;
         }
 
         public bool Contains(T item)
@@ -131,5 +119,16 @@
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
+
+        private void Grow()
+        {
+            T[] array = new T[items.Length * 2];
+            Array.Copy(items, array, Count);
+            items = array;
+        }
+        private void ValidateIndex(int index)
+        {
+            if (index < 0 || index > Count - 1) throw new IndexOutOfRangeException(nameof(index));
+        }
     }
 }
