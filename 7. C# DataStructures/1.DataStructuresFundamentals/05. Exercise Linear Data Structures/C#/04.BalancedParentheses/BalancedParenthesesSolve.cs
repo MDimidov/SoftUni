@@ -8,6 +8,11 @@ namespace Problem04.BalancedParentheses
     {
         public bool AreBalanced(string parentheses)
         {
+            if(parentheses.Length % 2 != 0)
+            {
+                return false;
+            }
+
             char[] openedBrackets = { '{', '[', '(' };
             char[] closedBrackets = { '}', ']', ')' };
 
@@ -32,7 +37,7 @@ namespace Problem04.BalancedParentheses
                     }
                     else
                     {
-                        brackets.Push(c);
+                        return false;
                     }
                 }
             }
