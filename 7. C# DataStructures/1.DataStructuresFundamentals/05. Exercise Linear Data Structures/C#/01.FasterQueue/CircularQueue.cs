@@ -55,14 +55,7 @@
 
         public T[] ToArray()
         {
-            T[] array = new T[Count];
-
-            for (int i = 0; i < Count; i++)
-            {
-                array[i] = elements[(startIndex + i) % elements.Length];
-            }
-
-            return array;
+            return CopyElements(new T[Count]);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -70,14 +63,9 @@
 
         private void Grow()
         {
-            T[] newElements = new T[elements.Length * 2];
-
-            for (int i = 0; i < Count; i++)
-            {
-                newElements[i] = elements[(startIndex + i) % elements.Length];
-            }
-
-            elements = newElements;
+            elements = CopyElements(new T[elements.Length * 2]);
+            startIndex = 0;
+            endIndex = Count;
         }
 
         private void emptyQueueThrowError()
@@ -86,6 +74,16 @@
             {
                 throw new InvalidOperationException(nameof(elements));
             }
+        }
+
+        private T[] CopyElements(T[] newElements)
+        {
+            for(int i = 0; i < Count; i++)
+            {
+                newElements[i] = elements[(startIndex + i) % elements.Length];
+            }
+
+            return newElements;
         }
     }
 
