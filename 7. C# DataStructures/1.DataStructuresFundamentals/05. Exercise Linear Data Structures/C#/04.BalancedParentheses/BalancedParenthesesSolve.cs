@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Problem04.BalancedParentheses
@@ -13,29 +12,23 @@ namespace Problem04.BalancedParentheses
                 return false;
             }
 
-            char[] openedBrackets = { '{', '[', '(' };
-            char[] closedBrackets = { '}', ']', ')' };
-
-            Dictionary<char, char> tupleBrackets = new Dictionary<char, char>() {
+            Dictionary<char, char> bracketsPairs = new Dictionary<char, char>() {
                 {'}', '{' },
                 {']', '[' },
                 {')', '(' },
             };
+
             Stack<char> brackets = new Stack<char>(parentheses.Length / 2);
 
             foreach (char c in parentheses)
             {
-                if (openedBrackets.Contains(c))
+                if (bracketsPairs.ContainsValue(c))
                 {
                     brackets.Push(c);
                 }
-                else if (closedBrackets.Contains(c))
+                else if (bracketsPairs.ContainsKey(c))
                 {
-                    if (brackets.Any() && tupleBrackets[c] == brackets.Peek())
-                    {
-                        brackets.Pop();
-                    }
-                    else
+                    if (!brackets.Any() || bracketsPairs[c] != brackets.Pop())
                     {
                         return false;
                     }
