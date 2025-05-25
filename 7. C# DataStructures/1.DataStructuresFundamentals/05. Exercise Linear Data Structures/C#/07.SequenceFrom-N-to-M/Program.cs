@@ -36,6 +36,45 @@
 //1.print item.value
 //2.item = item.previous
 
+// Method 1
+//int[] input = Console.ReadLine()!
+//    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+//    .Select(int.Parse)
+//    .ToArray();
+
+//int n = input[0];
+//int m = input[1];
+
+//Stack<int> stack = new Stack<int>();
+
+//stack.Push(m);
+
+//while (n < m)
+//{
+
+//    if (m / 2 >= n && m % 2 == 0)
+//    {
+//        m /= 2;
+//    }
+//    else if (m - 2 >= n)
+//    {
+//        m -= 2;
+//    }
+//    else if (n <= m - 1)
+//    {
+//        m -= 1;
+//    }
+
+//    stack.Push(m);
+//}
+
+//while (stack.Any())
+//{
+//    Console.Write(stack.Pop() + (stack.Any() ? " -> " : ""));
+//}
+
+
+// Method 2
 
 int[] input = Console.ReadLine()!
     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
@@ -45,30 +84,55 @@ int[] input = Console.ReadLine()!
 int n = input[0];
 int m = input[1];
 
-Stack<int> stack = new Stack<int>();
-
-stack.Push(m);
-
-while (n < m)
+if (m < n)
 {
-
-    if (m / 2 >= n && m % 2 == 0)
-    {
-        m /= 2;
-    }
-    else if (m - 2 >= n)
-    {
-        m -= 2;
-    }
-    else if (n <= m - 1)
-    {
-        m -= 1;
-    }
-
-    stack.Push(m);
+    Console.WriteLine("(no solution)");
+    return;
 }
 
-while (stack.Any())
+
+Problem03.Queue.Queue<Node<int>> queue = new();
+queue.Enqueue(new Node<int>(n, null));
+
+while (queue.Any())
 {
-    Console.Write(stack.Pop() + (stack.Any() ? " -> " : ""));
+    Node<int> currentNode = queue.Dequeue();
+    if(currentNode.Value == m)
+    {
+        PrintNodes(currentNode);
+        break;
+    }
+
+    if(currentNode.Value < m)
+    {
+        queue.Enqueue(new Node<int>(currentNode.Value + 1, currentNode));
+        queue.Enqueue(new Node<int>(currentNode.Value + 2, currentNode));
+        queue.Enqueue(new Node<int>(currentNode.Value * 2, currentNode));
+    }
+}
+
+void PrintNodes(Node<int> currentNode)
+{
+    Node<int>? node = currentNode;
+    Stack<int> stack = new();
+
+    while(node != null)
+    {
+        stack.Push(node.Value);
+        node = node.Previous;
+    }
+
+    Console.WriteLine(string.Join(" -> ", stack));
+}
+
+public class Node<T>
+{
+    public Node(T value, Node<T>? previous)
+    {
+        Previous = previous;
+        Value = value;
+    }
+
+    public Node<T>? Previous { get; set; }
+    public T Value { get; set; }
 }
