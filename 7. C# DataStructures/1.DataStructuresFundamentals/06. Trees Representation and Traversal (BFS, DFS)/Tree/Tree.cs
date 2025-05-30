@@ -30,7 +30,7 @@
         {
             Tree<T> parent = GetParentBfs(parentKey);
 
-            if(parent == null)
+            if (parent == null)
             {
                 throw new ArgumentNullException(nameof(parentKey));
             }
@@ -53,7 +53,7 @@
                     return node;
                 }
 
-                foreach(var child in node.children)
+                foreach (var child in node.children)
                 {
                     tree.Enqueue(child);
                 }
@@ -124,7 +124,28 @@
 
         public void RemoveNode(T nodeKey)
         {
-            throw new NotImplementedException();
+            if (this.value.Equals(nodeKey))
+            {
+                throw new ArgumentException(nameof(nodeKey));
+            }
+
+            Queue<Tree<T>> tree = new Queue<Tree<T>>();
+            tree.Enqueue(this);
+
+            while (tree.Any())
+            {
+                var node = tree.Dequeue();
+                for (int i = 0; i < node.children.Count; i++)
+                {
+                    if (node.children[i].value.Equals(nodeKey))
+                    {
+                        node.children.RemoveAt(i);
+                        return;
+                    }
+                }
+            }
+
+            throw new ArgumentNullException(nameof(nodeKey));
         }
 
         public void Swap(T firstKey, T secondKey)
