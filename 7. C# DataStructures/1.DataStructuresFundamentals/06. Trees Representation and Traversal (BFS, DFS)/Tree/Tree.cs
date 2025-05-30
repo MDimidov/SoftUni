@@ -7,7 +7,7 @@
     public class Tree<T> : IAbstractTree<T>
     {
         private T value;
-        private readonly List<Tree<T>> children;  
+        private readonly List<Tree<T>> children;
         private Tree<T> parent;
 
         public Tree(T value)
@@ -19,7 +19,7 @@
         public Tree(T value, params Tree<T>[] children)
             : this(value)
         {
-            foreach(var child in children)
+            foreach (var child in children)
             {
                 child.parent = this;
                 this.children.Add(child);
@@ -43,7 +43,7 @@
                 var subTree = queue.Dequeue();
                 result.Add(subTree.value);
 
-                foreach(var child in subTree.children)
+                foreach (var child in subTree.children)
                 {
                     queue.Enqueue(child);
                 }
@@ -54,7 +54,24 @@
 
         public IEnumerable<T> OrderDfs()
         {
-            throw new NotImplementedException();
+            Stack<T> result = new Stack<T>();
+            Stack<Tree<T>> tree = new Stack<Tree<T>>();
+
+            tree.Push(this);
+
+            while (tree.Any())
+            {
+                var node = tree.Pop();
+
+                foreach (var child in node.children)
+                {
+                    tree.Push(child);
+                }
+
+                result.Push(node.value);
+            }
+
+            return result;
         }
 
         public void RemoveNode(T nodeKey)

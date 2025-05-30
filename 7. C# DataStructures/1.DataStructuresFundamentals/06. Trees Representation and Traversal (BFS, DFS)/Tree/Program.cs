@@ -25,7 +25,7 @@
                             );
 
             //Console.WriteLine( string.Join(", ", subtree.OrderBfs()));
-            Console.WriteLine( string.Join(", ", tree.OrderBfs()));
+            Console.WriteLine( string.Join(", ", tree.OrderDfs()));
 
         }
     }
