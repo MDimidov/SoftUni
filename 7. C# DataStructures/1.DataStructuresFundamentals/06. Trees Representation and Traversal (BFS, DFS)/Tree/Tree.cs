@@ -161,7 +161,10 @@
             int secondNodeIndex = secondNodeParent.children.IndexOf(secondNode);
 
             firstNodeParent.children[firstNodeIndex] = secondNode;
+            secondNode.parent = firstNodeParent;
+
             secondNodeParent.children[secondNodeIndex] = firstNode;
+            firstNode.parent = secondNodeParent;
         }
     }
 }
