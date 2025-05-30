@@ -141,7 +141,27 @@
 
         public void Swap(T firstKey, T secondKey)
         {
-            throw new NotImplementedException();
+            var firstNode = GetNodeBfs(firstKey);
+            var secondNode = GetNodeBfs(secondKey);
+
+            if(firstNode is null || secondNode is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var firstNodeParent = firstNode.parent;
+            var secondNodeParent = secondNode.parent;
+
+            if(firstNodeParent is null || secondNodeParent is null)
+            {
+                throw new ArgumentException();
+            }
+
+            int firstNodeIndex = firstNodeParent.children.IndexOf(firstNode);
+            int secondNodeIndex = secondNodeParent.children.IndexOf(secondNode);
+
+            firstNodeParent.children[firstNodeIndex] = secondNode;
+            secondNodeParent.children[secondNodeIndex] = firstNode;
         }
     }
 }
