@@ -52,6 +52,16 @@
             return result;
         }
 
+        private void RecursiveDfs(Tree<T> node, ICollection<T> list)
+        {
+            foreach (var child in node.children)
+            {
+                RecursiveDfs(child, list);
+            }
+
+            list.Add(node.value);
+        }
+
         public IEnumerable<T> OrderDfs()
         {
             Stack<T> result = new Stack<T>();
@@ -71,6 +81,13 @@
                 result.Push(node.value);
             }
 
+            return result;
+        }
+
+        public IEnumerable<T> OrderDfsRecursive()
+        {
+            List<T> result = new List<T>();
+            RecursiveDfs(this, result);
             return result;
         }
 
