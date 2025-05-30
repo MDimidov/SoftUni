@@ -28,7 +28,7 @@
 
         public void AddChild(T parentKey, Tree<T> child)
         {
-            Tree<T> parent = GetParentBfs(parentKey);
+            Tree<T> parent = GetNodeBfs(parentKey);
 
             if (parent == null)
             {
@@ -38,7 +38,7 @@
             parent.children.Add(child);
         }
 
-        private Tree<T> GetParentBfs(T parentKey)
+        private Tree<T> GetNodeBfs(T nodeKey)
         {
             Queue<Tree<T>> tree = new Queue<Tree<T>>();
 
@@ -48,7 +48,7 @@
             {
                 var node = tree.Dequeue();
 
-                if (node.value.Equals(parentKey))
+                if (node.value.Equals(nodeKey))
                 {
                     return node;
                 }
@@ -129,23 +129,14 @@
                 throw new ArgumentException(nameof(nodeKey));
             }
 
-            Queue<Tree<T>> tree = new Queue<Tree<T>>();
-            tree.Enqueue(this);
+            var nodeToDelete = GetNodeBfs(nodeKey);
 
-            while (tree.Any())
+            if (nodeToDelete is null)
             {
-                var node = tree.Dequeue();
-                for (int i = 0; i < node.children.Count; i++)
-                {
-                    if (node.children[i].value.Equals(nodeKey))
-                    {
-                        node.children.RemoveAt(i);
-                        return;
-                    }
-                }
+                throw new ArgumentNullException(nameof(nodeKey));
             }
 
-            throw new ArgumentNullException(nameof(nodeKey));
+            nodeToDelete.parent.children.Remove(nodeToDelete);
         }
 
         public void Swap(T firstKey, T secondKey)
