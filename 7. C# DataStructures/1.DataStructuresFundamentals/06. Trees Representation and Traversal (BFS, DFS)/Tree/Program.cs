@@ -26,6 +26,9 @@
 
             //Console.WriteLine( string.Join(", ", subtree.OrderBfs()));
             Console.WriteLine( string.Join(", ", tree.OrderDfs()));
+
+            tree.Swap(103, 42);
+
             Console.WriteLine( string.Join(", ", tree.OrderDfsRecursive()));
 
         }
