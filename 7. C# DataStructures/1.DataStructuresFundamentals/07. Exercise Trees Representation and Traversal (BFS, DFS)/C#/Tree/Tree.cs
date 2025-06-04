@@ -79,7 +79,7 @@
             foreach (var leaf in leafs)
             {
                 int depth = GetDepth(leaf);
-                if(depth > maxDepth)
+                if (depth > maxDepth)
                 {
                     maxDepth = depth;
                     deepestNode = leaf;
@@ -105,7 +105,17 @@
 
         public IEnumerable<T> GetLongestPath()
         {
-            throw new NotImplementedException();
+            Stack<T> result = new Stack<T>();
+
+            var node = GetDeepestNode();
+
+            while (node != null)
+            {
+                result.Push(node.Key);
+                node = node.Parent;
+            }
+
+            return result;
         }
 
         private IEnumerable<Tree<T>> BfsWithResultKeys(Predicate<Tree<T>> predicate)

@@ -18,6 +18,8 @@
             Console.WriteLine(tree.AsString());
             Console.WriteLine($"Get Leaf Keys: {string.Join(", ", tree.GetLeafKeys())}");
             Console.WriteLine($"Get Internal Keys: {string.Join(", ", tree.GetInternalKeys())}");
+            Console.WriteLine($"Get Deepest Key: {tree.GetDeepestKey()}");
+            Console.WriteLine($"Get Longest Path: {string.Join(", ", tree.GetLongestPath())}");
         }
     }
 }
