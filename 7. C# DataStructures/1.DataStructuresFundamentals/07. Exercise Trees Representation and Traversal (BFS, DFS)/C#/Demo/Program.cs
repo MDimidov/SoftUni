@@ -1,6 +1,7 @@
 ﻿namespace Demo
 {
     using System;
+    using System.Linq;
     using Tree;
 
     class Program
@@ -20,10 +21,11 @@
             Console.WriteLine($"Get Internal Keys: {string.Join(", ", tree.GetInternalKeys())}");
             Console.WriteLine($"Get Deepest Key: {tree.GetDeepestKey()}");
             Console.WriteLine($"Get Longest Path: {string.Join(", ", tree.GetLongestPath())}");
+
             foreach (var line in tree.GetPathsWithGivenSum(27))
             {
                 Console.WriteLine($"Get Paths with given sum: {string.Join(", ", line)}");
-            }
+            };
         }
     }
 }
