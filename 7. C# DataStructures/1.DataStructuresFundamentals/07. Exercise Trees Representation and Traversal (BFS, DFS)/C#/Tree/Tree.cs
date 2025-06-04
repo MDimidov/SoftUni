@@ -58,16 +58,49 @@
         }
 
         public IEnumerable<T> GetInternalKeys()
-            => BfsWithResultKeys(tree => tree.Children.Any() && tree.Parent != null);
+            => BfsWithResultKeys(tree => tree.Children.Any() && tree.Parent != null)
+            .Select(tree => tree.Key);
 
 
         public IEnumerable<T> GetLeafKeys()
-            => BfsWithResultKeys(tree => !tree.Children.Any());
+            => BfsWithResultKeys(tree => !tree.Children.Any())
+            .Select(tree => tree.Key);
 
 
         public T GetDeepestKey()
+            => GetDeepestNode().Key;
+
+        private Tree<T> GetDeepestNode()
         {
-            throw new NotImplementedException();
+            var leafs = BfsWithResultKeys(tree => !tree.Children.Any());
+            int maxDepth = 0;
+
+            Tree<T> deepestNode = null;
+            foreach (var leaf in leafs)
+            {
+                int depth = GetDepth(leaf);
+                if(depth > maxDepth)
+                {
+                    maxDepth = depth;
+                    deepestNode = leaf;
+                }
+            }
+
+            return deepestNode;
+        }
+
+        private int GetDepth(Tree<T> leaf)
+        {
+            int depth = 0;
+            Tree<T> tree = leaf;
+
+            while (tree.Parent != null)
+            {
+                depth++;
+                tree = tree.Parent;
+            }
+
+            return depth;
         }
 
         public IEnumerable<T> GetLongestPath()
@@ -75,9 +108,9 @@
             throw new NotImplementedException();
         }
 
-        private IEnumerable<T> BfsWithResultKeys(Predicate<Tree<T>> predicate)
+        private IEnumerable<Tree<T>> BfsWithResultKeys(Predicate<Tree<T>> predicate)
         {
-            var result = new List<T>();
+            var result = new List<Tree<T>>();
             var queue = new Queue<Tree<T>>();
 
             queue.Enqueue(this);
@@ -87,7 +120,7 @@
                 var currentNode = queue.Dequeue();
                 if (predicate.Invoke(currentNode))
                 {
-                    result.Add(currentNode.Key);
+                    result.Add(currentNode);
                 }
 
                 foreach (var child in currentNode.Children)
