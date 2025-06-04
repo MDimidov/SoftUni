@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class IntegerTreeFactory
     {
@@ -14,22 +15,52 @@
 
         public IntegerTree CreateTreeFromStrings(string[] input)
         {
-            throw new NotImplementedException();
+            foreach (string inputLine in input)
+            {
+                int[] keys = inputLine
+                    .Split(' ')
+                    .Select(int.Parse)
+                    .ToArray();
+
+                int parent = keys[0];
+                int child = keys[1];
+
+                AddEdge(parent, child);
+            }
+
+            return GetRoot();
         }
 
         public IntegerTree CreateNodeByKey(int key)
         {
-            throw new NotImplementedException();
+            if (!nodesByKey.ContainsKey(key))
+            {
+                nodesByKey.Add(key, new IntegerTree(key));
+            }
+
+            return nodesByKey[key];
         }
 
         public void AddEdge(int parent, int child)
         {
-            throw new NotImplementedException();
+            var parentNode = CreateNodeByKey(parent);
+            var childNode = CreateNodeByKey(child);
+
+            childNode.AddParent(parentNode);
+            parentNode.AddChild(childNode);
         }
 
         public IntegerTree GetRoot()
         {
-            throw new NotImplementedException();
+            foreach (var kvp in nodesByKey)
+            {
+                if (kvp.Value.Parent is null)
+                {
+                    return kvp.Value;
+                }
+            }
+
+            return null;
         }
     }
 }

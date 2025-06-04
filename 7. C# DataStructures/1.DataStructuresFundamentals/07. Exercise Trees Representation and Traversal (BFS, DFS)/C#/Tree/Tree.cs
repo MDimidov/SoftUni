@@ -5,25 +5,28 @@
 
     public class Tree<T> : IAbstractTree<T>
     {
+        private List<Tree<T>> children;
+
         public Tree(T key, params Tree<T>[] children)
         {
-            throw new NotImplementedException();
+            this.children = new List<Tree<T>>(children);
+            Key = key;
         }
 
         public T Key { get; private set; }
 
         public Tree<T> Parent { get; private set; }
 
-        public IReadOnlyCollection<Tree<T>> Children => throw new NotImplementedException();
+        public IReadOnlyCollection<Tree<T>> Children => children.AsReadOnly();
 
         public void AddChild(Tree<T> child)
         {
-            throw new NotImplementedException();
+            children.Add(child);
         }
 
         public void AddParent(Tree<T> parent)
         {
-            throw new NotImplementedException();
+            this.Parent = parent;
         }
 
         public string AsString()
@@ -49,6 +52,12 @@
         public IEnumerable<T> GetLongestPath()
         {
             throw new NotImplementedException();
+        }
+
+        private Tree<T> GetKeys()
+        {
+                        
+            return null;
         }
     }
 }
