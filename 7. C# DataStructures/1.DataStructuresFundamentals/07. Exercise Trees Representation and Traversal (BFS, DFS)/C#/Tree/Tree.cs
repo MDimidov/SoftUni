@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     public class Tree<T> : IAbstractTree<T>
     {
@@ -9,8 +11,13 @@
 
         public Tree(T key, params Tree<T>[] children)
         {
-            this.children = new List<Tree<T>>(children);
+            this.children = new List<Tree<T>>();
             Key = key;
+
+            foreach (var child in children)
+            {
+                AddChild(child);
+            }
         }
 
         public T Key { get; private set; }
@@ -31,7 +38,23 @@
 
         public string AsString()
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+            int indent = 0;
+
+            DfsAsString(sb, this, indent);
+
+            return sb.ToString().Trim();
+        }
+
+        private void DfsAsString(StringBuilder sb, Tree<T> tree, int indent)
+        {
+            sb.Append(' ', indent)
+                .AppendLine(tree.Key.ToString());
+
+            foreach (var child in tree.Children)
+            {
+                DfsAsString(sb, child, indent + 2);
+            }
         }
 
         public IEnumerable<T> GetInternalKeys()
@@ -41,7 +64,26 @@
 
         public IEnumerable<T> GetLeafKeys()
         {
-            throw new NotImplementedException();
+            var result = new List<T>();
+            var queue = new Queue<Tree<T>>();
+
+            queue.Enqueue(this);
+
+            while (queue.Any())
+            {
+                var currentNode = queue.Dequeue();
+                if (!currentNode.Children.Any())
+                {
+                    result.Add(currentNode.Key);
+                }
+
+                foreach (var child in currentNode.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+            return result;
         }
 
         public T GetDeepestKey()
@@ -56,7 +98,7 @@
 
         private Tree<T> GetKeys()
         {
-                        
+
             return null;
         }
     }
