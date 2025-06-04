@@ -58,52 +58,12 @@
         }
 
         public IEnumerable<T> GetInternalKeys()
-        {
-            var result = new List<T>();
-            var queue = new Queue<Tree<T>>();
+            => BfsWithResultKeys(tree => tree.Children.Any() && tree.Parent != null);
 
-            queue.Enqueue(this);
-
-            while (queue.Any())
-            {
-                var currentNode = queue.Dequeue();
-                if (currentNode.Children.Any() && currentNode.Parent != null)
-                {
-                    result.Add(currentNode.Key);
-                }
-
-                foreach (var child in currentNode.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
-
-            return result;
-        }
 
         public IEnumerable<T> GetLeafKeys()
-        {
-            var result = new List<T>();
-            var queue = new Queue<Tree<T>>();
+            => BfsWithResultKeys(tree => !tree.Children.Any());
 
-            queue.Enqueue(this);
-
-            while (queue.Any())
-            {
-                var currentNode = queue.Dequeue();
-                if (!currentNode.Children.Any())
-                {
-                    result.Add(currentNode.Key);
-                }
-
-                foreach (var child in currentNode.Children)
-                {
-                    queue.Enqueue(child);
-                }
-            }
-
-            return result;
-        }
 
         public T GetDeepestKey()
         {
@@ -115,10 +75,28 @@
             throw new NotImplementedException();
         }
 
-        private Tree<T> GetKeys()
+        private IEnumerable<T> BfsWithResultKeys(Predicate<Tree<T>> predicate)
         {
+            var result = new List<T>();
+            var queue = new Queue<Tree<T>>();
 
-            return null;
+            queue.Enqueue(this);
+
+            while (queue.Any())
+            {
+                var currentNode = queue.Dequeue();
+                if (predicate.Invoke(currentNode))
+                {
+                    result.Add(currentNode.Key);
+                }
+
+                foreach (var child in currentNode.Children)
+                {
+                    queue.Enqueue(child);
+                }
+            }
+
+            return result;
         }
     }
 }
