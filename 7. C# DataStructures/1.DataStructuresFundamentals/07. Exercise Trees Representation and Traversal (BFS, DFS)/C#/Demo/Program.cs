@@ -17,6 +17,7 @@
 
             Console.WriteLine(tree.AsString());
             Console.WriteLine($"Get Leaf Keys: {string.Join(", ", tree.GetLeafKeys())}");
+            Console.WriteLine($"Get Internal Keys: {string.Join(", ", tree.GetInternalKeys())}");
         }
     }
 }
