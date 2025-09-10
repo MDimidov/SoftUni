@@ -1,5 +1,11 @@
 // 1. Car.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+//You are given a program in a CarMain.cpp file that reads and creates const objects of class Car, which has the
+// following attributes :
+// • Brand(string)
+// • Model(string)
+// • Year(int)
+// The program reads input and writes output to the console, using the Car class and getters for the above - mentioned attributes. Your task is to study the code in CarMain.cpp and implement the Car class in Car.h(which is #include - d by CarMain.cpp), so that CarMain.cpp compiles successfully and accomplishes the task described.Your Car.h file should resemble the following :
+
 
 #include <iostream>
 
@@ -7,14 +13,3 @@ int main()
 {
     std::cout << "Hello World!\n";
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
